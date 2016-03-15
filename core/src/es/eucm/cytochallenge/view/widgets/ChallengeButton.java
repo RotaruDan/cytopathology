@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
+import es.eucm.cytochallenge.model.control.InteractiveZoneControl;
 import es.eucm.cytochallenge.model.control.MultipleAnswerControl;
 import es.eucm.cytochallenge.model.control.MultipleImageAnswerControl;
 import es.eucm.cytochallenge.model.control.TextControl;
@@ -38,6 +39,8 @@ public class ChallengeButton extends TextButton {
             imageIcon = SkinConstants.IC_FTB;
         } else if (textControl instanceof MultipleImageAnswerControl) {
             imageIcon = SkinConstants.IC_MICQ;
+        } else if (textControl instanceof InteractiveZoneControl) {
+            imageIcon = SkinConstants.IC_ARROW;
         }
         image = new Image(skin.getDrawable(imageIcon));
         image.setScaling(Scaling.fit);

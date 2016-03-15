@@ -7,4 +7,6 @@
 	<entry-point class='es.eucm.cytochallenge.client.HtmlLauncher' />
 	
 	<set-configuration-property name="gdx.assetpath" value="../android/assets" />
+	<extend-configuration-property name="gdx.reflect.include" value="es.eucm.cytochallenge.model" />
+	<extend-configuration-property name="gdx.reflect.include" value="es.eucm.cytochallenge.view.widgets" />
 </module>

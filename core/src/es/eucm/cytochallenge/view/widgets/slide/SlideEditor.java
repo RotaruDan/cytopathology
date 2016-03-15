@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import es.eucm.cytochallenge.utils.Actions2;
 import es.eucm.cytochallenge.view.SkinConstants;
@@ -40,6 +41,9 @@ public class SlideEditor extends AbstractWidget {
     private Image slideBackground;
 
     private ImageButton fitButton;
+
+    // Supported: Center, Left
+    private int align = Align.center;
 
     protected float zoom = 1.0f, fitZoom, maxZoom, minZoom;
 
@@ -127,8 +131,17 @@ public class SlideEditor extends AbstractWidget {
      * Sets the root group in its initial position, fitting the view
      */
     public void fit(boolean animated) {
-        float x = (getWidth() - rootActor.getWidth() * fitZoom) * .5f;
-        float y = (getHeight() - rootActor.getHeight() * fitZoom) * .5f;
+        float x = 0f;
+        float y = 0f;
+
+        if(align == Align.center) {
+            x = (getWidth() - rootActor.getWidth() * fitZoom) * .5f;
+            y = (getHeight() - rootActor.getHeight() * fitZoom) * .5f;
+        } else if (align == Align.left){
+            // Align == Align.left
+            x = 0f;
+            y = 0f;
+        }
         if (animated) {
             slideContainer.addAction(new SequenceAction(new ParallelAction(
                     Actions.moveTo(x, y,
@@ -254,6 +267,10 @@ public class SlideEditor extends AbstractWidget {
 
     public Actor getRootActor() {
         return rootActor;
+    }
+
+    public void setAlign(int align) {
+        this.align = align;
     }
 
     public static class SlideEditorStyle {

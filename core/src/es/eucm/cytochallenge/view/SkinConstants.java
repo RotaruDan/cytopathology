@@ -24,7 +24,14 @@ public interface SkinConstants {
     String DRAWABLE_BG48 = "bg48";
     String DRAWABLE_BLANK = "blank";
     String DRAWABLE_TOUCH = "touch";
+    String DRAWABLE_CLOCK = "clock";
     String DRAWABLE_LOGO = "logo";
+    String DRAWABLE_CLOCK_AXIS = "clock_axis";
+    String DRAWABLE_BOOKS_LEFT = "books_left";
+    String DRAWABLE_BOOKS_RIGHT = "books_right";
+    String DRAWABLE_DESK = "desk";
+    String DRAWABLE_DOCTOR_BOARD = "doctor_board";
+    String DRAWABLE_BOARD = "board";
 
     // Buttons
     String DRAWABLE_BUTTON_CHECK_OFF = "button_check_off";
@@ -45,6 +52,7 @@ public interface SkinConstants {
     String DRAWABLE_9P_BLANK75 = "blank75";
     String DRAWABLE_9P_BLANK_GREY_BORDER = "blank_grey_border";
     String DRAWABLE_9P_PAGE_RIGHT = "page_right";
+    String DRAWABLE_9P_TOOLBAR = "toolbar";
 
     // Buttons
     String DRAWABLE_9P_BUTTON = "button";
@@ -71,6 +79,8 @@ public interface SkinConstants {
     String IC_FTB = "ic_ftb";
     String IC_DND = "ic_dnd";
     String IC_MICQ = "ic_micq";
+    String IC_TABLET = "ic_tablet";
+    String IC_MAPMARKER = "map-marker";
 
 
     /**
@@ -111,8 +121,9 @@ public interface SkinConstants {
      *  Colors
      */
     Color COLOR_BACKGROUND = new Color(94f/255f, 190f/255f, 214f/255f, 1f);
+    Color COLOR_BACKGROUND_LAB = new Color(161f/255f, 181f/255f, 188f/255f, 1f);
     Color COLOR_PANEL_RIGHT = new Color(100f/255f, 200f/255f, 235f/255f, 1f);
     Color COLOR_BUTTON = new Color(0.050980392f, 0.35682745f, 0.549019607f, 1f);
     Color COLOR_BUTTON_CLEAR = new Color(63f/255f, 145f/255f, 195f/255f, 1f);
-
+    Color COLOR_TOOLBAR_TOP = COLOR_PANEL_RIGHT;
 }

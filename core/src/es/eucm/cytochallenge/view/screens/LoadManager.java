@@ -28,6 +28,7 @@ import es.eucm.cytochallenge.view.transitions.TransitionManager;
 public class LoadManager extends BaseScreen {
     public static final String[] SCALES = new String[]{"1.0", "2.0"};
     private String SKIN_JSON_SRC = "skin/scale1.0/skin.json";
+    private String I18N_SRC = "i18n/app";
 
     private CytoChallenge myGame;
     private TransitionManager transitionManager;
@@ -79,6 +80,8 @@ public class LoadManager extends BaseScreen {
 
         /*-QUEUE here loading assets-*/
         am.load(SKIN_JSON_SRC, Skim.class);
+
+        am.load(I18N_SRC, I18NBundle.class);
         am.setErrorListener(new AssetErrorListener() {
             @Override
             public void error(AssetDescriptor asset, Throwable throwable) {
@@ -136,14 +139,19 @@ public class LoadManager extends BaseScreen {
 
                     skin = am.get(SKIN_JSON_SRC, Skim.class);
 
+                    i18n = am.get(I18N_SRC, I18NBundle.class);
+
                     menu = new Menu();
                     menu.create();
 
-                    challenges = new Challenges();
-                    challenges.create();
+                    lab = new Lab();
+                    lab.create();
 
                     challengeList = new ChallengeList();
                     challengeList.create();
+
+                    challenges = new Challenges();
+                    challenges.create();
 
                     transitionManager.initialize();
 

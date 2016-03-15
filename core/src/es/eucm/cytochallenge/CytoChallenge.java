@@ -17,7 +17,7 @@ public class CytoChallenge extends ApplicationAdapter {
 
     @Override
     public void create() {
-        Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        Gdx.app.setLogLevel(Application.LOG_NONE);
         this.transitionManager = new TransitionManager();
         this.loadManager = new LoadManager(this, this.transitionManager);
         this.showingScreen = this.loadManager;

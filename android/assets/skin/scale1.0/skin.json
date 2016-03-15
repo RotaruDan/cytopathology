@@ -343,6 +343,11 @@
             "down": "button_down",
             "font": "default_font",
             "fontColor": "blue"
+        },
+        "challenge_list": {
+            "font": "default_font",
+            "fontColor": "blue_900",
+            "downFontColor": "white"
         }
     },
     "com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
@@ -587,6 +592,12 @@
             "down": "transparent_48_bg",
             "font": "default_font",
             "fontColor": "white"
+        }
+    },
+    "es.eucm.cytochallenge.view.widgets.ChatDialog$ChatDialogStyle": {
+        "default": {
+            "background": "page_up",
+            "textStyle": "context"
         }
     }
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.I18NBundle;
 import es.eucm.cytochallenge.CytoChallenge;
 import es.eucm.cytochallenge.view.transitions.Fade;
 
@@ -18,10 +19,12 @@ public class BaseScreen {
     protected static Stage stage;
     protected static CytoChallenge game;
     protected static AssetManager am;
+    protected static I18NBundle i18n;
 
     protected static Menu menu;
-    protected static Challenges challenges;
+    protected static Lab lab;
     protected static ChallengeList challengeList;
+    protected static Challenges challenges;
     /*    protected static Help help;
         protected static Credits credits;
         protected static Play play;

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -31,6 +32,7 @@ public class Menu extends BaseScreen {
         settings = WidgetBuilder.toolbarIcon(SkinConstants.IC_SETTINGS);
         settingsContainer.setActor(settings);
         settingsContainer.top().right();
+        settingsContainer.setTouchable(Touchable.childrenOnly);
 
         root.addActor(settingsContainer);
 
@@ -58,7 +60,7 @@ public class Menu extends BaseScreen {
                 if (target == settings) {
 
                 } else if (target == play) {
-                    next = challengeList;
+                    next = lab;
                 }
                 return next;
             }

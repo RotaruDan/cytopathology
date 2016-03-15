@@ -5,16 +5,20 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.*;
 import es.eucm.cytochallenge.model.*;
+import es.eucm.cytochallenge.model.control.InteractiveZoneControl;
 import es.eucm.cytochallenge.model.control.MultipleAnswerControl;
 import es.eucm.cytochallenge.model.control.MultipleImageAnswerControl;
 import es.eucm.cytochallenge.model.control.TextControl;
@@ -25,12 +29,14 @@ import es.eucm.cytochallenge.model.control.filltheblank.FillTheBlankStatement;
 import es.eucm.cytochallenge.utils.Grades;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.screens.BaseScreen;
+import es.eucm.cytochallenge.view.widgets.IconButton;
 import es.eucm.cytochallenge.view.widgets.LinearLayout;
+import es.eucm.cytochallenge.view.widgets.RightToolbarLayout;
+import es.eucm.cytochallenge.view.widgets.TopToolbarLayout;
 import es.eucm.cytochallenge.view.widgets.challenge.filltheblank.FillTheBlankText;
 import es.eucm.cytochallenge.view.widgets.slide.SlideEditor;
 
 import java.util.*;
-import java.util.List;
 
 /**
  * Created by dan on 02/03/2016.
@@ -56,6 +62,9 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
     // FtB
     private Array<FillTheBlankText> ftbTexts = new Array<FillTheBlankText>();
 
+    // ZoneInteraction
+    private Array<Button> markers = new Array<Button>();
+
     public TextChallengeWidget() {
         root = new Table();
     }
@@ -80,7 +89,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
         Container imageContainer;
 
-        float defaultPad = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(20f);
+        float defaultPad = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(24f);
 
         if (textControl instanceof MultipleAnswerControl) {
 
@@ -135,7 +144,6 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             String[] answers = miaControl.getAnswers();
 
             Table rootTable = new Table();
-            //rootTable.setFillParent(true);
 
             imageGroup.setMaxCheckCount(answers.length);
 
@@ -148,7 +156,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
                         Button.ButtonStyle.class));
                 Image imageActor = new Image(new TextureRegionDrawable(
                         new TextureRegion(answerTexture)));
-                imageActor.setScaling(Scaling.fill);
+                imageActor.setScaling(Scaling.fit);
                 float pad8 = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(imageActor.getHeight() * .1f);
 
                 imageButton.add(imageActor).expand().fill().pad(pad8);
@@ -184,8 +192,28 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             imageContainer.fill();
             imageContainer.setClip(true);
 
-            root.defaults().expand().fill();
-            root.add(imageContainer);
+            Table topTable = new Table();
+            topTable.background(BaseScreen.skin.getDrawable(SkinConstants.DRAWABLE_9P_TOOLBAR));
+            topTable.setColor(SkinConstants.COLOR_TOOLBAR_TOP);
+
+            Label label = new Label(textControl.getText(), BaseScreen.skin,
+                    SkinConstants.STYLE_TOOLBAR);
+
+            ScrollPane horizontalScroll = new ScrollPane(label);
+            horizontalScroll.setScrollingDisabled(false, true);
+
+            Button icon = es.eucm.cytochallenge.view.widgets.WidgetBuilder.toolbarIcon(SkinConstants.IC_UNDO);
+            icon.setColor(Color.CLEAR);
+            topTable.add(icon);
+
+            topTable.add(horizontalScroll)
+                    .expandX();
+
+            TopToolbarLayout layout = new TopToolbarLayout();
+            layout.setTopToolbar(topTable);
+            layout.setContainer(imageContainer);
+
+            root.add(layout).expand().fill();
 
         }
 
@@ -206,12 +234,16 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
             Group imageGroup = new Group();
             imageGroup.addActor(imageActor);
-            imageGroup.setBounds(imageActor.getX(), imageActor.getY(), imageActor.getWidth(), imageActor.getHeight());
 
-            float meanWidth = 0f, meanHeight = 0f;
+            float maxWidth = 0f, maxHeight = 0f;
+            float maxX = imageActor.getWidth(), maxY = imageActor.getHeight();
+            float minX = 0f, minY = 0f;
+
+            shuffleArray(answers);
 
             for (int i = 0; i < answers.length; i++) {
                 final DragAndDropAnswer answer = answers[i];
+
 
                 final WidgetGroup parentContainer = new WidgetGroup();
                 parentContainer.setFillParent(true);
@@ -221,13 +253,20 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
                 // Correct Answer stored inside the parent
                 parentContainer.setUserObject(answer.getText());
 
-                final TextButton answerLabel = new TextButton("", BaseScreen.skin, SkinConstants.STYLE_DRAGANDDROP);
+                final TextButton answerLabel = new TextButton(answer.getText(), BaseScreen.skin, SkinConstants.STYLE_DRAGANDDROP);
                 answerLabel.setPosition(answer.getX() + (answer.getWidth() - answerLabel.getPrefWidth()) * .5f,
                         answer.getY() + (answer.getHeight() - answerLabel.getPrefHeight()) * .5f);
+                answerLabel.pack();
                 parentContainer.addActor(answerLabel);
 
-                meanWidth += answer.getWidth();
-                meanHeight += answer.getHeight();
+                maxWidth = Math.max(maxWidth, answerLabel.getWidth());
+                maxHeight = Math.max(maxHeight, answerLabel.getHeight());
+
+                // Max/min computing
+                maxX = Math.max(answer.getX() + answerLabel.getWidth() + defaultPad, maxX);
+                maxY = Math.max(answer.getY() + answerLabel.getHeight() + defaultPad, maxY);
+                minX = Math.min(answer.getX(), minX);
+                minY = Math.min(answer.getY(), minY);
 
                 answerLabel.getLabel().setColor(Color.CLEAR);
 
@@ -252,30 +291,32 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
                 });
             }
 
-            meanWidth = meanWidth / answers.length;
-            meanHeight = meanHeight / answers.length;
+            imageGroup.setBounds(minX, minY, maxX - minX, maxY - minY);
+
 
             for (int j = 0; j < dragContainers.size; j++) {
                 WidgetGroup widgetGroup = dragContainers.get(j);
                 TextButton first = (TextButton) widgetGroup.getChildren().first();
-
-                first.setBounds(first.getX() + (first.getWidth() - meanWidth) * .5f,
-                        first.getY() + (first.getHeight() - meanHeight) * .5f,
-                        meanWidth, meanHeight);
+                first.setText("");
+                first.setBounds(first.getX() + (first.getWidth() - maxWidth) * .5f,
+                        first.getY() + (first.getHeight() - maxHeight) * .5f,
+                        maxWidth, maxHeight);
             }
 
             SlideEditor slideEditor = new SlideEditor(BaseScreen.skin);
             slideEditor.setRootActor(imageGroup);
+            slideEditor.setAlign(Align.center);
 
             imageContainer = new Container();
             imageContainer.setActor(slideEditor);
             imageContainer.fill();
             imageContainer.setClip(true);
 
-            root.defaults().expand().fill();
-            root.add(imageContainer);
+            // root.add(imageContainer).expand().fill();
 
             final Table panelTable = new Table();
+            panelTable.pad(defaultPad);
+            panelTable.defaults().space(defaultPad);
 
             for (int i = 0; i < answers.length; i++) {
                 DragAndDropAnswer correctAnswer = answers[i];
@@ -323,9 +364,13 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
                             targetActor.getParent().addActor(dragActor);
 
-                            if (((TextButton) targetActor).getLabel().getText().toString().isEmpty() &&
-                                    payload.getObject() == panelTable) {
-                                targetActor.remove();
+                            if (payload.getObject() == panelTable) {
+                                if (((TextButton) targetActor).getLabel().getText().toString().isEmpty()) {
+                                    targetActor.remove();
+                                } else {
+                                    panelTable.add(targetActor);
+                                    panelTable.row();
+                                }
                             } else {
 
                                 targetActor.addAction(Actions.moveTo(this.x + (dragActor.getWidth() - targetActor.getWidth()) * .5f,
@@ -366,13 +411,12 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             ScrollPane scroll = new ScrollPane(panelTable);
             panelTable.background(BaseScreen.skin.getDrawable(SkinConstants.DRAWABLE_9P_PAGE_RIGHT));
             panelTable.setColor(SkinConstants.COLOR_PANEL_RIGHT);
-            panelTable.pack();
-            Container panelCont = new Container(scroll);
-            panelCont.setFillParent(true);
-            panelCont.right().fillY();
 
-            root.addActor(panelCont);
+            RightToolbarLayout layout = new RightToolbarLayout();
+            layout.setRightToolbar(scroll);
+            layout.setContainer(imageContainer);
 
+            root.add(layout).expand().fill();
         }
 
 
@@ -383,14 +427,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             FillTheBlankControl dndControl = (FillTheBlankControl) textControl;
 
             Table verticalLayout = new Table();
-
-            Label mainTitle = new Label(dndControl.getText(), BaseScreen.skin, SkinConstants.STYLE_TOOLBAR);
-            mainTitle.setAlignment(Align.center);
-            mainTitle.setWrap(true);
-
-            verticalLayout.add(mainTitle).expandX();
-            verticalLayout.row();
-
+            verticalLayout.pad(es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(48f));
             FillTheBlankStatement[] statements = dndControl.getStatements();
 
             for (int i = 0; i < statements.length; i++) {
@@ -406,11 +443,106 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
             ScrollPane scroll = new ScrollPane(verticalLayout);
             scroll.setScrollingDisabled(true, false);
-            scroll.setFillParent(true);
 
-            root.defaults().expand().fill();
-            root.add(scroll);
+            Table topTable = new Table();
+            topTable.background(BaseScreen.skin.getDrawable(SkinConstants.DRAWABLE_9P_TOOLBAR));
+            topTable.setColor(SkinConstants.COLOR_TOOLBAR_TOP);
 
+            Label label = new Label(textControl.getText(), BaseScreen.skin,
+                    SkinConstants.STYLE_TOOLBAR);
+
+            ScrollPane horizontalScroll = new ScrollPane(label);
+            horizontalScroll.setScrollingDisabled(false, true);
+
+            Button icon = es.eucm.cytochallenge.view.widgets.WidgetBuilder.toolbarIcon(SkinConstants.IC_UNDO);
+            icon.setColor(Color.CLEAR);
+            topTable.add(icon);
+
+            topTable.add(horizontalScroll)
+                    .expandX();
+
+            TopToolbarLayout layout = new TopToolbarLayout();
+            layout.setTopToolbar(topTable);
+            layout.setContainer(scroll);
+
+            root.add(layout).expand().fill();
+
+        }
+
+        // InteractiveZone
+        else if (textControl instanceof InteractiveZoneControl) {
+
+            markers.clear();
+
+            final Image imageActor = new Image(new TextureRegionDrawable(
+                    new TextureRegion(texture)));
+            imageActor.setScaling(Scaling.fit);
+
+            final Group imageGroup = new Group();
+            imageGroup.addActor(imageActor);
+            imageGroup.setBounds(0, 0, imageActor.getWidth(), imageActor.getHeight());
+
+            SlideEditor slideEditor = new SlideEditor(BaseScreen.skin);
+            slideEditor.setRootActor(imageGroup);
+            imageActor.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    final IconButton mapMarker = es.eucm.cytochallenge.view.widgets.WidgetBuilder.toolbarIcon(SkinConstants.IC_MAPMARKER);
+                    mapMarker.addListener(new ClickListener(){
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            mapMarker.remove();
+                            markers.removeValue(mapMarker, true);
+                        }
+                    });
+                    imageGroup.addActor(mapMarker);
+                    mapMarker.pack();
+                    mapMarker.setOrigin(Align.center);
+                    mapMarker.setPosition(x - mapMarker.getWidth() * .5f, y - mapMarker.getHeight() * .5f);
+                    markers.add(mapMarker);
+                }
+            });
+            imageContainer = new Container();
+            imageContainer.setActor(slideEditor);
+            imageContainer.fill();
+            imageContainer.setClip(true);
+
+            Table topTable = new Table();
+            topTable.background(BaseScreen.skin.getDrawable(SkinConstants.DRAWABLE_9P_TOOLBAR));
+            topTable.setColor(SkinConstants.COLOR_TOOLBAR_TOP);
+
+            Label label = new Label(textControl.getText(), BaseScreen.skin,
+                    SkinConstants.STYLE_TOOLBAR);
+
+            ScrollPane horizontalScroll = new ScrollPane(label);
+            horizontalScroll.setScrollingDisabled(false, true);
+
+            Button icon = es.eucm.cytochallenge.view.widgets.WidgetBuilder.toolbarIcon(SkinConstants.IC_UNDO);
+            icon.setColor(Color.CLEAR);
+            topTable.add(icon);
+
+            topTable.add(horizontalScroll)
+                    .expandX();
+
+            TopToolbarLayout layout = new TopToolbarLayout();
+            layout.setTopToolbar(topTable);
+            layout.setContainer(imageContainer);
+
+            root.add(layout).expand().fill();
+
+        }
+    }
+
+    // Implementing Fisher–Yates shuffle
+    static void shuffleArray(DragAndDropAnswer[] ar)
+    {
+        for (int i = ar.length - 1; i > 0; --i)
+        {
+            int index = MathUtils.random(i);
+            // Simple swap
+            DragAndDropAnswer a = ar[index];
+            ar[index] = ar[i];
+            ar[i] = a;
         }
     }
 
@@ -475,6 +607,32 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
         return correctAnswers;
     }
 
+    // InteractiveZone
+    private int checkInteractiveZoneResult(InteractiveZoneControl zoneControl) {
+        int correctAnswers = 0;
+
+        float[][] answers = zoneControl.getAnswers();
+
+        for (int i = 0; i < markers.size; i++) {
+            Button button = markers.get(i);
+
+            for (int j = 0; j < answers.length; j++) {
+                float[] answer = answers[j];
+
+                Polygon polygon = new Polygon(answer);
+
+                if(polygon.contains(button.getX() + button.getWidth() * .5f,
+                        button.getY() + button.getHeight() * .5f)) {
+                    correctAnswers++;
+                    break;
+                }
+            }
+        }
+
+
+        return correctAnswers;
+    }
+
     public void setUpScore() {
 
         root.clear();
@@ -532,6 +690,18 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
         else if (textControl instanceof FillTheBlankControl) {
             int results = checkFtBResult();
             int total = checkFtBTotalCount();
+
+            Label resultsLabel = new Label(Grades.getGrade(results / (float) total * 100) +
+                    "    " + results + "/" + total, BaseScreen.skin, SkinConstants.STYLE_TOAST);
+            resultsLabel.setAlignment(Align.center);
+
+            root.add(resultsLabel).expand().fill();
+        }
+
+        // InteractiveZone
+        else if (textControl instanceof InteractiveZoneControl) {
+            int results = checkInteractiveZoneResult((InteractiveZoneControl) textControl);
+            int total = markers.size;
 
             Label resultsLabel = new Label(Grades.getGrade(results / (float) total * 100) +
                     "    " + results + "/" + total, BaseScreen.skin, SkinConstants.STYLE_TOAST);

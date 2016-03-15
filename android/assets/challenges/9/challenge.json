@@ -1,0 +1,19 @@
+{
+  "class": "es.eucm.cytochallenge.model.TextChallenge",
+  "imagePath": "squamousCells.jpg",
+  "textControl": {
+    "class": "es.eucm.cytochallenge.model.control.InteractiveZoneControl",
+    "text": "Select the superficial squamous cells",
+    "answers": [
+      [
+        0, 375,
+        803, 375,
+        803, 546,
+        0, 546
+      ]
+    ],
+    "correctAnswers": [
+      0
+    ]
+  }
+}
