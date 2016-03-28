@@ -101,6 +101,14 @@ public class WidgetBuilder {
         return new TextButton(text, BaseScreen.skin, style);
     }
 
+
+    public static TextButton dialogButton(String text, TextButton.TextButtonStyle style) {
+        TextButton button = new TextButton(text.toUpperCase(), style);
+        button.pad(dpToPixels(8)).padBottom(dpToPixels(10))
+                .padTop(dpToPixels(10));
+        return button;
+    }
+
     public static Image image(String icon, String color) {
         Image image = new Image(BaseScreen.skin, icon);
         image.setColor(BaseScreen.skin.getColor(color));

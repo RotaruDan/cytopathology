@@ -6,7 +6,7 @@ public class InteractiveZoneControl extends TextControl {
     private float[][] answers;
     private int[] correctAnswers;
 
-    public int[] getCorrectAnswer() {
+    public int[] getCorrectAnswers() {
         return correctAnswers;
     }
 

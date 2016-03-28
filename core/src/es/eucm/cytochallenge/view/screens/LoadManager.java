@@ -12,11 +12,11 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import es.eucm.cytochallenge.CytoChallenge;
@@ -66,6 +66,9 @@ public class LoadManager extends BaseScreen {
         if (Gdx.app.getLogLevel() != Application.LOG_NONE) {
             //stage.setDebugUnderMouse(true);
             stage.setDebugAll(true);
+            I18NBundle.setExceptionOnMissingKey(true);
+        } else {
+            I18NBundle.setExceptionOnMissingKey(false);
         }
 
         InternalFileHandleResolver resolver = new InternalFileHandleResolver();
@@ -81,6 +84,7 @@ public class LoadManager extends BaseScreen {
         /*-QUEUE here loading assets-*/
         am.load(SKIN_JSON_SRC, Skim.class);
 
+        I18NBundle.setSimpleFormatter(true);
         am.load(I18N_SRC, I18NBundle.class);
         am.setErrorListener(new AssetErrorListener() {
             @Override
@@ -88,6 +92,7 @@ public class LoadManager extends BaseScreen {
                 Gdx.app.log("LoadManager", "LoadManager.error: " + asset, throwable);
             }
         });
+        shapeRenderer = new ShapeRenderer(1000);
     }
 
     public void update() {
@@ -113,6 +118,9 @@ public class LoadManager extends BaseScreen {
                                 Gdx.input.setOnscreenKeyboardVisible(false);
                                 stage.setKeyboardFocus(null);
                                 stage.unfocusAll();
+                                if (Gdx.app.getType() == Application.ApplicationType.WebGL) {
+                                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                                }
                                 return true;
                             } else if (Gdx.app.getType() == Application.ApplicationType.Desktop &&
                                     keycode == Input.Keys.NUM_2) {
@@ -120,6 +128,7 @@ public class LoadManager extends BaseScreen {
                                         Gdx.graphics.getWidth() / 4,
                                         Gdx.graphics.getHeight() / 2, 1, Input.Buttons.LEFT);
                             }
+
                             return false;
                         }
 

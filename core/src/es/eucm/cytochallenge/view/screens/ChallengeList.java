@@ -36,7 +36,7 @@ public class ChallengeList extends BaseScreen {
 
         loadChallenges(layout);
 
-        ScrollPane scroll = new ScrollPane(layout);
+        ScrollPane scroll = new ScrollPane(layout, BaseScreen.skin, "verticalScroll");
         scroll.setScrollingDisabled(true, false);
 
 

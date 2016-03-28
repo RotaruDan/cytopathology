@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -20,16 +21,12 @@ public class BaseScreen {
     protected static CytoChallenge game;
     protected static AssetManager am;
     protected static I18NBundle i18n;
+    public static ShapeRenderer shapeRenderer;
 
     protected static Menu menu;
     protected static Lab lab;
     protected static ChallengeList challengeList;
     protected static Challenges challenges;
-    /*    protected static Help help;
-        protected static Credits credits;
-        protected static Play play;
-        protected static Background bg;
-    */
     protected BaseScreen previousScreen;
     protected Table root;
 

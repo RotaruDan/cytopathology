@@ -69,6 +69,7 @@ public interface SkinConstants {
     String IC_CIRCLE = "ic_circle";
     String IC_CLOSE = "ic_close";
     String IC_CONVERSATION = "ic_conversation";
+    String IC_ERROR = "ic_error";
     String IC_SETTINGS = "ic_settings";
     String IC_PLAY = "ic_play";
     String IC_CELL_WITH_RECEPTORS = "ic_cell_with_receptors";

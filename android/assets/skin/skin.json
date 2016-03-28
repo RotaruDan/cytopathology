@@ -245,6 +245,10 @@
             "name": "circle",
             "color": "semi_transparent"
         },
+        "light_yellow_semi_bg": {
+            "name": "blank",
+            "color": "light_yellow_semi"
+        },
         "black_spinner": {
             "name": "spinner_default",
             "color": "black"
@@ -283,6 +287,10 @@
             "font": "default_font",
             "fontColor": "white",
             "background": "transparent_48_bg"
+        },
+        "edition": {
+            "font": "default_font",
+            "fontColor": "gray"
         },
         "toast_action": {
             "font": "default_font",
@@ -327,6 +335,11 @@
             "downFontColor": "white",
             "disabledFontColor": "gray"
         },
+        "tab": {
+            "down": "light_yellow_semi_bg",
+            "font": "default_font",
+            "fontColor": "white"
+        },
         "toolbar": {
             "down": "pressed_48_bg",
             "font": "default_font",
@@ -343,6 +356,12 @@
             "down": "button_down",
             "font": "default_font",
             "fontColor": "blue"
+        },
+        "dialog": {
+            "up": "transparent_bg",
+            "down": "light_gray_bg",
+            "font": "default_font",
+            "fontColor": "blue_900"
         },
         "challenge_list": {
             "font": "default_font",
@@ -456,6 +475,10 @@
         },
         "pane": {
             "background": "page"
+        },
+        "verticalScroll": {
+            "vScroll": "knob_after",
+            "vScrollKnob": "knob_after"
         }
     },
     "com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle": {
@@ -598,6 +621,22 @@
         "default": {
             "background": "page_up",
             "textStyle": "context"
+        }
+    },
+    "es.eucm.cytochallenge.view.widgets.Tabs$TabsStyle": {
+        "default": {
+            "textButtonStyle": "tab",
+            "selectedDrawable": "selected_tab",
+            "selectedDrawableColor": "light_yellow",
+            "disablexTextColor": "white_semi6",
+            "activeTextColor": "white"
+        }
+    },
+    "es.eucm.cytochallenge.view.widgets.HintDialog$HintDialogStyle": {
+        "default": {
+            "background": "page_up",
+            "textStyle": "edition",
+            "buttonStyle": "dialog"
         }
     }
 }

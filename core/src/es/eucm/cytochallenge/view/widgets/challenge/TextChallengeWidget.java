@@ -7,14 +7,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.*;
 import es.eucm.cytochallenge.model.*;
@@ -34,6 +32,7 @@ import es.eucm.cytochallenge.view.widgets.LinearLayout;
 import es.eucm.cytochallenge.view.widgets.RightToolbarLayout;
 import es.eucm.cytochallenge.view.widgets.TopToolbarLayout;
 import es.eucm.cytochallenge.view.widgets.challenge.filltheblank.FillTheBlankText;
+import es.eucm.cytochallenge.view.widgets.challenge.result.*;
 import es.eucm.cytochallenge.view.widgets.slide.SlideEditor;
 
 import java.util.*;
@@ -48,6 +47,8 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
     private TextChallenge challenge;
 
     private String challengePath;
+    private I18NBundle i18n;
+    private Skin skin;
 
     // MCQ
     private ButtonGroup<TextButton> group = new ButtonGroup<TextButton>();
@@ -65,8 +66,10 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
     // ZoneInteraction
     private Array<Button> markers = new Array<Button>();
 
-    public TextChallengeWidget() {
+    public TextChallengeWidget(Skin skin, I18NBundle bundle) {
         root = new Table();
+        this.skin = skin;
+        i18n = bundle;
     }
 
     public void setChallengePath(String challengePath) {
@@ -84,7 +87,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         }
         TextControl textControl = challenge.getTextControl();
-        Label text = new Label(textControl.getText(), BaseScreen.skin, SkinConstants.STYLE_TOAST);
+        Label text = new Label(textControl.getText(), skin, SkinConstants.STYLE_TOAST);
         text.setWrap(true);
 
         Container imageContainer;
@@ -94,6 +97,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
         if (textControl instanceof MultipleAnswerControl) {
 
             Table right = new Table();
+            right.pad(defaultPad);
             right.add(text).fillX().expandX();
             final Image image = new Image(new TextureRegionDrawable(
                     new TextureRegion(texture)));
@@ -108,7 +112,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
             for (int i = 0; i < answers.length; i++) {
                 String answer = answers[i];
-                final TextButton answerLabel = new TextButton((i + 1) + " - " + answer, BaseScreen.skin,
+                final TextButton answerLabel = new TextButton((i + 1) + " - " + answer, skin,
                         SkinConstants.STYLE_MULTIPLE_CHOICE);
                 answerLabel.setUserObject(answer);
                 answerLabel.pad(defaultPad);
@@ -121,7 +125,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             right.row();
             right.add(answersLayout).expand();
 
-            SlideEditor slideEditor = new SlideEditor(BaseScreen.skin);
+            SlideEditor slideEditor = new SlideEditor(skin);
             slideEditor.setRootActor(image);
 
             imageContainer = new Container();
@@ -129,9 +133,14 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             imageContainer.fill();
             imageContainer.setClip(true);
 
-            root.defaults().expand().fill().pad(defaultPad).prefWidth(Value.percentWidth(0.5f, root));
-            root.add(imageContainer);
-            root.add(right);
+            Table rootTable = new Table();
+            rootTable.pad(defaultPad);
+            rootTable.defaults().expand().fill().prefWidth(Value.percentWidth(0.5f, root));
+            rootTable.add(imageContainer);
+            rootTable.add(right);
+
+
+            root.add(rootTable).expand().fill();
 
         }
 
@@ -152,7 +161,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
                 Texture answerTexture = new Texture(Gdx.files.internal(challengePath + answer));
                 answerTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-                Button imageButton = new Button(BaseScreen.skin.get(SkinConstants.STYLE_CHECK,
+                Button imageButton = new Button(skin.get(SkinConstants.STYLE_CHECK,
                         Button.ButtonStyle.class));
                 Image imageActor = new Image(new TextureRegionDrawable(
                         new TextureRegion(answerTexture)));
@@ -184,7 +193,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
             rootTable.pack();
 
-            SlideEditor slideEditor = new SlideEditor(BaseScreen.skin);
+            SlideEditor slideEditor = new SlideEditor(skin);
             slideEditor.setRootActor(rootTable);
 
             imageContainer = new Container();
@@ -193,10 +202,10 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             imageContainer.setClip(true);
 
             Table topTable = new Table();
-            topTable.background(BaseScreen.skin.getDrawable(SkinConstants.DRAWABLE_9P_TOOLBAR));
+            topTable.background(skin.getDrawable(SkinConstants.DRAWABLE_9P_TOOLBAR));
             topTable.setColor(SkinConstants.COLOR_TOOLBAR_TOP);
 
-            Label label = new Label(textControl.getText(), BaseScreen.skin,
+            Label label = new Label(textControl.getText(), skin,
                     SkinConstants.STYLE_TOOLBAR);
 
             ScrollPane horizontalScroll = new ScrollPane(label);
@@ -253,7 +262,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
                 // Correct Answer stored inside the parent
                 parentContainer.setUserObject(answer.getText());
 
-                final TextButton answerLabel = new TextButton(answer.getText(), BaseScreen.skin, SkinConstants.STYLE_DRAGANDDROP);
+                final TextButton answerLabel = new TextButton(answer.getText(), skin, SkinConstants.STYLE_DRAGANDDROP);
                 answerLabel.setPosition(answer.getX() + (answer.getWidth() - answerLabel.getPrefWidth()) * .5f,
                         answer.getY() + (answer.getHeight() - answerLabel.getPrefHeight()) * .5f);
                 answerLabel.pack();
@@ -303,7 +312,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
                         maxWidth, maxHeight);
             }
 
-            SlideEditor slideEditor = new SlideEditor(BaseScreen.skin);
+            SlideEditor slideEditor = new SlideEditor(skin);
             slideEditor.setRootActor(imageGroup);
             slideEditor.setAlign(Align.center);
 
@@ -312,15 +321,13 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             imageContainer.fill();
             imageContainer.setClip(true);
 
-            // root.add(imageContainer).expand().fill();
-
             final Table panelTable = new Table();
             panelTable.pad(defaultPad);
             panelTable.defaults().space(defaultPad);
 
             for (int i = 0; i < answers.length; i++) {
                 DragAndDropAnswer correctAnswer = answers[i];
-                final TextButton answerLabel = new TextButton(correctAnswer.getText(), BaseScreen.skin,
+                final TextButton answerLabel = new TextButton(correctAnswer.getText(), skin,
                         SkinConstants.STYLE_DRAGANDDROP);
 
                 // start DnD
@@ -333,7 +340,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
                         this.x = answerLabel.getX();
                         this.y = answerLabel.getY();
 
-                        dnd.setDragActorPosition(-answerLabel.getWidth() * .5f, answerLabel.getHeight());
+                        dnd.setDragActorPosition(-answerLabel.getWidth() * .5f, answerLabel.getHeight() * .5f);
 
                         payload.setObject(answerLabel.getParent());
                         payload.setDragActor(answerLabel);
@@ -409,7 +416,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             }
 
             ScrollPane scroll = new ScrollPane(panelTable);
-            panelTable.background(BaseScreen.skin.getDrawable(SkinConstants.DRAWABLE_9P_PAGE_RIGHT));
+            panelTable.background(skin.getDrawable(SkinConstants.DRAWABLE_9P_PAGE_RIGHT));
             panelTable.setColor(SkinConstants.COLOR_PANEL_RIGHT);
 
             RightToolbarLayout layout = new RightToolbarLayout();
@@ -433,7 +440,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             for (int i = 0; i < statements.length; i++) {
                 FillTheBlankStatement statement = statements[i];
 
-                FillTheBlankText fillText = new FillTheBlankText(BaseScreen.skin);
+                FillTheBlankText fillText = new FillTheBlankText(skin);
                 fillText.init(statement);
                 ftbTexts.add(fillText);
 
@@ -445,10 +452,10 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             scroll.setScrollingDisabled(true, false);
 
             Table topTable = new Table();
-            topTable.background(BaseScreen.skin.getDrawable(SkinConstants.DRAWABLE_9P_TOOLBAR));
+            topTable.background(skin.getDrawable(SkinConstants.DRAWABLE_9P_TOOLBAR));
             topTable.setColor(SkinConstants.COLOR_TOOLBAR_TOP);
 
-            Label label = new Label(textControl.getText(), BaseScreen.skin,
+            Label label = new Label(textControl.getText(), skin,
                     SkinConstants.STYLE_TOOLBAR);
 
             ScrollPane horizontalScroll = new ScrollPane(label);
@@ -482,13 +489,35 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             imageGroup.addActor(imageActor);
             imageGroup.setBounds(0, 0, imageActor.getWidth(), imageActor.getHeight());
 
-            SlideEditor slideEditor = new SlideEditor(BaseScreen.skin);
+            SlideEditor slideEditor = new SlideEditor(skin);
             slideEditor.setRootActor(imageGroup);
-            imageActor.addListener(new ClickListener() {
+            imageActor.addListener(new DragListener() {
+
+                boolean dragged;
+
                 @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    dragged = false;
+                    return super.touchDown(event, x, y, pointer, button);
+                }
+
+                @Override
+                public void dragStart(InputEvent event, float x, float y, int pointer) {
+                    super.dragStart(event, x, y, pointer);
+                    dragged = true;
+                }
+
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    super.touchUp(event, x, y, pointer, button);
+                    if (!dragged) {
+                        clicked(event, x, y);
+                    }
+                }
+
                 public void clicked(InputEvent event, float x, float y) {
                     final IconButton mapMarker = es.eucm.cytochallenge.view.widgets.WidgetBuilder.toolbarIcon(SkinConstants.IC_MAPMARKER);
-                    mapMarker.addListener(new ClickListener(){
+                    mapMarker.addListener(new ClickListener() {
                         @Override
                         public void clicked(InputEvent event, float x, float y) {
                             mapMarker.remove();
@@ -508,10 +537,10 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             imageContainer.setClip(true);
 
             Table topTable = new Table();
-            topTable.background(BaseScreen.skin.getDrawable(SkinConstants.DRAWABLE_9P_TOOLBAR));
+            topTable.background(skin.getDrawable(SkinConstants.DRAWABLE_9P_TOOLBAR));
             topTable.setColor(SkinConstants.COLOR_TOOLBAR_TOP);
 
-            Label label = new Label(textControl.getText(), BaseScreen.skin,
+            Label label = new Label(textControl.getText(), skin,
                     SkinConstants.STYLE_TOOLBAR);
 
             ScrollPane horizontalScroll = new ScrollPane(label);
@@ -533,11 +562,9 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
         }
     }
 
-    // Implementing Fisher–Yates shuffle
-    static void shuffleArray(DragAndDropAnswer[] ar)
-    {
-        for (int i = ar.length - 1; i > 0; --i)
-        {
+    // Implementing FisherYates shuffle
+    static void shuffleArray(DragAndDropAnswer[] ar) {
+        for (int i = ar.length - 1; i > 0; --i) {
             int index = MathUtils.random(i);
             // Simple swap
             DragAndDropAnswer a = ar[index];
@@ -546,173 +573,96 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
         }
     }
 
-    // DragAndDropControl
-    private int checkDnDResult() {
-        int correctCount = 0;
-        for (int i = 0; i < dragContainers.size; i++) {
-            if (dragContainers.get(i) instanceof Group) {
-                WidgetGroup child = dragContainers.get(i);
-
-                String correctAnswer = (String) child.getUserObject();
-                String currentAnswer = ((TextButton) child.getChildren().first()).getLabel().getText().toString();
-
-                if (correctAnswer.equals(currentAnswer)) {
-                    correctCount++;
-                }
-            }
-        }
-        return correctCount;
-    }
-
-    // FillTheBlankControl
-    private int checkFtBResult() {
-        int correctCount = 0;
-        for (int i = 0; i < ftbTexts.size; i++) {
-            FillTheBlankText child = ftbTexts.get(i);
-
-            correctCount += child.getCorrectAnswers();
-        }
-        return correctCount;
-    }
-
-    private int checkFtBTotalCount() {
-        int correctCount = 0;
-        for (int i = 0; i < ftbTexts.size; i++) {
-            FillTheBlankText child = ftbTexts.get(i);
-
-            correctCount += child.getTotalAnswers();
-        }
-        return correctCount;
-    }
-
-    // MultipleImageAnswerControl
-    private int checkMIAResult() {
-        Array<Button> buttons = imageGroup.getButtons();
-
-        int correctAnswers = 0;
-        for (int i = 0; i < buttons.size; i++) {
-            Button button = buttons.get(i);
-            if ((Boolean) button.getUserObject()) {
-                if (button.isChecked()) {
-                    correctAnswers++;
-                } else {
-                    // correctAnswers--;
-                }
-            } else {
-                if (button.isChecked()) {
-                    correctAnswers--;
-                }
-            }
-        }
-        return correctAnswers;
-    }
-
-    // InteractiveZone
-    private int checkInteractiveZoneResult(InteractiveZoneControl zoneControl) {
-        int correctAnswers = 0;
-
-        float[][] answers = zoneControl.getAnswers();
-
-        for (int i = 0; i < markers.size; i++) {
-            Button button = markers.get(i);
-
-            for (int j = 0; j < answers.length; j++) {
-                float[] answer = answers[j];
-
-                Polygon polygon = new Polygon(answer);
-
-                if(polygon.contains(button.getX() + button.getWidth() * .5f,
-                        button.getY() + button.getHeight() * .5f)) {
-                    correctAnswers++;
-                    break;
-                }
-            }
-        }
-
-
-        return correctAnswers;
-    }
 
     public void setUpScore() {
 
-        root.clear();
 
         TextControl textControl = challenge.getTextControl();
         if (textControl instanceof MultipleAnswerControl) {
             MultipleAnswerControl multipleAnswerControl = ((MultipleAnswerControl) textControl);
 
-            int score = 0;
-            String correctAnswer = multipleAnswerControl.getAnswers()[multipleAnswerControl.getCorrectAnswer()];
-            String selectedAnswer = group.getChecked().getUserObject().toString();
+            Table actor = (Table) root.getChildren().get(0);
+            actor.getChildren().get(1).setTouchable(Touchable.disabled);
+            MultipleAnswerResult result = new MultipleAnswerResult(skin,
+                    multipleAnswerControl, i18n,  group, actor);
 
-            if (correctAnswer.equals(selectedAnswer)) {
-                score = 100;
-            }
-
-            String answer = Grades.getGrade(score) + "\n" + correctAnswer;
-            Label resultsLabel = new Label(answer, BaseScreen.skin, SkinConstants.STYLE_TOAST);
-            resultsLabel.setAlignment(Align.center);
-
-            root.add(resultsLabel).expand().fill();
+            root.clear();
+            root.add(result).expand().fill();
 
         }
 
         // MultipleImageAnswerControl
         else if (textControl instanceof MultipleImageAnswerControl) {
-            MultipleImageAnswerControl multipleImageAnswerControl = ((MultipleImageAnswerControl) textControl);
 
 
-            int results = Math.max(0, checkMIAResult());
-            int total = multipleImageAnswerControl.getCorrectAnswers().length;
+            TopToolbarLayout actor = (TopToolbarLayout) root.getChildren().get(0);
+            Container container = (Container) actor.getContainer();
 
-            Label resultsLabel = new Label(Grades.getGrade(results / (float) total * 100) +
-                    "    " + results + "/" + total, BaseScreen.skin, SkinConstants.STYLE_TOAST);
-            resultsLabel.setAlignment(Align.center);
+            SlideEditor editor = (SlideEditor) container.getActor();
+            Table rootRightTable = (Table) editor.getRootActor();
+            rootRightTable.setTouchable(Touchable.disabled);
 
-            root.add(resultsLabel).expand().fill();
+            MultipleImageAnswerResult result = new MultipleImageAnswerResult(skin,
+                    (MultipleImageAnswerControl) textControl, i18n,  imageGroup, editor);
+
+            root.clear();
+            root.add(result).expand().fill();
 
         }
 
         // DragAndDropControl
         else if (textControl instanceof DragAndDropControl) {
+            RightToolbarLayout actor = (RightToolbarLayout) root.getChildren().get(0);
+            Container container = (Container) actor.getContainer();
 
-            int results = checkDnDResult();
-            int total = dragContainers.size;
+            SlideEditor editor = (SlideEditor) container.getActor();
+            Group rootRightTable = (Group) editor.getRootActor();
+            rootRightTable.setTouchable(Touchable.disabled);
 
-            Label resultsLabel = new Label(Grades.getGrade(results / (float) total * 100) +
-                    "    " + results + "/" + total, BaseScreen.skin, SkinConstants.STYLE_TOAST);
-            resultsLabel.setAlignment(Align.center);
+            DragAndDropResult result = new DragAndDropResult(skin,
+                    (DragAndDropControl) textControl, i18n,  dragContainers, editor);
 
-            root.add(resultsLabel).expand().fill();
+            root.clear();
+            root.add(result).expand().fill();
         }
 
         // FillTheBlankControl
         else if (textControl instanceof FillTheBlankControl) {
-            int results = checkFtBResult();
-            int total = checkFtBTotalCount();
+            FillTheBlankControl multipleAnswerControl = ((FillTheBlankControl) textControl);
 
-            Label resultsLabel = new Label(Grades.getGrade(results / (float) total * 100) +
-                    "    " + results + "/" + total, BaseScreen.skin, SkinConstants.STYLE_TOAST);
-            resultsLabel.setAlignment(Align.center);
+            TopToolbarLayout actor = (TopToolbarLayout) root.getChildren().get(0);
+            ScrollPane container = (ScrollPane) actor.getContainer();
+            container.getWidget().setTouchable(Touchable.disabled);
+            FillTheBlankResult result = new FillTheBlankResult(skin,
+                    multipleAnswerControl, i18n, ftbTexts, container);
 
-            root.add(resultsLabel).expand().fill();
+            root.clear();
+            root.add(result).expand().fill();
         }
 
         // InteractiveZone
         else if (textControl instanceof InteractiveZoneControl) {
-            int results = checkInteractiveZoneResult((InteractiveZoneControl) textControl);
-            int total = markers.size;
+            TopToolbarLayout actor = (TopToolbarLayout) root.getChildren().get(0);
+            Container container = (Container) actor.getContainer();
 
-            Label resultsLabel = new Label(Grades.getGrade(results / (float) total * 100) +
-                    "    " + results + "/" + total, BaseScreen.skin, SkinConstants.STYLE_TOAST);
-            resultsLabel.setAlignment(Align.center);
+            SlideEditor editor = (SlideEditor) container.getActor();
+            Group rootRightTable = (Group) editor.getRootActor();
+            rootRightTable.setTouchable(Touchable.disabled);
 
-            root.add(resultsLabel).expand().fill();
+            InteractiveZoneResult result = new InteractiveZoneResult(skin,
+                    (InteractiveZoneControl) textControl, i18n,  markers, editor);
+
+            root.clear();
+            root.add(result).expand().fill();
         }
     }
 
     @Override
     public Actor getWidget() {
         return root;
+    }
+
+    public TextChallenge getChallenge() {
+        return challenge;
     }
 }

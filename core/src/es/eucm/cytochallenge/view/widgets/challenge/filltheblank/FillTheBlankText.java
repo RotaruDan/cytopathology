@@ -46,7 +46,7 @@ public class FillTheBlankText extends TextButton {
             String currentText = text.substring(tokeenOffset, tokenIndex);
 
             Label label;
-            if(i == 0) {
+            if (i == 0) {
                 label = getLabel();
                 label.setText(currentText);
                 getLabelCell().padLeft(leftPad);
@@ -66,11 +66,22 @@ public class FillTheBlankText extends TextButton {
         }
         totalAnswers = options.length;
 
-        if(tokeenOffset < text.length()) {
+        if (tokeenOffset < text.length()) {
             String currentText = text.substring(tokeenOffset, text.length());
             Label label = new Label(currentText, getLabel().getStyle());
             label.setAlignment(Align.left);
             add(label);
+        }
+    }
+
+    public void setCorrectAnswers() {
+        SnapshotArray<Actor> children = getChildren();
+        for (int i = 0; i < children.size; i++) {
+            Actor actor = children.get(i);
+            if (actor instanceof SelectBox) {
+                SelectBox selectBox = (SelectBox) actor;
+                selectBox.setSelectedIndex((Integer) selectBox.getUserObject());
+            }
         }
     }
 
@@ -83,9 +94,9 @@ public class FillTheBlankText extends TextButton {
         SnapshotArray<Actor> children = getChildren();
         for (int i = 0; i < children.size; i++) {
             Actor child = children.get(i);
-            if(child instanceof SelectBox) {
+            if (child instanceof SelectBox) {
                 SelectBox childBox = (SelectBox) child;
-                if(childBox.getSelectedIndex() == (Integer)childBox.getUserObject()) {
+                if (childBox.getSelectedIndex() == (Integer) childBox.getUserObject()) {
                     correctAnswers++;
                 }
             }

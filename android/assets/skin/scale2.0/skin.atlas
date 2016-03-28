@@ -468,6 +468,14 @@ page_up
   orig: 32, 32
   offset: 0, 0
   index: -1
+selected_tab
+  rotate: false
+  xy: 680, 288
+  size: 4, 4
+  split: 1, 0, 1, 0
+  orig: 4, 4
+  offset: 0, 0
+  index: -1
 spinner_default
   rotate: false
   xy: 1898, 1304
@@ -529,7 +537,7 @@ text_field
   index: -1
 text_field_cursor
   rotate: false
-  xy: 680, 288
+  xy: 2042, 2042
   size: 4, 4
   split: 0, 4, 2, 0
   pad: -1, -1, 2, 0

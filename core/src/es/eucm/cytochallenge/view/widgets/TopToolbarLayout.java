@@ -39,4 +39,8 @@ public class TopToolbarLayout extends AbstractWidget {
         this.container = container;
         addActorAt(0, container);
     }
+
+    public Actor getContainer() {
+        return container;
+    }
 }

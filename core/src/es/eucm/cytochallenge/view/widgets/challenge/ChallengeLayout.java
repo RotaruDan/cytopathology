@@ -2,8 +2,14 @@ package es.eucm.cytochallenge.view.widgets.challenge;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import es.eucm.cytochallenge.view.widgets.AbstractWidget;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
+import es.eucm.cytochallenge.view.SkinConstants;
+import es.eucm.cytochallenge.view.widgets.*;
+import es.eucm.cytochallenge.view.widgets.WidgetBuilder;
 
 public class ChallengeLayout extends AbstractWidget {
 
@@ -18,7 +24,8 @@ public class ChallengeLayout extends AbstractWidget {
                 getPrefWidth(backButton), backHeight);
 
         float checkWidth = getPrefWidth(checkButton);
-        setBounds(checkButton, getWidth() - checkWidth, 0,
+        float offset = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(16);
+        setBounds(checkButton, getWidth() - checkWidth - offset, offset,
                 checkWidth, getPrefHeight(checkButton));
 
         setBounds(content, 0, 0, getWidth(), getHeight());
