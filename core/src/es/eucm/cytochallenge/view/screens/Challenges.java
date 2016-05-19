@@ -26,6 +26,7 @@ public class Challenges extends BaseScreen {
 
     private ChallengeLayout challengeLayout = new ChallengeLayout();
     private TextChallengeWidget currentChallenge;
+    private Button check, hint;
     private Button addButton;
     private String challengePath;
     ClickListener hideListener;
@@ -44,6 +45,7 @@ public class Challenges extends BaseScreen {
             }
         });
 
+        /*
         final CirclesMenu circlesMenu = buildAddButtons();
         addButton = es.eucm.cytochallenge.view.widgets.WidgetBuilder.circleButton(SkinConstants.IC_ADD);
         addButton.pack();
@@ -70,6 +72,36 @@ public class Challenges extends BaseScreen {
                                 + addButton.getWidth(),
                         addButton.getY());
                 challengeLayout.addListener(hideListener);
+            }
+        });
+        */
+
+        hint = WidgetBuilder.circleButton(SkinConstants.IC_ERROR);
+        hint.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Hint hint = currentChallenge.getChallenge().getHint();
+                if (hint != null) {
+                    HintDialog dialog = new HintDialog(skin, hint, i18n, challengePath);
+                    menu.getStage().addActor(dialog);
+                    dialog.show();
+                }
+            }
+        });
+
+        check = WidgetBuilder.circleButton(SkinConstants.IC_CHECK);
+        addButton = check;
+        check.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                currentChallenge.setUpScore();
+                addButton = hint;
+                check.remove();
+                Hint hintInfo = currentChallenge.getChallenge().getHint();
+                if (hintInfo != null) {
+                    challengeLayout.setCheckButton(hint);
+                }
+
             }
         });
 
@@ -100,7 +132,7 @@ public class Challenges extends BaseScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Hint hint = currentChallenge.getChallenge().getHint();
-                if(hint != null) {
+                if (hint != null) {
                     HintDialog dialog = new HintDialog(skin, hint, i18n, challengePath);
                     menu.getStage().addActor(dialog);
                     dialog.show();
@@ -127,12 +159,14 @@ public class Challenges extends BaseScreen {
 
         challengeLayout.setContent(currentChallenge.getWidget());
 
-        addButton.setVisible(true);
-        //print();
+        addButton = check;
+        challengeLayout.setCheckButton(check);
+        print();
     }
 
     private void print() {
         TextChallenge ftb = new TextChallenge();
+        ftb.setDifficulty(Difficulty.MEDIUM);
 
         FillTheBlankControl tc = new FillTheBlankControl();
 
@@ -177,7 +211,7 @@ public class Challenges extends BaseScreen {
         TextInfo t5 = new TextInfo();
         t5.setText("The squamous epithelium will mature all the way upto superficial cell layers under the hormonal influence of female sex hormone, estrogen, secreted in the first half of the menstrual cycle by the ovary in cycling women");
 
-        Info[] infos = new Info[] {
+        Info[] infos = new Info[]{
                 t1,
                 i1,
                 t2,
