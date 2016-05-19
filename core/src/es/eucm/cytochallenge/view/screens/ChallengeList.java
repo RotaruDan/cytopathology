@@ -86,13 +86,16 @@ public class ChallengeList extends BaseScreen {
             final FileHandle child = Gdx.files.internal(challengeFolder + challengeJson);
             Gdx.app.log("Files", "file: " + child.path());
 
+            if(!child.exists()) {
+                continue;
+            }
             Challenge challenge = json.fromJson(Challenge.class, child);
             Gdx.app.log("Files", "json challenge: " + challenge.getImagePath());
 
             if (challenge instanceof TextChallenge) {
                 TextChallenge textChallenge = (TextChallenge) challenge;
 
-                final Button button = new ChallengeButton(textChallenge.getTextControl(),
+                final Button button = new ChallengeButton(textChallenge,
                         skin);
                 button.setUserObject(challengeFolder);
                 Gdx.app.log("Files", "json challenge getTextControl: " + textChallenge.getTextControl());

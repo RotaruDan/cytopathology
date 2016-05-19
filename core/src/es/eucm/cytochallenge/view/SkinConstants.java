@@ -81,6 +81,7 @@ public interface SkinConstants {
     String IC_DND = "ic_dnd";
     String IC_MICQ = "ic_micq";
     String IC_TABLET = "ic_tablet";
+    String IC_DIFFICULTY = "ic_difficulty";
     String IC_MAPMARKER = "map-marker";
 
 

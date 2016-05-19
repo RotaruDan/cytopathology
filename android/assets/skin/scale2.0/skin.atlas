@@ -236,6 +236,13 @@ ic_circle
   orig: 48, 48
   offset: 0, 0
   index: -1
+ic_difficulty
+  rotate: false
+  xy: 150, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 ic_close
   rotate: false
   xy: 834, 806

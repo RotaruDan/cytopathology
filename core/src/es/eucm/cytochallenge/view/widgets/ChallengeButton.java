@@ -8,6 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
+import es.eucm.cytochallenge.model.Challenge;
+import es.eucm.cytochallenge.model.Difficulty;
+import es.eucm.cytochallenge.model.TextChallenge;
 import es.eucm.cytochallenge.model.control.InteractiveZoneControl;
 import es.eucm.cytochallenge.model.control.MultipleAnswerControl;
 import es.eucm.cytochallenge.model.control.MultipleImageAnswerControl;
@@ -22,8 +25,11 @@ public class ChallengeButton extends TextButton {
     private final Image image;
     private final Label label;
 
-    public ChallengeButton(TextControl textControl, Skin skin) {
-        super(textControl.getText(), skin);
+    public ChallengeButton(Challenge challenge, Skin skin) {
+        super("", skin);
+
+        TextControl textControl = ((TextChallenge)challenge).getTextControl();
+        setText(textControl.getText());
 
         label = getLabel();
         label.setEllipsis(true);
@@ -52,7 +58,20 @@ public class ChallengeButton extends TextButton {
         left();
         defaults().space(defaultPad);
 
+        Color difficultyColor = null;
+        if (challenge.getDifficulty() == Difficulty.EASY) {
+            difficultyColor = Color.GREEN;
+        } else if (challenge.getDifficulty() == Difficulty.MEDIUM) {
+            difficultyColor = Color.ORANGE;
+        } else {
+            difficultyColor = Color.RED;
+        }
+        Image difficulty = new Image(skin.getDrawable(SkinConstants.IC_DIFFICULTY));
+        difficulty.setColor(difficultyColor);
+        difficulty.setScaling(Scaling.fit);
+
         add(image).width(image.getWidth());
+        add(difficulty).width(difficulty.getWidth());
         add(label);
         setSize(getPrefWidth(), getPrefHeight());
     }
