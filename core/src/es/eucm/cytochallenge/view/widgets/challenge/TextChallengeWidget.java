@@ -82,7 +82,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
         this.challenge = challenge;
         Texture texture = null;
-        if (challenge.getImagePath() != null) {
+        if (challenge.getImagePath() != null && !challenge.getImagePath().isEmpty()) {
             texture = new Texture(Gdx.files.internal(challengePath + challenge.getImagePath()));
             texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         }
