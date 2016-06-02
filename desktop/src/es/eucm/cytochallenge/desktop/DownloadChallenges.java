@@ -2,16 +2,11 @@ package es.eucm.cytochallenge.desktop;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglFiles;
 import com.badlogic.gdx.backends.lwjgl.LwjglNet;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.utils.*;
-import es.eucm.cytochallenge.CytoChallenge;
-import es.eucm.cytochallenge.model.Challenge;
-import es.eucm.cytochallenge.utils.ZipUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
