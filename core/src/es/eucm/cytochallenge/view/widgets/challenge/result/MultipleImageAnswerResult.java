@@ -84,15 +84,13 @@ public class MultipleImageAnswerResult extends ResultLayout<MultipleImageAnswerC
 
             Image imageActor = new Image(originalImage.getDrawable());
             imageActor.setScaling(Scaling.fit);
-            float pad8 = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(imageActor.getHeight() * .1f);
+            float pad8 = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(Gdx.graphics.getHeight() * .1f);
 
             imageButton.add(imageActor).expand().fill().pad(pad8);
             imageButton.setClip(true);
             imageButton.setUserObject(false);
 
 
-            rootTable.pad(pad8);
-            rootTable.defaults();
             rootTable.add(imageButton).expand().fill();
             if (i + i == answers.length / 2) {
                 rootTable.row();

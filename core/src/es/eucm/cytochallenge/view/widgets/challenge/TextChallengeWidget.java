@@ -24,6 +24,7 @@ import es.eucm.cytochallenge.model.control.draganddrop.DragAndDropAnswer;
 import es.eucm.cytochallenge.model.control.draganddrop.DragAndDropControl;
 import es.eucm.cytochallenge.model.control.filltheblank.FillTheBlankControl;
 import es.eucm.cytochallenge.model.control.filltheblank.FillTheBlankStatement;
+import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
 import es.eucm.cytochallenge.utils.Grades;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.screens.BaseScreen;
@@ -46,7 +47,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
     private Table root;
     private TextChallenge challenge;
 
-    private String challengePath;
+    private ChallengeResourceProvider challengeResourceProvider;
     private I18NBundle i18n;
     private Skin skin;
 
@@ -72,8 +73,30 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
         i18n = bundle;
     }
 
-    public void setChallengePath(String challengePath) {
-        this.challengePath = challengePath;
+    public void setChallengeResourceProvider(ChallengeResourceProvider challengeResourceProvider) {
+        this.challengeResourceProvider = challengeResourceProvider;
+    }
+
+    private class ImageResourceCallback implements ChallengeResourceProvider.ResourceProvidedCallback<Texture> {
+
+        private final Image image;
+
+        public ImageResourceCallback(Image image) {
+            this.image = image;
+        }
+
+        @Override
+        public void loaded(Texture resource) {
+            resource.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            image.setDrawable(new TextureRegionDrawable(
+                    new TextureRegion(resource)));
+            image.pack();
+        }
+
+        @Override
+        public void failed() {
+
+        }
     }
 
     @Override
@@ -81,11 +104,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
         root.clear();
 
         this.challenge = challenge;
-        Texture texture = null;
-        if (challenge.getImagePath() != null && !challenge.getImagePath().isEmpty()) {
-            texture = new Texture(Gdx.files.internal(challengePath + challenge.getImagePath()));
-            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        }
+
         TextControl textControl = challenge.getTextControl();
         Label text = new Label(textControl.getText(), skin, SkinConstants.STYLE_TOAST);
         text.setWrap(true);
@@ -99,8 +118,16 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             Table right = new Table();
             right.pad(defaultPad);
             right.add(text).fillX().expandX();
-            final Image image = new Image(new TextureRegionDrawable(
-                    new TextureRegion(texture)));
+            final Image image = new Image();
+            final SlideEditor slideEditor = new SlideEditor(skin);
+            slideEditor.setRootActor(image);
+            challengeResourceProvider.getTexture(challenge.getImagePath(), new ImageResourceCallback(image) {
+                @Override
+                public void loaded(Texture resource) {
+                    super.loaded(resource);
+                    slideEditor.setRootActor(image);
+                }
+            });
             image.setScaling(Scaling.fit);
 
             MultipleAnswerControl multipleAnswerControl = ((MultipleAnswerControl) textControl);
@@ -125,8 +152,6 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             right.row();
             right.add(answersLayout).expand();
 
-            SlideEditor slideEditor = new SlideEditor(skin);
-            slideEditor.setRootActor(image);
 
             imageContainer = new Container();
             imageContainer.setActor(slideEditor);
@@ -152,33 +177,44 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             MultipleImageAnswerControl miaControl = (MultipleImageAnswerControl) textControl;
             String[] answers = miaControl.getAnswers();
 
-            Table rootTable = new Table();
+            final Table rootTable = new Table();
 
             imageGroup.setMaxCheckCount(answers.length);
 
+            final SlideEditor slideEditor = new SlideEditor(skin);
+            slideEditor.setRootActor(rootTable);
+
             for (int i = 0; i < answers.length; i++) {
                 String answer = answers[i];
-                Texture answerTexture = new Texture(Gdx.files.internal(challengePath + answer));
-                answerTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-                Button imageButton = new Button(skin.get(SkinConstants.STYLE_CHECK,
+                final Button imageButton = new Button(skin.get(SkinConstants.STYLE_CHECK,
                         Button.ButtonStyle.class));
-                Image imageActor = new Image(new TextureRegionDrawable(
-                        new TextureRegion(answerTexture)));
-                imageActor.setScaling(Scaling.fit);
-                float pad8 = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(imageActor.getHeight() * .1f);
+                final Image imageActor = new Image();
 
+                final float pad8 = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(Gdx.graphics.getHeight() * .1f);
                 imageButton.add(imageActor).expand().fill().pad(pad8);
+
+                challengeResourceProvider.getTexture(answer, new ImageResourceCallback(imageActor) {
+                    @Override
+                    public void loaded(Texture resource) {
+                        super.loaded(resource);
+
+                        rootTable.setSize(rootTable.getPrefWidth(), rootTable.getPrefHeight());
+
+                        slideEditor.setRootActor(rootTable);
+                    }
+                });
+
+                imageActor.setScaling(Scaling.fit);
+
                 imageButton.setClip(true);
                 imageButton.setUserObject(false);
 
                 imageGroup.add(imageButton);
 
-                rootTable.pad(pad8);
-                rootTable.defaults();
                 rootTable.add(imageButton).expand().fill();
                 if (i + i == answers.length / 2) {
-                    rootTable.row();
+                      rootTable.row();
                 }
             }
 
@@ -192,9 +228,6 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             // TODO random shuffle
 
             rootTable.pack();
-
-            SlideEditor slideEditor = new SlideEditor(skin);
-            slideEditor.setRootActor(rootTable);
 
             imageContainer = new Container();
             imageContainer.setActor(slideEditor);
@@ -237,12 +270,25 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
             final DragAndDrop dnd = new DragAndDrop();
 
-            final Image imageActor = new Image(new TextureRegionDrawable(
-                    new TextureRegion(texture)));
-            imageActor.setScaling(Scaling.fit);
+            final Image imageActor = new Image();
 
-            Group imageGroup = new Group();
+            final Group imageGroup = new Group();
             imageGroup.addActor(imageActor);
+
+            final SlideEditor slideEditor = new SlideEditor(skin);
+            slideEditor.setRootActor(imageGroup);
+            challengeResourceProvider.getTexture(challenge.getImagePath(), new ImageResourceCallback(imageActor) {
+                @Override
+                public void loaded(Texture resource) {
+                    super.loaded(resource);
+
+                    imageGroup.setSize(Math.max(imageActor.getWidth(), imageGroup.getWidth()), Math.max(imageActor.getHeight(), imageGroup.getHeight()));
+                    slideEditor.setRootActor(imageGroup);
+                    slideEditor.setAlign(Align.center);
+                }
+
+            });
+            imageActor.setScaling(Scaling.fit);
 
             float maxWidth = 0f, maxHeight = 0f;
             float maxX = imageActor.getWidth(), maxY = imageActor.getHeight();
@@ -312,9 +358,6 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
                         maxWidth, maxHeight);
             }
 
-            SlideEditor slideEditor = new SlideEditor(skin);
-            slideEditor.setRootActor(imageGroup);
-            slideEditor.setAlign(Align.center);
 
             imageContainer = new Container();
             imageContainer.setActor(slideEditor);
@@ -481,16 +524,23 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
             markers.clear();
 
-            final Image imageActor = new Image(new TextureRegionDrawable(
-                    new TextureRegion(texture)));
+            final Image imageActor = new Image();
             imageActor.setScaling(Scaling.fit);
 
             final Group imageGroup = new Group();
             imageGroup.addActor(imageActor);
-            imageGroup.setBounds(0, 0, imageActor.getWidth(), imageActor.getHeight());
 
-            SlideEditor slideEditor = new SlideEditor(skin);
+            final SlideEditor slideEditor = new SlideEditor(skin);
             slideEditor.setRootActor(imageGroup);
+            challengeResourceProvider.getTexture(challenge.getImagePath(), new ImageResourceCallback(imageActor) {
+                @Override
+                public void loaded(Texture resource) {
+                    super.loaded(resource);
+
+                    imageGroup.setBounds(0, 0, imageActor.getWidth(), imageActor.getHeight());
+                    slideEditor.setRootActor(imageGroup);
+                }
+            });
             imageActor.addListener(new DragListener() {
 
                 boolean dragged;
@@ -584,7 +634,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             Table actor = (Table) root.getChildren().get(0);
             actor.getChildren().get(1).setTouchable(Touchable.disabled);
             MultipleAnswerResult result = new MultipleAnswerResult(skin,
-                    multipleAnswerControl, i18n,  group, actor);
+                    multipleAnswerControl, i18n, group, actor);
 
             root.clear();
             root.add(result).expand().fill();
@@ -603,7 +653,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             rootRightTable.setTouchable(Touchable.disabled);
 
             MultipleImageAnswerResult result = new MultipleImageAnswerResult(skin,
-                    (MultipleImageAnswerControl) textControl, i18n,  imageGroup, editor);
+                    (MultipleImageAnswerControl) textControl, i18n, imageGroup, editor);
 
             root.clear();
             root.add(result).expand().fill();
@@ -620,7 +670,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             rootRightTable.setTouchable(Touchable.disabled);
 
             DragAndDropResult result = new DragAndDropResult(skin,
-                    (DragAndDropControl) textControl, i18n,  dragContainers, editor);
+                    (DragAndDropControl) textControl, i18n, dragContainers, editor);
 
             root.clear();
             root.add(result).expand().fill();
@@ -650,7 +700,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             rootRightTable.setTouchable(Touchable.disabled);
 
             InteractiveZoneResult result = new InteractiveZoneResult(skin,
-                    (InteractiveZoneControl) textControl, i18n,  markers, editor);
+                    (InteractiveZoneControl) textControl, i18n, markers, editor);
 
             root.clear();
             root.add(result).expand().fill();
