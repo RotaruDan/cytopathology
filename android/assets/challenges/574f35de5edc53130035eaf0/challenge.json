@@ -1,5 +1,6 @@
 {
     "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "difficulty": "EASY",
     "imagePath": "",
     "textControl": {
         "class": "es.eucm.cytochallenge.model.control.filltheblank.FillTheBlankControl",
@@ -77,7 +78,7 @@
                 "options": [
                     [
                         "variable",
-                        "constant"
+                        "constante"
                     ]
                 ],
                 "correctAnswers": [
