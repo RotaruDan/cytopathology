@@ -3,6 +3,8 @@ package es.eucm.cytochallenge.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import es.eucm.cytochallenge.CytoChallenge;
+import es.eucm.cytochallenge.model.PreviewConfig;
+import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -87,6 +89,17 @@ public class DesktopLauncher {
 			System.out.println(j == pollygons.length ? "" : ",");
 		}
 
-		new LwjglApplication(new CytoChallenge(), config);
+
+		boolean test = true;
+		PreviewChallengeResourceProvider challengeResourceProvider = null;
+		if(test) {
+			challengeResourceProvider = new PreviewChallengeResourceProvider();
+			PreviewConfig prevConfig = new PreviewConfig();
+			prevConfig.setImagesHost("http://cytopathology.e-ucm.es/uploads/574f35915edc53130035eaef/");
+			prevConfig.setChallengeHost("http://cytopathology.e-ucm.es/challenges/574f35915edc53130035eaef/");
+			challengeResourceProvider.setPreviewConfig(prevConfig);
+		}
+
+		new LwjglApplication(new CytoChallenge(challengeResourceProvider), config);
 	}
 }
