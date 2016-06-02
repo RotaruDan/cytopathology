@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import es.eucm.cytochallenge.CytoChallenge;
 import es.eucm.cytochallenge.lib.skim.Skim;
 import es.eucm.cytochallenge.lib.skim.SkimLoader;
+import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.transitions.TransitionManager;
 
@@ -150,21 +151,32 @@ public class LoadManager extends BaseScreen {
 
                     i18n = am.get(I18N_SRC, I18NBundle.class);
 
-                    menu = new Menu();
-                    menu.create();
+                    ChallengeResourceProvider challengeResourceProvide = game.getChallengeResourceProvider();
 
-                    lab = new Lab();
-                    lab.create();
+                    if (challengeResourceProvide == null) {
 
-                    challengeList = new ChallengeList();
-                    challengeList.create();
+                        menu = new Menu();
+                        menu.create();
 
-                    challenges = new Challenges();
-                    challenges.create();
+                        lab = new Lab();
+                        lab.create();
 
-                    transitionManager.initialize();
+                        challengeList = new ChallengeList();
+                        challengeList.create();
 
-                    game.changeScreen(menu, null);
+                        challenges = new Challenges();
+                        challenges.create();
+
+                        transitionManager.initialize();
+
+                        game.changeScreen(menu, null);
+                    } else {
+
+                        challenges = new Challenges();
+                        challenges.setChallengeResourceProvider(challengeResourceProvide);
+                        challenges.create();
+                        game.changeScreen(challenges, null);
+                    }
                 }
             });
         }

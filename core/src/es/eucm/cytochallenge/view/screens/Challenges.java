@@ -14,6 +14,7 @@ import es.eucm.cytochallenge.model.hint.Hint;
 import es.eucm.cytochallenge.model.hint.ImageInfo;
 import es.eucm.cytochallenge.model.hint.Info;
 import es.eucm.cytochallenge.model.hint.TextInfo;
+import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.transitions.Fade;
 import es.eucm.cytochallenge.view.widgets.CirclesMenu;
@@ -28,7 +29,7 @@ public class Challenges extends BaseScreen {
     private TextChallengeWidget currentChallenge;
     private Button check, hint;
     private Button addButton;
-    private String challengePath;
+    private ChallengeResourceProvider challengeResourceProvider;
     ClickListener hideListener;
 
     @Override
@@ -82,7 +83,7 @@ public class Challenges extends BaseScreen {
             public void clicked(InputEvent event, float x, float y) {
                 Hint hint = currentChallenge.getChallenge().getHint();
                 if (hint != null) {
-                    HintDialog dialog = new HintDialog(skin, hint, i18n, challengePath);
+                    HintDialog dialog = new HintDialog(skin, hint, i18n, challengeResourceProvider);
                     menu.getStage().addActor(dialog);
                     dialog.show();
                 }
@@ -133,7 +134,7 @@ public class Challenges extends BaseScreen {
             public void clicked(InputEvent event, float x, float y) {
                 Hint hint = currentChallenge.getChallenge().getHint();
                 if (hint != null) {
-                    HintDialog dialog = new HintDialog(skin, hint, i18n, challengePath);
+                    HintDialog dialog = new HintDialog(skin, hint, i18n, challengeResourceProvider);
                     menu.getStage().addActor(dialog);
                     dialog.show();
                 }
@@ -149,19 +150,27 @@ public class Challenges extends BaseScreen {
     public void show() {
         super.show();
 
-        Json json = new Json();
-        Challenge challenge = json.fromJson(Challenge.class,
-                Gdx.files.internal(challengePath + "challenge.json"));
+        challengeResourceProvider.getChallenge("challenge.json", new ChallengeResourceProvider.ResourceProvidedCallback<Challenge>() {
+            @Override
+            public void loaded(Challenge resource) {
 
-        currentChallenge = new TextChallengeWidget(skin, i18n);
-        currentChallenge.setChallengePath(challengePath);
-        currentChallenge.init((TextChallenge) challenge);
+                currentChallenge = new TextChallengeWidget(skin, i18n);
+                currentChallenge.setChallengeResourceProvider(challengeResourceProvider);
+                currentChallenge.init((TextChallenge) resource);
 
-        challengeLayout.setContent(currentChallenge.getWidget());
+                challengeLayout.setContent(currentChallenge.getWidget());
 
-        addButton = check;
-        challengeLayout.setCheckButton(check);
-        print();
+                addButton = check;
+                challengeLayout.setCheckButton(check);
+            }
+
+            @Override
+            public void failed() {
+
+            }
+        });
+
+        // print();
     }
 
     private void print() {
@@ -170,12 +179,12 @@ public class Challenges extends BaseScreen {
 
         FillTheBlankControl tc = new FillTheBlankControl();
 
-        tc.setText("Endocervical columnar cells – cytologic criteria");
+        tc.setText("Endocervical columnar cells  cytologic criteria");
 
         FillTheBlankStatement[] sts = new FillTheBlankStatement[12];
 
         FillTheBlankStatement sts0 = new FillTheBlankStatement();
-        sts0.setText("Cell shape – [0]");
+        sts0.setText("Cell shape  [0]");
         sts0.setOptions(new String[][]{new String[]{"squamous", "columnar", "cuboidal"}});
         sts0.setCorrectAnswers(new int[]{1});
 
@@ -237,10 +246,14 @@ public class Challenges extends BaseScreen {
 
     @Override
     public void onBackPressed() {
-        game.changeScreen(challengeList, Fade.init(1f, true));
+        if(challengeList != null) {
+            game.changeScreen(challengeList, Fade.init(1f, true));
+        } else {
+            game.changeScreen(challenges, Fade.init(1f, true));
+        }
     }
 
-    public void setChallengePath(String challengePath) {
-        this.challengePath = challengePath;
+    public void setChallengeResourceProvider(ChallengeResourceProvider challengeResourceProvider) {
+        this.challengeResourceProvider = challengeResourceProvider;
     }
 }

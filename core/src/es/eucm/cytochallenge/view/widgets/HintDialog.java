@@ -19,10 +19,11 @@ import es.eucm.cytochallenge.model.hint.ImageInfo;
 import es.eucm.cytochallenge.model.hint.Info;
 import es.eucm.cytochallenge.model.hint.TextInfo;
 import es.eucm.cytochallenge.utils.Actions2;
+import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
 
 public class HintDialog extends Table {
 
-    public HintDialog(Skin skin, Hint hint, I18NBundle i18n, String challengePath) {
+    public HintDialog(Skin skin, Hint hint, I18NBundle i18n, ChallengeResourceProvider challengeResourceProvider) {
         HintDialogStyle style = skin.get(HintDialogStyle.class);
         background(style.background);
         float pad24dp = WidgetBuilder.dpToPixels(24);
@@ -48,9 +49,19 @@ public class HintDialog extends Table {
 
             } else if (info instanceof ImageInfo) {
                 ImageInfo imageInfo = (ImageInfo) info;
-                Texture texture = new Texture(Gdx.files.internal(challengePath + imageInfo.getImagePath()));
-                texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-                Image image = new Image(new TextureRegionDrawable(new TextureRegion(texture)));
+                final Image image = new Image();
+                challengeResourceProvider.getTexture(imageInfo.getImagePath(), new ChallengeResourceProvider.ResourceProvidedCallback<Texture>() {
+                    @Override
+                    public void loaded(Texture resource) {
+                        resource.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+                        image.setDrawable(new TextureRegionDrawable(new TextureRegion(resource)));
+                    }
+
+                    @Override
+                    public void failed() {
+
+                    }
+                });
                 image.setScaling(Scaling.fit);
                 container.add(image).expand().fill();
                 container.row();

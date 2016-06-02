@@ -28,7 +28,9 @@ public class ChallengeLayout extends AbstractWidget {
         setBounds(checkButton, getWidth() - checkWidth - offset, offset,
                 checkWidth, getPrefHeight(checkButton));
 
-        setBounds(content, 0, 0, getWidth(), getHeight());
+        if(content != null) {
+            setBounds(content, 0, 0, getWidth(), getHeight());
+        }
 
     }
 
@@ -66,5 +68,6 @@ public class ChallengeLayout extends AbstractWidget {
         this.content = content;
         addActor(content);
         content.toBack();
+        invalidateHierarchy();
     }
 }
