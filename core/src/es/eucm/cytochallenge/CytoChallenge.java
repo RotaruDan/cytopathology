@@ -4,6 +4,8 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import es.eucm.cytochallenge.model.PreviewConfig;
+import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
 import es.eucm.cytochallenge.view.screens.BaseScreen;
 import es.eucm.cytochallenge.view.screens.LoadManager;
 import es.eucm.cytochallenge.view.SkinConstants;
@@ -11,9 +13,18 @@ import es.eucm.cytochallenge.view.transitions.TransitionManager;
 
 public class CytoChallenge extends ApplicationAdapter {
 
+    private ChallengeResourceProvider resourceProvider;
     public BaseScreen showingScreen;
     private LoadManager loadManager;
     private TransitionManager transitionManager;
+
+    public CytoChallenge(ChallengeResourceProvider resourceProvider) {
+        this.resourceProvider = resourceProvider;
+    }
+
+    public CytoChallenge(){
+        this(null);
+    }
 
     @Override
     public void create() {
@@ -66,5 +77,13 @@ public class CytoChallenge extends ApplicationAdapter {
         Gdx.app.log(this.showingScreen.getClassTag(), "Changing screen to " + next.getClass().getSimpleName() +
                 " with transition: " + screenTransition);
         this.showingScreen = this.transitionManager.prepateTransition(next, null);
+    }
+
+    public ChallengeResourceProvider getChallengeResourceProvider() {
+        return resourceProvider;
+    }
+
+    public void setResourceProvider(ChallengeResourceProvider resourceProvider) {
+        this.resourceProvider = resourceProvider;
     }
 }
