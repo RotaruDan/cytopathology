@@ -26,6 +26,7 @@ public class BaseScreen {
     protected static Menu menu;
     protected static Lab lab;
     protected static ChallengeList challengeList;
+    protected static CourseList courseList;
     protected static Challenges challenges;
     protected BaseScreen previousScreen;
     protected Table root;

@@ -38,7 +38,7 @@ public class Lab extends BaseScreen {
         tablet.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.changeScreen(challengeList);
+                game.changeScreen(courseList);
             }
         });
 

@@ -164,6 +164,9 @@ public class LoadManager extends BaseScreen {
                         challengeList = new ChallengeList();
                         challengeList.create();
 
+                        courseList = new CourseList();
+                        courseList.create();
+
                         challenges = new Challenges();
                         challenges.create();
 
