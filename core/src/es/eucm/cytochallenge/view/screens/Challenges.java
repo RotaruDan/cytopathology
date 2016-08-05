@@ -10,11 +10,13 @@ import com.badlogic.gdx.utils.*;
 import es.eucm.cytochallenge.model.*;
 import es.eucm.cytochallenge.model.control.filltheblank.FillTheBlankControl;
 import es.eucm.cytochallenge.model.control.filltheblank.FillTheBlankStatement;
+import es.eucm.cytochallenge.model.course.Course;
 import es.eucm.cytochallenge.model.hint.Hint;
 import es.eucm.cytochallenge.model.hint.ImageInfo;
 import es.eucm.cytochallenge.model.hint.Info;
 import es.eucm.cytochallenge.model.hint.TextInfo;
 import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
+import es.eucm.cytochallenge.utils.InternalFilesChallengeResourceProvider;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.transitions.Fade;
 import es.eucm.cytochallenge.view.widgets.CirclesMenu;
@@ -30,7 +32,14 @@ public class Challenges extends BaseScreen {
     private Button check, hint;
     private Button addButton;
     private ChallengeResourceProvider challengeResourceProvider;
+    private Course currentCourse;
+    private int challengeCount = 0;
     ClickListener hideListener;
+
+    public void setCurrentCourse(Course currentCourse) {
+        this.currentCourse = currentCourse;
+        challengeCount = 0;
+    }
 
     @Override
     public void create() {
@@ -45,37 +54,6 @@ public class Challenges extends BaseScreen {
                 onBackPressed();
             }
         });
-
-        /*
-        final CirclesMenu circlesMenu = buildAddButtons();
-        addButton = es.eucm.cytochallenge.view.widgets.WidgetBuilder.circleButton(SkinConstants.IC_ADD);
-        addButton.pack();
-        circlesMenu.pack();
-        hideListener = new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                circlesMenu.hide(new Runnable() {
-                    @Override
-                    public void run() {
-                        circlesMenu.remove();
-                        challengeLayout.removeListener(hideListener);
-                    }
-                });
-            }
-        };
-        addButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                challengeLayout.addActor(circlesMenu);
-                circlesMenu.show();
-                circlesMenu.setPosition(addButton.getX()
-                                - circlesMenu.getWidth()
-                                + addButton.getWidth(),
-                        addButton.getY());
-                challengeLayout.addListener(hideListener);
-            }
-        });
-        */
 
         hint = WidgetBuilder.circleButton(SkinConstants.IC_ERROR);
         hint.addListener(new ClickListener() {
@@ -111,6 +89,7 @@ public class Challenges extends BaseScreen {
 
         root.add(challengeLayout).expand().fill();
     }
+
 
     private CirclesMenu buildAddButtons() {
 
@@ -149,6 +128,19 @@ public class Challenges extends BaseScreen {
     @Override
     public void show() {
         super.show();
+
+        if (currentCourse != null &&
+                currentCourse.getChallenges().size > 0 &&
+                (challengeResourceProvider instanceof InternalFilesChallengeResourceProvider)) {
+            if (challengeCount >= currentCourse.getChallenges().size) {
+                challengeCount = 0;
+            }
+            String currentChallenge = "challenges/" + currentCourse.getChallenges().get(challengeCount) + "/";
+            challengeCount++;
+            InternalFilesChallengeResourceProvider internalChallengeResourceProvider =
+                    (InternalFilesChallengeResourceProvider) challengeResourceProvider;
+            internalChallengeResourceProvider.setResourcePath(currentChallenge);
+        }
 
         challengeResourceProvider.getChallenge("challenge.json", new ChallengeResourceProvider.ResourceProvidedCallback<Challenge>() {
             @Override
@@ -246,7 +238,7 @@ public class Challenges extends BaseScreen {
 
     @Override
     public void onBackPressed() {
-        if(challengeList != null) {
+        if (challengeList != null) {
             game.changeScreen(challengeList, Fade.init(1f, true));
         } else {
             game.changeScreen(challenges, Fade.init(1f, true));
