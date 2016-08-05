@@ -91,5 +91,13 @@
             2,
             3
         ]
+    },
+    "hint": {
+        "infos": [
+            {
+                "class": "es.eucm.cytochallenge.model.hint.TextInfo",
+                "text": "Hint Example Text"
+            }
+        ]
     }
 }

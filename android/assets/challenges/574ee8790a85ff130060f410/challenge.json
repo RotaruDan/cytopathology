@@ -17,8 +17,8 @@
             },
             {
                 "text": "Mitosis",
-                "x": 665.8606363379437,
-                "y": 228.66847826086956,
+                "x": 658.5236798162045,
+                "y": 225,
                 "width": 102.94793701171875,
                 "height": 40
             },
@@ -35,6 +35,26 @@
                 "y": 234.7826086956522,
                 "width": 147.45501708984375,
                 "height": 40
+            }
+        ]
+    },
+    "hint": {
+        "infos": [
+            {
+                "class": "es.eucm.cytochallenge.model.hint.TextInfo",
+                "text": "Apoptosis: is a process of programmed cell death that occurs in multicellular organisms."
+            },
+            {
+                "class": "es.eucm.cytochallenge.model.hint.ImageInfo",
+                "imagePath": "hints/Apoptosis_DU145_cells_mosaic.jpg"
+            },
+            {
+                "class": "es.eucm.cytochallenge.model.hint.TextInfo",
+                "text": "Mitosis is a part of the cell cycle in which chromosomes in a cell nucleus are separated into two identical sets of chromosomes, and each set ends up in its own nucleus."
+            },
+            {
+                "class": "es.eucm.cytochallenge.model.hint.TextInfo",
+                "text": "Rosettes are little round groupings of cells found in tumors. They usually consist of cells in a spoke-wheel or halo arrangement surrounding a central, acellular region."
             }
         ]
     }
