@@ -13,7 +13,7 @@ import es.eucm.cytochallenge.view.widgets.WidgetBuilder;
 
 public class ChallengeLayout extends AbstractWidget {
 
-    Button backButton, checkButton;
+    Button backButton, nextChallenge, checkButton;
     Actor content;
 
     @Override
@@ -24,6 +24,14 @@ public class ChallengeLayout extends AbstractWidget {
                 getPrefWidth(backButton), backHeight);
 
         float checkWidth = getPrefWidth(checkButton);
+        if(nextChallenge != null) {
+
+            float nextWidth = getPrefWidth(nextChallenge);
+            float offset = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(16);
+            setBounds(nextChallenge, getWidth() - nextWidth - offset, offset * 2 + checkWidth,
+                    nextWidth, getPrefHeight(nextChallenge));
+        }
+
         float offset = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(16);
         setBounds(checkButton, getWidth() - checkWidth - offset, offset,
                 checkWidth, getPrefHeight(checkButton));
@@ -55,6 +63,16 @@ public class ChallengeLayout extends AbstractWidget {
     public void setCheckButton(Button checkButton) {
         this.checkButton = checkButton;
         addActor(checkButton);
+    }
+
+    public void setNextChallenge(Button nextChallenge) {
+        if(nextChallenge != null) {
+            nextChallenge.remove();
+        }
+        this.nextChallenge = nextChallenge;
+        if(nextChallenge != null) {
+            addActor(nextChallenge);
+        }
     }
 
     public Actor getContent() {

@@ -17,6 +17,10 @@ public class InternalFilesChallengeResourceProvider implements ChallengeResource
 
     @Override
     public void getTexture(String imagePath, ResourceProvidedCallback<Texture> callback) {
+        if(imagePath == null || imagePath.isEmpty()) {
+            callback.failed();
+            return;
+        }
         callback.loaded(new Texture(Gdx.files.internal(resourcePath + imagePath)));
     }
 
@@ -25,6 +29,7 @@ public class InternalFilesChallengeResourceProvider implements ChallengeResource
         try {
             callback.loaded(json.fromJson(Challenge.class, Gdx.files.internal(resourcePath + jsonPath)));
         } catch (Exception exception) {
+            exception.printStackTrace();
             callback.failed();
         }
     }
