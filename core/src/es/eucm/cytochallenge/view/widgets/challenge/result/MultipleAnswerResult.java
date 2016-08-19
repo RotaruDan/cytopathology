@@ -1,6 +1,7 @@
 package es.eucm.cytochallenge.view.widgets.challenge.result;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -23,10 +24,17 @@ public class MultipleAnswerResult extends ResultLayout<MultipleAnswerControl> {
     @Override
     protected Label buildLabel(MultipleAnswerControl control, Object... args) {
         int score = 0;
-        String correctAnswer = control.getAnswers()[control.getCorrectAnswer()];
-        String selectedAnswer = ((ButtonGroup) args[0]).getChecked().getUserObject().toString();
+        String correctAnswer = null;
+        String selectedAnswer = null;
+        if (control.getCorrectAnswer() <= control.getAnswers().length - 1) {
+            correctAnswer = control.getAnswers()[control.getCorrectAnswer()];
+        }
+        Button checked = ((ButtonGroup) args[0]).getChecked();
+        if (checked != null) {
+            selectedAnswer = checked.getUserObject().toString();
+        }
 
-        if (correctAnswer.equals(selectedAnswer)) {
+        if (correctAnswer != null && correctAnswer.equals(selectedAnswer)) {
             score = 100;
         }
 
@@ -39,7 +47,10 @@ public class MultipleAnswerResult extends ResultLayout<MultipleAnswerControl> {
     @Override
     protected Actor[] buildTabs(MultipleAnswerControl control, Object... args) {
         Actor right = (Actor) args[1];
-        String correctAnswerStr = control.getAnswers()[control.getCorrectAnswer()];
+        String correctAnswerStr = "";
+        if (control.getCorrectAnswer() <= control.getAnswers().length - 1) {
+            correctAnswerStr = control.getAnswers()[control.getCorrectAnswer()];
+        }
         Label correctAnswer = new Label(correctAnswerStr, getSkin(), SkinConstants.STYLE_TOAST);
         correctAnswer.setAlignment(Align.center);
         return new Actor[]{
