@@ -36,6 +36,7 @@ public class ChallengeList extends BaseScreen {
 
     private Course currentCourse;
     private Table layout;
+    private Label title;
 
     public void setCurrentCourse(Course currentCourse) {
         this.currentCourse = currentCourse;
@@ -55,7 +56,7 @@ public class ChallengeList extends BaseScreen {
         topTable.background(BaseScreen.skin.getDrawable(SkinConstants.DRAWABLE_9P_TOOLBAR));
         topTable.setColor(SkinConstants.COLOR_TOOLBAR_TOP);
 
-        Label label = new Label(i18n.get("challenges"), BaseScreen.skin,
+        title = new Label("", BaseScreen.skin,
                 SkinConstants.STYLE_TOOLBAR);
 
         Button icon = es.eucm.cytochallenge.view.widgets.WidgetBuilder.toolbarIcon(SkinConstants.IC_UNDO);
@@ -76,7 +77,7 @@ public class ChallengeList extends BaseScreen {
         });
 
         topTable.add(icon);
-        topTable.add(label)
+        topTable.add(title)
                 .expandX();
         topTable.add(play);
 
@@ -101,6 +102,11 @@ public class ChallengeList extends BaseScreen {
         super.show();
         layout.clearChildren();
         loadChallenges(layout);
+        if(currentCourse != null) {
+            title.setText(i18n.get("challenge") + ": " + currentCourse.getName());
+        } else {
+            title.setText(i18n.get("challenge"));
+        }
     }
 
     private void loadChallenges(final Table layout) {
