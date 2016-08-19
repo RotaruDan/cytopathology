@@ -23,6 +23,7 @@ import es.eucm.cytochallenge.CytoChallenge;
 import es.eucm.cytochallenge.lib.skim.Skim;
 import es.eucm.cytochallenge.lib.skim.SkimLoader;
 import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
+import es.eucm.cytochallenge.utils.Prefs;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.transitions.TransitionManager;
 
@@ -154,6 +155,8 @@ public class LoadManager extends BaseScreen {
                     ChallengeResourceProvider challengeResourceProvide = game.getChallengeResourceProvider();
 
                     if (challengeResourceProvide == null) {
+
+                        prefs = new Prefs();
 
                         menu = new Menu();
                         menu.create();

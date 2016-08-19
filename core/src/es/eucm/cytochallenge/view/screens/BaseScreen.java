@@ -3,6 +3,7 @@ package es.eucm.cytochallenge.view.screens;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.I18NBundle;
 import es.eucm.cytochallenge.CytoChallenge;
+import es.eucm.cytochallenge.utils.Prefs;
 import es.eucm.cytochallenge.view.transitions.Fade;
 
 public class BaseScreen {
@@ -23,6 +25,7 @@ public class BaseScreen {
     protected static I18NBundle i18n;
     public static ShapeRenderer shapeRenderer;
 
+    protected Prefs prefs;
     protected static Menu menu;
     protected static Lab lab;
     protected static ChallengeList challengeList;
