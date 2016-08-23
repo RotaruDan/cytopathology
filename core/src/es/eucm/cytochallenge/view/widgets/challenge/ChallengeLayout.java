@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import es.eucm.cytochallenge.view.SkinConstants;
+import es.eucm.cytochallenge.view.TimerWidget;
 import es.eucm.cytochallenge.view.widgets.*;
 import es.eucm.cytochallenge.view.widgets.WidgetBuilder;
 
@@ -15,6 +16,7 @@ public class ChallengeLayout extends AbstractWidget {
 
     Button backButton, nextChallenge, checkButton;
     Actor content;
+    TimerWidget timer;
 
     @Override
     public void layout() {
@@ -40,6 +42,10 @@ public class ChallengeLayout extends AbstractWidget {
             setBounds(content, 0, 0, getWidth(), getHeight());
         }
 
+        if(timer != null) {
+            float timerPrefHeight = getPrefHeight(timer);
+            setBounds(timer, 0, backButton.getY() - timerPrefHeight, getPrefWidth(timer), timerPrefHeight);
+        }
     }
 
     @Override
@@ -66,8 +72,8 @@ public class ChallengeLayout extends AbstractWidget {
     }
 
     public void setNextChallenge(Button nextChallenge) {
-        if(nextChallenge != null) {
-            nextChallenge.remove();
+        if(this.nextChallenge != null) {
+            this.nextChallenge.remove();
         }
         this.nextChallenge = nextChallenge;
         if(nextChallenge != null) {
@@ -87,5 +93,19 @@ public class ChallengeLayout extends AbstractWidget {
         addActor(content);
         content.toBack();
         invalidateHierarchy();
+    }
+
+    public void setTimer(TimerWidget timer) {
+        if(this.timer != null) {
+            this.timer.remove();
+        }
+        this.timer = timer;
+        if(timer != null) {
+            addActor(timer);
+        }
+    }
+
+    public TimerWidget getTimer() {
+        return timer;
     }
 }

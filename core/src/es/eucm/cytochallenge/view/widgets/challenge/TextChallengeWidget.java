@@ -38,22 +38,20 @@ import es.eucm.cytochallenge.view.widgets.slide.SlideEditor;
 
 import java.util.*;
 
-/**
- * Created by dan on 02/03/2016.
- */
+
 public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
     public static final float HIDE_TIME = .5f;
     private Table root;
     private TextChallenge challenge;
 
+    private CompletedListener completedListener;
     private ChallengeResourceProvider challengeResourceProvider;
     private I18NBundle i18n;
     private Skin skin;
 
     // MCQ
     private ButtonGroup<TextButton> group = new ButtonGroup<TextButton>();
-
 
     // MICQ
     private ButtonGroup<Button> imageGroup = new ButtonGroup<Button>();
@@ -214,7 +212,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
                 rootTable.add(imageButton).expand().fill();
                 if (i + i == answers.length / 2) {
-                      rootTable.row();
+                    rootTable.row();
                 }
             }
 
@@ -639,6 +637,9 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             root.clear();
             root.add(result).expand().fill();
 
+            if(completedListener != null) {
+                completedListener.completed(challenge.getId(), result.getScore());
+            }
         }
 
         // MultipleImageAnswerControl
@@ -658,6 +659,9 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             root.clear();
             root.add(result).expand().fill();
 
+            if(completedListener != null) {
+                completedListener.completed(challenge.getId(), result.getScore());
+            }
         }
 
         // DragAndDropControl
@@ -674,6 +678,10 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
             root.clear();
             root.add(result).expand().fill();
+
+            if(completedListener != null) {
+                completedListener.completed(challenge.getId(), result.getScore());
+            }
         }
 
         // FillTheBlankControl
@@ -688,6 +696,10 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
             root.clear();
             root.add(result).expand().fill();
+
+            if(completedListener != null) {
+                completedListener.completed(challenge.getId(), result.getScore());
+            }
         }
 
         // InteractiveZone
@@ -704,6 +716,10 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
             root.clear();
             root.add(result).expand().fill();
+
+            if(completedListener != null) {
+                completedListener.completed(challenge.getId(), result.getScore());
+            }
         }
     }
 
@@ -714,5 +730,13 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
     public TextChallenge getChallenge() {
         return challenge;
+    }
+
+    public interface CompletedListener {
+         void completed(String challengeId, float score);
+    }
+
+    public void setCompletedListener(CompletedListener completedListener) {
+        this.completedListener = completedListener;
     }
 }
