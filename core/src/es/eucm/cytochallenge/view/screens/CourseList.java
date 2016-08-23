@@ -1,6 +1,7 @@
 package es.eucm.cytochallenge.view.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Scaling;
 import es.eucm.cytochallenge.model.Challenge;
+import es.eucm.cytochallenge.model.Difficulty;
 import es.eucm.cytochallenge.model.TextChallenge;
 import es.eucm.cytochallenge.model.course.Course;
 import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
@@ -69,6 +71,20 @@ public class CourseList extends BaseScreen {
 
             Tile tile = new Tile(skin);
             tile.setText(course.getName());
+
+            Color difficultyColor = null;
+            if (course.getDifficulty() == Difficulty.EASY) {
+                difficultyColor = Color.GREEN;
+            } else if (course.getDifficulty() == Difficulty.MEDIUM) {
+                difficultyColor = Color.ORANGE;
+            } else {
+                difficultyColor = Color.RED;
+            }
+            Image difficulty = new Image(skin.getDrawable(SkinConstants.IC_DIFFICULTY));
+            difficulty.setColor(difficultyColor);
+            difficulty.setScaling(Scaling.fit);
+
+            tile.setMarker(difficulty);
 
             layout.add(tile);
             tile.addListener(new ClickListener() {

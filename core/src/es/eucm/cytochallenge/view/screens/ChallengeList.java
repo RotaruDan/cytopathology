@@ -27,6 +27,7 @@ import es.eucm.cytochallenge.utils.InternalFilesChallengeResourceProvider;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.transitions.Fade;
 import es.eucm.cytochallenge.view.widgets.ChallengeButton;
+import es.eucm.cytochallenge.view.widgets.CourseInfoDialog;
 import es.eucm.cytochallenge.view.widgets.TopToolbarLayout;
 import es.eucm.cytochallenge.view.widgets.WidgetBuilder;
 
@@ -37,6 +38,8 @@ public class ChallengeList extends BaseScreen {
     private Course currentCourse;
     private Table layout;
     private Label title;
+    private CourseInfoDialog courseDialog;
+    private Button courseInfo;
 
     public void setCurrentCourse(Course currentCourse) {
         this.currentCourse = currentCourse;
@@ -48,6 +51,7 @@ public class ChallengeList extends BaseScreen {
         super.create();
 
         layout = new Table();
+        courseDialog = new CourseInfoDialog(skin, i18n);
 
         ScrollPane scroll = new ScrollPane(layout, BaseScreen.skin, "verticalScroll");
         scroll.setScrollingDisabled(true, false);
@@ -76,9 +80,22 @@ public class ChallengeList extends BaseScreen {
             }
         });
 
+        courseInfo = es.eucm.cytochallenge.view.widgets.WidgetBuilder.toolbarIcon(SkinConstants.IC_ERROR);
+        courseInfo.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(currentCourse != null) {
+                    courseDialog.show();
+                    courseDialog.setVisible(true);
+                    menu.getStage().addActor(courseDialog);
+                }
+            }
+        });
+
         topTable.add(icon);
         topTable.add(title)
                 .expandX();
+        topTable.add(courseInfo);
         topTable.add(play);
 
         TopToolbarLayout rootLayout = new TopToolbarLayout();
@@ -100,13 +117,16 @@ public class ChallengeList extends BaseScreen {
     @Override
     public void show() {
         super.show();
+        if(currentCourse != null) {
+            title.setText(i18n.get("course") + ": " + currentCourse.getName());
+            courseDialog.init(currentCourse);
+            courseInfo.setVisible(true);
+        } else {
+            title.setText(i18n.get("challenges"));
+            courseInfo.setVisible(false);
+        }
         layout.clearChildren();
         loadChallenges(layout);
-        if(currentCourse != null) {
-            title.setText(i18n.get("challenge") + ": " + currentCourse.getName());
-        } else {
-            title.setText(i18n.get("challenge"));
-        }
     }
 
     private void loadChallenges(final Table layout) {
@@ -128,7 +148,8 @@ public class ChallengeList extends BaseScreen {
         }
 
         for (int i = 0; i < challengesPaths.size; i++) {
-            final String challengeFolder = challengesPath + challengesPaths.get(i) + "/";
+            final String challengeId = challengesPaths.get(i);
+            final String challengeFolder = challengesPath + challengeId + "/";
             challengeResourceProvider.setResourcePath(challengeFolder);
             challengeResourceProvider.getChallenge(challengeJson, new ChallengeResourceProvider.ResourceProvidedCallback<Challenge>() {
                 @Override
@@ -136,6 +157,10 @@ public class ChallengeList extends BaseScreen {
                     Gdx.app.log("Files", "json challenge: " + challenge.getImagePath());
 
                     if (challenge instanceof TextChallenge) {
+                        challenge.setId(challengeId);
+                        if(currentCourse != null) {
+                            courseDialog.addChallenge(challenge);
+                        }
                         TextChallenge textChallenge = (TextChallenge) challenge;
 
                         final Button button = new ChallengeButton(textChallenge,
@@ -148,6 +173,7 @@ public class ChallengeList extends BaseScreen {
                             public void clicked(InputEvent event, float x, float y) {
                                 challenges.setCurrentCourse(null);
                                 challengeResourceProvider.setResourcePath(button.getUserObject().toString());
+                                challengeResourceProvider.setCurrentChallengeId(challengeId);
                                 challenges.setChallengeResourceProvider(challengeResourceProvider);
                                 game.changeScreen(challenges);
                             }

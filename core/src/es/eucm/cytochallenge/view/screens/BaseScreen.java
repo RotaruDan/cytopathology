@@ -24,8 +24,8 @@ public class BaseScreen {
     protected static AssetManager am;
     protected static I18NBundle i18n;
     public static ShapeRenderer shapeRenderer;
-
-    protected Prefs prefs;
+    public static Prefs prefs;
+    
     protected static Menu menu;
     protected static Lab lab;
     protected static ChallengeList challengeList;

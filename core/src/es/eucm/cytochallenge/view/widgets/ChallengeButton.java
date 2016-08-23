@@ -17,7 +17,9 @@ import es.eucm.cytochallenge.model.control.MultipleImageAnswerControl;
 import es.eucm.cytochallenge.model.control.TextControl;
 import es.eucm.cytochallenge.model.control.draganddrop.DragAndDropControl;
 import es.eucm.cytochallenge.model.control.filltheblank.FillTheBlankControl;
+import es.eucm.cytochallenge.utils.Grades;
 import es.eucm.cytochallenge.view.SkinConstants;
+import es.eucm.cytochallenge.view.screens.BaseScreen;
 
 
 public class ChallengeButton extends TextButton {
@@ -70,8 +72,15 @@ public class ChallengeButton extends TextButton {
         difficulty.setColor(difficultyColor);
         difficulty.setScaling(Scaling.fit);
 
+
+        float finalScore = BaseScreen.prefs.getChallengeScore(challenge.getId());
+        System.out.println("finalScore = " + finalScore);
+        Label score = new Label(Grades.getGrade(finalScore) + "", skin);
+
+
         add(image).width(image.getWidth());
         add(difficulty).width(difficulty.getWidth());
+        add(score);
         add(label);
         setSize(getPrefWidth(), getPrefHeight());
     }
