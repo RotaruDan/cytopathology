@@ -639,6 +639,13 @@
             "buttonStyle": "dialog"
         }
     },
+    "es.eucm.cytochallenge.view.widgets.CourseInfoDialog$CourseInfoDialogStyle": {
+        "default": {
+            "background": "page_up",
+            "textStyle": "edition",
+            "buttonStyle": "dialog"
+        }
+    },
     "es.eucm.cytochallenge.view.widgets.Tile$TileStyle": {
         "default": {
             "labelBackground": "semi_transparent_bg",
