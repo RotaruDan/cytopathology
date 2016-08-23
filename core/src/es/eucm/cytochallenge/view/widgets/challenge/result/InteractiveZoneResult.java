@@ -67,7 +67,9 @@ public class InteractiveZoneResult extends ResultLayout<InteractiveZoneControl> 
         int results = checkInteractiveZoneResult(control, markers);
         int total = markers.size;
 
-        Label resultsLabel = new Label(Grades.getGrade(results / (float) total * 100) +
+        score = results / (float) total * 100;
+
+        Label resultsLabel = new Label(Grades.getGrade(score) +
                 "    " + results + "/" + total, getSkin(), SkinConstants.STYLE_TOAST);
         resultsLabel.setAlignment(Align.center);
         return resultsLabel;

@@ -51,8 +51,9 @@ public class FillTheBlankResult extends ResultLayout<FillTheBlankControl> {
         Array<FillTheBlankText> ftbTexts = (Array<FillTheBlankText>) args[0];
         int results = checkFtBResult(ftbTexts);
         int total = checkFtBTotalCount(ftbTexts);
+        score = results / (float) total * 100;
 
-        Label resultsLabel = new Label(Grades.getGrade(results / (float) total * 100) +
+        Label resultsLabel = new Label(Grades.getGrade(score) +
                 "    " + results + "/" + total, getSkin(), SkinConstants.STYLE_TOAST);
         resultsLabel.setAlignment(Align.center);
         return resultsLabel;

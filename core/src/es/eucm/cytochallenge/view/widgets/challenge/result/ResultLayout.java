@@ -19,6 +19,7 @@ public abstract class ResultLayout<T extends TextControl> extends AbstractWidget
     protected Container<Actor> topRow;
     protected Tabs tabs;
     protected Container<Actor> content;
+    protected float score;
 
     public ResultLayout(Skin skin, T control, I18NBundle i18n, Object... args) {
         toolbar = new Table(skin);
@@ -101,4 +102,8 @@ public abstract class ResultLayout<T extends TextControl> extends AbstractWidget
         };
     }
     protected abstract Actor[] buildTabs(T control, Object... args);
+
+    public float getScore() {
+        return score;
+    }
 }

@@ -56,7 +56,8 @@ public class MultipleImageAnswerResult extends ResultLayout<MultipleImageAnswerC
         int results = Math.max(0, checkMIAResult((ButtonGroup) args[0]));
         int total = control.getCorrectAnswers().length;
 
-        Label resultsLabel = new Label(Grades.getGrade(results / (float) total * 100) +
+        score = results / (float) total * 100;
+        Label resultsLabel = new Label(Grades.getGrade(score) +
                 "    " + results + "/" + total, getSkin(), SkinConstants.STYLE_TOAST);
         resultsLabel.setAlignment(Align.center);
         return resultsLabel;

@@ -23,7 +23,7 @@ public class MultipleAnswerResult extends ResultLayout<MultipleAnswerControl> {
 
     @Override
     protected Label buildLabel(MultipleAnswerControl control, Object... args) {
-        int score = 0;
+        score = 0;
         String correctAnswer = null;
         String selectedAnswer = null;
         if (control.getCorrectAnswer() <= control.getAnswers().length - 1) {

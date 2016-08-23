@@ -1,25 +1,15 @@
 package es.eucm.cytochallenge.view.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.*;
 import es.eucm.cytochallenge.model.*;
-import es.eucm.cytochallenge.model.control.filltheblank.FillTheBlankControl;
-import es.eucm.cytochallenge.model.control.filltheblank.FillTheBlankStatement;
 import es.eucm.cytochallenge.model.course.Course;
 import es.eucm.cytochallenge.model.hint.Hint;
-import es.eucm.cytochallenge.model.hint.ImageInfo;
-import es.eucm.cytochallenge.model.hint.Info;
-import es.eucm.cytochallenge.model.hint.TextInfo;
 import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
 import es.eucm.cytochallenge.utils.InternalFilesChallengeResourceProvider;
-import es.eucm.cytochallenge.view.SkinConstants;
+import es.eucm.cytochallenge.view.*;
 import es.eucm.cytochallenge.view.transitions.Fade;
-import es.eucm.cytochallenge.view.widgets.CirclesMenu;
 import es.eucm.cytochallenge.view.widgets.HintDialog;
 import es.eucm.cytochallenge.view.widgets.WidgetBuilder;
 import es.eucm.cytochallenge.view.widgets.challenge.ChallengeLayout;
@@ -96,6 +86,10 @@ public class Challenges extends BaseScreen {
                 if(currentCourse != null) {
                     challengeLayout.setNextChallenge(nextChallenge);
                 }
+                TimerWidget timer = challengeLayout.getTimer();
+                if(timer != null) {
+                    timer.stop();
+                }
             }
         });
 
@@ -115,22 +109,39 @@ public class Challenges extends BaseScreen {
             if (challengeCount >= currentCourse.getChallenges().size) {
                 challengeCount = 0;
             }
-            String currentChallenge = "challenges/" + currentCourse.getChallenges().get(challengeCount) + "/";
+            String currentChallengeId = currentCourse.getChallenges().get(challengeCount);
+            String currentChallenge = "challenges/" + currentChallengeId + "/";
             challengeCount++;
             InternalFilesChallengeResourceProvider internalChallengeResourceProvider =
                     (InternalFilesChallengeResourceProvider) challengeResourceProvider;
             internalChallengeResourceProvider.setResourcePath(currentChallenge);
+            internalChallengeResourceProvider.setCurrentChallengeId(currentChallengeId);
+        }
+
+        if(currentCourse == null) {
+            challengeLayout.setNextChallenge(null);
         }
 
         challengeResourceProvider.getChallenge("challenge.json", new ChallengeResourceProvider.ResourceProvidedCallback<Challenge>() {
             @Override
             public void loaded(Challenge resource) {
 
-                System.out.println("resource = " + resource);
+                resource.setId(((InternalFilesChallengeResourceProvider) challengeResourceProvider).getCurrentChallengeId());
+
                 if(currentChallenge != null) {
                     currentChallenge.getWidget().remove();
                 }
                 currentChallenge = new TextChallengeWidget(skin, i18n);
+                currentChallenge.setCompletedListener(new TextChallengeWidget.CompletedListener() {
+                    @Override
+                    public void completed(String challengeId, float score) {
+                        if(currentCourse != null) {
+                            prefs.saveCourseChallengeScore(challengeId, score);
+                        } else {
+                            prefs.saveChallengeScore(challengeId, score);
+                        }
+                    }
+                });
                 currentChallenge.setChallengeResourceProvider(challengeResourceProvider);
                 currentChallenge.init((TextChallenge) resource);
 
@@ -145,12 +156,34 @@ public class Challenges extends BaseScreen {
 
             }
         });
+
+        if(currentCourse != null) {
+            if (currentCourse.getDifficulty() == Difficulty.EASY) {
+
+            } else if (currentCourse.getDifficulty() == Difficulty.MEDIUM) {
+                buildTimer(15.5f);
+            } else {
+                buildTimer(10.5f);
+            }
+        }
+    }
+
+    private void buildTimer(float startTime) {
+        TimerWidget timer = new TimerWidget("", skin);
+        timer.setTime(startTime);
+        challengeLayout.setTimer(timer);
+    }
+
+    @Override
+    public void update() {
+        super.update();
     }
 
     @Override
     public void hide() {
         super.hide();
         challengeLayout.setNextChallenge(null);
+        challengeLayout.setTimer(null);
     }
 
     @Override

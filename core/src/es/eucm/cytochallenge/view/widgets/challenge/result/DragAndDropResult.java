@@ -20,6 +20,7 @@ import es.eucm.cytochallenge.model.control.draganddrop.DragAndDropAnswer;
 import es.eucm.cytochallenge.model.control.draganddrop.DragAndDropControl;
 import es.eucm.cytochallenge.utils.Grades;
 import es.eucm.cytochallenge.view.SkinConstants;
+import es.eucm.cytochallenge.view.screens.BaseScreen;
 import es.eucm.cytochallenge.view.widgets.RightToolbarLayout;
 import es.eucm.cytochallenge.view.widgets.TopToolbarLayout;
 import es.eucm.cytochallenge.view.widgets.slide.SlideEditor;
@@ -59,7 +60,10 @@ public class DragAndDropResult extends ResultLayout<DragAndDropControl> {
         int results = checkDnDResult(containers);
         int total = containers.size;
 
-        Label resultsLabel = new Label(Grades.getGrade(results / (float) total * 100) +
+        float finalGrade = results / (float) total * 100;
+        score = finalGrade;
+
+        Label resultsLabel = new Label(Grades.getGrade(finalGrade) +
                 "    " + results + "/" + total, getSkin(), SkinConstants.STYLE_TOAST);
         resultsLabel.setAlignment(Align.center);
         return resultsLabel;
