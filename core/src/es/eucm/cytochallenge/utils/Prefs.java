@@ -13,18 +13,40 @@ public class Prefs {
     }
 
     public void saveChallengeScore(String challengeId, float score) {
-        prefs.putFloat("challenge_" + challengeId, score);
+        if (challengeId != null) {
+            String key = "challenge_" + challengeId;
+            float currentScore = prefs.getFloat(key, 0);
+            if (currentScore < score) {
+                prefs.putFloat(key, score);
+                prefs.flush();
+            }
+        }
     }
 
     public float getChallengeScore(String challengeId) {
-        return prefs.getFloat("challenge_" + challengeId, 0);
+        return prefs.getFloat("challenge_" + challengeId, 0f);
     }
 
-    public void saveCourseScore(String courseId, String score) {
-        prefs.putString("course_" + courseId, score);
+    public void saveCourseChallengeScore(String challengeId, float score) {
+        saveChallengeScore("course_" + challengeId, score);
     }
 
-    public String getCourseScore(String courseId) {
-        return prefs.getString("course_" + courseId, "");
+    public float getCourseChallengeScore(String challengeId) {
+        return getChallengeScore("course_" + challengeId);
+    }
+
+    public void saveCourseScore(String courseId, float score) {
+        if (courseId != null) {
+            String key = "course_" + courseId;
+            float currentScore = prefs.getFloat(key, 0);
+            if (currentScore < score) {
+                prefs.putFloat(key, score);
+                prefs.flush();
+            }
+        }
+    }
+
+    public float getCourseScore(String courseId) {
+        return prefs.getFloat("course_" + courseId, 0f);
     }
 }

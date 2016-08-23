@@ -8,6 +8,8 @@ import es.eucm.cytochallenge.model.hint.Hint;
  */
 public class Challenge {
 
+    private String id;
+
     private Difficulty difficulty = Difficulty.EASY;
 
     private Category category = Category.OTHER;
@@ -46,5 +48,13 @@ public class Challenge {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -8,6 +8,7 @@ import es.eucm.cytochallenge.model.Challenge;
 
 public class InternalFilesChallengeResourceProvider implements ChallengeResourceProvider {
 
+    private String currentChallengeId;
     private String resourcePath;
     private Json json;
 
@@ -36,5 +37,13 @@ public class InternalFilesChallengeResourceProvider implements ChallengeResource
 
     public void setResourcePath(String resourcePath) {
         this.resourcePath = resourcePath;
+    }
+
+    public String getCurrentChallengeId() {
+        return currentChallengeId;
+    }
+
+    public void setCurrentChallengeId(String currentChallengeId) {
+        this.currentChallengeId = currentChallengeId;
     }
 }
