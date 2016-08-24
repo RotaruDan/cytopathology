@@ -1,6 +1,7 @@
 package es.eucm.cytochallenge.view.widgets;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.Scaling;
 import es.eucm.cytochallenge.model.Challenge;
+import es.eucm.cytochallenge.model.TextChallenge;
 import es.eucm.cytochallenge.model.course.Course;
 import es.eucm.cytochallenge.model.hint.Hint;
 import es.eucm.cytochallenge.model.hint.ImageInfo;
@@ -31,6 +33,7 @@ public class CourseInfoDialog extends Table {
 
 
     public CourseInfoDialog(Skin skin, I18NBundle i18n) {
+        setSkin(skin);
         CourseInfoDialogStyle style = skin.get(CourseInfoDialogStyle.class);
         background(style.background);
         float pad24dp = WidgetBuilder.dpToPixels(24);
@@ -72,10 +75,8 @@ public class CourseInfoDialog extends Table {
     }
 
     public void addChallenge(Challenge challenge) {
-
-        Label textLabel = new Label(BaseScreen.prefs.getCourseChallengeScore(challenge.getId()) + "", textStyle);
-        textLabel.setWrap(true);
-        container.add(textLabel).expandX().fillX();
+        ChallengeButton challengeButton = new ChallengeButton(challenge, getSkin(), true, "dialog");
+        container.add(challengeButton).expandX().fillX().center();
         container.row();
     }
 
@@ -91,15 +92,13 @@ public class CourseInfoDialog extends Table {
     }
 
     public void show() {
-        System.out.println("show");
-        float y = getY();
+        float y = 0;
         setY(Gdx.graphics.getHeight());
         clearActions();
         addAction(Actions.moveTo(0, y, 0.33f, Interpolation.exp5Out));
     }
 
     public void hide() {
-        System.out.println("hide");
         addAction(Actions.sequence(Actions.moveTo(0, Gdx.graphics.getHeight(),
                 0.33f, Interpolation.exp5Out), Actions.run(new Runnable() {
             @Override

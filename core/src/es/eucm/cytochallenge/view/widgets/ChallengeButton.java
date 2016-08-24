@@ -28,7 +28,11 @@ public class ChallengeButton extends TextButton {
     private final Label label;
 
     public ChallengeButton(Challenge challenge, Skin skin) {
-        super("", skin);
+        this(challenge, skin, false, "default");
+    }
+
+    public ChallengeButton(Challenge challenge, Skin skin, boolean isCourse, String styleName) {
+        super("", skin, styleName);
 
         TextControl textControl = ((TextChallenge)challenge).getTextControl();
         setText(textControl.getText());
@@ -72,9 +76,12 @@ public class ChallengeButton extends TextButton {
         difficulty.setColor(difficultyColor);
         difficulty.setScaling(Scaling.fit);
 
-
-        float finalScore = BaseScreen.prefs.getChallengeScore(challenge.getId());
-        System.out.println("finalScore = " + finalScore);
+        float finalScore;
+        if(!isCourse) {
+            finalScore = BaseScreen.prefs.getChallengeScore(challenge.getId());
+        } else {
+            finalScore = BaseScreen.prefs.getCourseChallengeScore(challenge.getId());
+        }
         Label score = new Label(Grades.getGrade(finalScore) + "", skin);
 
 
