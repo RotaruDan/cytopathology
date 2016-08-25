@@ -1,6 +1,7 @@
 package es.eucm.cytochallenge.view.screens;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import es.eucm.cytochallenge.model.*;
@@ -11,6 +12,7 @@ import es.eucm.cytochallenge.utils.InternalFilesChallengeResourceProvider;
 import es.eucm.cytochallenge.view.*;
 import es.eucm.cytochallenge.view.transitions.Fade;
 import es.eucm.cytochallenge.view.widgets.HintDialog;
+import es.eucm.cytochallenge.view.widgets.Toast;
 import es.eucm.cytochallenge.view.widgets.WidgetBuilder;
 import es.eucm.cytochallenge.view.widgets.challenge.ChallengeLayout;
 import es.eucm.cytochallenge.view.widgets.challenge.TextChallengeWidget;
@@ -24,6 +26,7 @@ public class Challenges extends BaseScreen {
     private ChallengeResourceProvider challengeResourceProvider;
     private Course currentCourse;
     private int challengeCount = 0;
+    private ImageButton nextChallenge;
 
     public void setCurrentCourse(Course currentCourse) {
         this.currentCourse = currentCourse;
@@ -56,13 +59,13 @@ public class Challenges extends BaseScreen {
             }
         });
 
-        final Button nextChallenge = WidgetBuilder.circleButton(SkinConstants.IC_ARROW);
+        nextChallenge = WidgetBuilder.circleButton(SkinConstants.IC_ARROW);
         nextChallenge.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(currentCourse.getChallenges().size == challengeCount) {
-                    // TODO show final Course completion result
+                if (currentCourse.getChallenges().size == challengeCount) {
                     challengeLayout.setNextChallenge(null);
+                    challengeList.setShowCourseInfo(true);
                     game.changeScreen(challengeList);
                 } else {
                     challengeLayout.setNextChallenge(null);
@@ -76,20 +79,7 @@ public class Challenges extends BaseScreen {
         check.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                currentChallenge.setUpScore();
-                addButton = hint;
-                check.remove();
-                Hint hintInfo = currentChallenge.getChallenge().getHint();
-                if (hintInfo != null) {
-                    challengeLayout.setCheckButton(hint);
-                }
-                if(currentCourse != null) {
-                    challengeLayout.setNextChallenge(nextChallenge);
-                }
-                TimerWidget timer = challengeLayout.getTimer();
-                if(timer != null) {
-                    timer.stop();
-                }
+                checkChallenge();
             }
         });
 
@@ -97,6 +87,23 @@ public class Challenges extends BaseScreen {
         challengeLayout.setBackButton(back);
 
         root.add(challengeLayout).expand().fill();
+    }
+
+    private void checkChallenge() {
+        currentChallenge.setUpScore();
+        addButton = hint;
+        check.remove();
+        Hint hintInfo = currentChallenge.getChallenge().getHint();
+        if (hintInfo != null) {
+            challengeLayout.setCheckButton(hint);
+        }
+        if (currentCourse != null) {
+            challengeLayout.setNextChallenge(nextChallenge);
+        }
+        TimerWidget timer = challengeLayout.getTimer();
+        if (timer != null) {
+            timer.stop();
+        }
     }
 
     @Override
@@ -118,7 +125,7 @@ public class Challenges extends BaseScreen {
             internalChallengeResourceProvider.setCurrentChallengeId(currentChallengeId);
         }
 
-        if(currentCourse == null) {
+        if (currentCourse == null) {
             challengeLayout.setNextChallenge(null);
         }
 
@@ -128,14 +135,14 @@ public class Challenges extends BaseScreen {
 
                 resource.setId(((InternalFilesChallengeResourceProvider) challengeResourceProvider).getCurrentChallengeId());
 
-                if(currentChallenge != null) {
+                if (currentChallenge != null) {
                     currentChallenge.getWidget().remove();
                 }
                 currentChallenge = new TextChallengeWidget(skin, i18n);
                 currentChallenge.setCompletedListener(new TextChallengeWidget.CompletedListener() {
                     @Override
                     public void completed(String challengeId, float score) {
-                        if(currentCourse != null) {
+                        if (currentCourse != null) {
                             prefs.saveCourseChallengeScore(challengeId, score);
                         } else {
                             prefs.saveChallengeScore(challengeId, score);
@@ -157,7 +164,7 @@ public class Challenges extends BaseScreen {
             }
         });
 
-        if(currentCourse != null) {
+        if (currentCourse != null) {
             if (currentCourse.getDifficulty() == Difficulty.EASY) {
 
             } else if (currentCourse.getDifficulty() == Difficulty.MEDIUM) {
@@ -172,6 +179,22 @@ public class Challenges extends BaseScreen {
         TimerWidget timer = new TimerWidget("", skin);
         timer.setTime(startTime);
         challengeLayout.setTimer(timer);
+        timer.setOnTimeoutListener(new Runnable() {
+            @Override
+            public void run() {
+                stage.addAction(Actions.delay(.5f, Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast toast = new Toast(skin);
+                        toast.setText(i18n.get("timeout"));
+                        stage.addActor(toast);
+                        toast.show();
+                        challengeLayout.setTimer(null);
+                    }
+                })));
+                checkChallenge();
+            }
+        });
     }
 
     @Override

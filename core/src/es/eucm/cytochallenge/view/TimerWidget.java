@@ -9,6 +9,7 @@ public class TimerWidget extends TextButton {
 
     private boolean stopped;
     private float time;
+    private Runnable onTimeoutListener;
 
     public TimerWidget(String text, Skin skin) {
         super(text, skin);
@@ -18,11 +19,14 @@ public class TimerWidget extends TextButton {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (time == 0 || stopped) {
+        if (time <= 0 || stopped) {
             return;
         }
         time -= delta;
         setText(String.valueOf((int) time));
+        if(onTimeoutListener != null && time <= 0) {
+            onTimeoutListener.run();
+        }
     }
 
     public float getTime() {
@@ -40,5 +44,9 @@ public class TimerWidget extends TextButton {
 
     public void start() {
         stopped = false;
+    }
+
+    public void setOnTimeoutListener(Runnable onTimeoutListener) {
+        this.onTimeoutListener = onTimeoutListener;
     }
 }
