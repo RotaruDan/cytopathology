@@ -139,9 +139,11 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
                 String answer = answers[i];
                 final TextButton answerLabel = new TextButton((i + 1) + " - " + answer, skin,
                         SkinConstants.STYLE_MULTIPLE_CHOICE);
+                answerLabel.getLabel().setWrap(true);
                 answerLabel.setUserObject(answer);
                 answerLabel.pad(defaultPad);
                 answerLabel.getLabel().setAlignment(Align.left);
+                answerLabel.getLabelCell().width(Gdx.graphics.getWidth() * .45f);
                 answersLayout.add(answerLabel).expandX();
 
                 group.add(answerLabel);

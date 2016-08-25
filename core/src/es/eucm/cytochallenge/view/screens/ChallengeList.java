@@ -35,6 +35,7 @@ public class ChallengeList extends BaseScreen {
 
     private InternalFilesChallengeResourceProvider challengeResourceProvider = new InternalFilesChallengeResourceProvider();
 
+    private boolean showCourseInfo = false;
     private Course currentCourse;
     private Table layout;
     private Label title;
@@ -84,10 +85,8 @@ public class ChallengeList extends BaseScreen {
         courseInfo.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(currentCourse != null) {
-                    courseDialog.show();
-                    courseDialog.setVisible(true);
-                    menu.getStage().addActor(courseDialog);
+                if (currentCourse != null) {
+                    showCourseDialog();
                 }
             }
         });
@@ -105,6 +104,12 @@ public class ChallengeList extends BaseScreen {
         root.add(rootLayout).expand().fill();
     }
 
+    private void showCourseDialog() {
+        courseDialog.show();
+        courseDialog.setVisible(true);
+        menu.getStage().addActor(courseDialog);
+    }
+
     private void playCourse() {
         if (currentCourse == null) {
             return;
@@ -117,16 +122,21 @@ public class ChallengeList extends BaseScreen {
     @Override
     public void show() {
         super.show();
-        if(currentCourse != null) {
+        if (currentCourse != null) {
             title.setText(i18n.get("course") + ": " + currentCourse.getName());
             courseDialog.init(currentCourse);
             courseInfo.setVisible(true);
+            if (showCourseInfo) {
+                showCourseInfo = false;
+                showCourseDialog();
+            }
         } else {
             title.setText(i18n.get("challenges"));
             courseInfo.setVisible(false);
         }
         layout.clearChildren();
         loadChallenges(layout);
+
     }
 
     private void loadChallenges(final Table layout) {
@@ -158,7 +168,7 @@ public class ChallengeList extends BaseScreen {
 
                     if (challenge instanceof TextChallenge) {
                         challenge.setId(challengeId);
-                        if(currentCourse != null) {
+                        if (currentCourse != null) {
                             courseDialog.addChallenge(challenge);
                         }
                         TextChallenge textChallenge = (TextChallenge) challenge;
@@ -208,5 +218,7 @@ public class ChallengeList extends BaseScreen {
         game.changeScreen(courseList, Fade.init(1f, true));
     }
 
-
+    public void setShowCourseInfo(boolean showCourseInfo) {
+        this.showCourseInfo = showCourseInfo;
+    }
 }

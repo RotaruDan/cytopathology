@@ -27,13 +27,14 @@ import es.eucm.cytochallenge.view.screens.BaseScreen;
 
 public class CourseInfoDialog extends Table {
 
+    private final I18NBundle i18n;
     private Label.LabelStyle textStyle;
     private Table container;
     private Label title;
 
-
     public CourseInfoDialog(Skin skin, I18NBundle i18n) {
         setSkin(skin);
+        this.i18n = i18n;
         CourseInfoDialogStyle style = skin.get(CourseInfoDialogStyle.class);
         background(style.background);
         float pad24dp = WidgetBuilder.dpToPixels(24);
@@ -57,7 +58,7 @@ public class CourseInfoDialog extends Table {
             }
         });
 
-        add(title).expandX().fill();
+        add(title);
         row();
         add(scroll).expand().fill();
         row();
@@ -71,12 +72,12 @@ public class CourseInfoDialog extends Table {
 
     public void init(Course course) {
         clearChallenges();
-        title.setText(course.getName());
+        title.setText(i18n.get("exam") + ": " + course.getName());
     }
 
     public void addChallenge(Challenge challenge) {
         ChallengeButton challengeButton = new ChallengeButton(challenge, getSkin(), true, "dialog");
-        container.add(challengeButton).expandX().fillX().center();
+        container.add(challengeButton).expandX().fillX().width(Gdx.graphics.getWidth() * .95f).center();
         container.row();
     }
 
@@ -84,11 +85,6 @@ public class CourseInfoDialog extends Table {
     public Actor hit(float x, float y, boolean touchable) {
         Actor hit = super.hit(x, y, touchable);
         return hit == null ? this : hit;
-    }
-
-    @Override
-    public void layout() {
-        super.layout();
     }
 
     public void show() {
