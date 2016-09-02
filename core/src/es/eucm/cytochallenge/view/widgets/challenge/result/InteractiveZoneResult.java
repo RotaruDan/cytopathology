@@ -152,8 +152,12 @@ public class InteractiveZoneResult extends ResultLayout<InteractiveZoneControl> 
         addDescription(horizontalScroll);
 
         return new Actor[]{
-                right,
                 slideEditor
+        };
+    }
+    protected String[] buildTabNames(I18NBundle i18n) {
+        return new String[]{
+                i18n.get("result")
         };
     }
 }

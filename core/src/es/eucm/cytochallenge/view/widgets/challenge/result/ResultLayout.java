@@ -38,30 +38,33 @@ public abstract class ResultLayout<T extends TextControl> extends AbstractWidget
         content = new Container<Actor>();
         content.fill();
         addActor(content);
-
-        setTabs(buildTabNames(i18n), buildTabs(control, args));
+        setTabs(buildTabNames(i18n), skin, buildTabs(control, args));
     }
 
     private void addResultRow() {
         toolbar.add(topRow).expandX().fillX();
-        toolbar.add(tabs).right();
+        if (tabs != null) {
+            toolbar.add(tabs).right();
+        }
     }
 
-    protected Skin getSkin(){
+    protected Skin getSkin() {
         return toolbar.getSkin();
     }
 
-    private void setTabs(String[] tabName, Actor... tabWidget) {
-        results = tabWidget;
-        tabs.setItems(tabName);
-        tabs.addListener(new Tabs.TabListener() {
+    private void setTabs(String[] tabName, Skin skin, Actor... tabWidget) {
+        if (tabName != null) {
+            results = tabWidget;
+            tabs.setItems(tabName);
+            tabs.addListener(new Tabs.TabListener() {
 
-            @Override
-            public void changed(Tabs.TabEvent event) {
-                changeTab();
-            }
-        });
-        changeTab();
+                @Override
+                public void changed(Tabs.TabEvent event) {
+                    changeTab();
+                }
+            });
+            changeTab();
+        }
     }
 
     private void changeTab() {
@@ -95,12 +98,14 @@ public abstract class ResultLayout<T extends TextControl> extends AbstractWidget
     }
 
     protected abstract Label buildLabel(T control, Object... args);
+
     protected String[] buildTabNames(I18NBundle i18n) {
         return new String[]{
                 i18n.get("currentAnswer"),
                 i18n.get("correctAnswer")
         };
     }
+
     protected abstract Actor[] buildTabs(T control, Object... args);
 
     public float getScore() {
