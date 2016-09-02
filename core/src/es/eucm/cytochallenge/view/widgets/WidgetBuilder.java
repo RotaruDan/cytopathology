@@ -1,11 +1,14 @@
 package es.eucm.cytochallenge.view.widgets;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.Scaling;
+import es.eucm.cytochallenge.model.Difficulty;
 import es.eucm.cytochallenge.view.screens.BaseScreen;
 import es.eucm.cytochallenge.view.SkinConstants;
 
@@ -113,5 +116,23 @@ public class WidgetBuilder {
         Image image = new Image(BaseScreen.skin, icon);
         image.setColor(BaseScreen.skin.getColor(color));
         return image;
+    }
+
+    public static Label difficulty(Difficulty difficulty, I18NBundle i18n) {
+        Color difficultyColor = null;
+        String difficultyText = null;
+        if (difficulty == Difficulty.EASY) {
+            difficultyColor = Color.CHARTREUSE;
+            difficultyText = "easy";
+        } else if (difficulty == Difficulty.MEDIUM) {
+            difficultyColor = Color.ORANGE;
+            difficultyText = "medium";
+        } else {
+            difficultyColor = Color.RED;
+            difficultyText = "hard";
+        }
+        Label difficultyLabel = new Label(i18n.get(difficultyText).toUpperCase(), BaseScreen.skin, "toast");
+        difficultyLabel.setColor(difficultyColor);
+        return difficultyLabel;
     }
 }

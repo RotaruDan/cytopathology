@@ -75,8 +75,8 @@ public class CourseInfoDialog extends Table {
         title.setText(i18n.get("exam") + ": " + course.getName());
     }
 
-    public void addChallenge(Challenge challenge) {
-        ChallengeButton challengeButton = new ChallengeButton(challenge, getSkin(), true, "dialog");
+    public void addChallenge(Challenge challenge, I18NBundle i18n) {
+        ChallengeButton challengeButton = new ChallengeButton(challenge, getSkin(), true, "dialog", i18n);
         container.add(challengeButton).expandX().fillX().width(Gdx.graphics.getWidth() * .95f).center();
         container.row();
     }

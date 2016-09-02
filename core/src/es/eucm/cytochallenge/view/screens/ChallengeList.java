@@ -169,12 +169,12 @@ public class ChallengeList extends BaseScreen {
                     if (challenge instanceof TextChallenge) {
                         challenge.setId(challengeId);
                         if (currentCourse != null) {
-                            courseDialog.addChallenge(challenge);
+                            courseDialog.addChallenge(challenge, i18n);
                         }
                         TextChallenge textChallenge = (TextChallenge) challenge;
 
                         final Button button = new ChallengeButton(textChallenge,
-                                skin);
+                                skin, i18n);
                         button.setUserObject(challengeFolder);
                         Gdx.app.log("Files", "json challenge getTextControl: " + textChallenge.getTextControl());
 

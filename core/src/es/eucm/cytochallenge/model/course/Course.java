@@ -1,12 +1,14 @@
 package es.eucm.cytochallenge.model.course;
 
 import com.badlogic.gdx.utils.Array;
+import es.eucm.cytochallenge.model.Challenge;
 import es.eucm.cytochallenge.model.Difficulty;
+import es.eucm.cytochallenge.view.screens.Challenges;
 
 public class Course {
-    private Difficulty difficulty = Difficulty.EASY;
     private String courseId, name;
     private Array<String> challenges;
+    private Difficulty difficulty;
 
     public String getCourseId() {
         return courseId;
@@ -32,11 +34,17 @@ public class Course {
         this.challenges = challenges;
     }
 
-    public Difficulty getDifficulty() {
+    public Difficulty getEstimatedDifficulty(Array<Challenge> challenges) {
+        difficulty = Difficulty.EASY;
+        if(challenges != null) {
+            for(int i = 0; i < challenges.size; ++i) {
+                Difficulty challengeDifficulty = challenges.get(i).getDifficulty();
+                if(challengeDifficulty.ordinal() > difficulty.ordinal()) {
+                    difficulty = challengeDifficulty;
+                }
+            }
+        }
         return difficulty;
     }
 
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
-    }
 }

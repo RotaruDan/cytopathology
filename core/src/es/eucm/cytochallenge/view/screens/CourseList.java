@@ -72,19 +72,7 @@ public class CourseList extends BaseScreen {
             Tile tile = new Tile(skin);
             tile.setText(course.getName());
 
-            Color difficultyColor = null;
-            if (course.getDifficulty() == Difficulty.EASY) {
-                difficultyColor = Color.GREEN;
-            } else if (course.getDifficulty() == Difficulty.MEDIUM) {
-                difficultyColor = Color.ORANGE;
-            } else {
-                difficultyColor = Color.RED;
-            }
-            Image difficulty = new Image(skin.getDrawable(SkinConstants.IC_DIFFICULTY));
-            difficulty.setColor(difficultyColor);
-            difficulty.setScaling(Scaling.fit);
-
-            tile.setMarker(difficulty);
+            tile.setMarker(WidgetBuilder.difficulty(course.getEstimatedDifficulty(null), i18n));
 
             layout.add(tile);
             tile.addListener(new ClickListener() {
