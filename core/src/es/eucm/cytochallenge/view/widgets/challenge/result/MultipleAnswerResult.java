@@ -47,15 +47,13 @@ public class MultipleAnswerResult extends ResultLayout<MultipleAnswerControl> {
     @Override
     protected Actor[] buildTabs(MultipleAnswerControl control, Object... args) {
         Actor right = (Actor) args[1];
-        String correctAnswerStr = "";
-        if (control.getCorrectAnswer() <= control.getAnswers().length - 1) {
-            correctAnswerStr = control.getAnswers()[control.getCorrectAnswer()];
-        }
-        Label correctAnswer = new Label(correctAnswerStr, getSkin(), SkinConstants.STYLE_TOAST);
-        correctAnswer.setAlignment(Align.center);
         return new Actor[]{
-                right,
-                correctAnswer
+                right
+        };
+    }
+    protected String[] buildTabNames(I18NBundle i18n) {
+        return new String[]{
+                i18n.get("result")
         };
     }
 }
