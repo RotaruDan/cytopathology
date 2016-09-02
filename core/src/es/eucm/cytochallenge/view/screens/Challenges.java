@@ -164,14 +164,12 @@ public class Challenges extends BaseScreen {
             }
         });
 
-        if (currentCourse != null) {
-            if (currentCourse.getDifficulty() == Difficulty.EASY) {
+        if (currentChallenge.getChallenge().getDifficulty() == Difficulty.EASY) {
 
-            } else if (currentCourse.getDifficulty() == Difficulty.MEDIUM) {
-                buildTimer(15.5f);
-            } else {
-                buildTimer(10.5f);
-            }
+        } else if (currentChallenge.getChallenge().getDifficulty() == Difficulty.MEDIUM) {
+            buildTimer(15.5f);
+        } else {
+            buildTimer(10.5f);
         }
     }
 
