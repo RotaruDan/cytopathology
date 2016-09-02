@@ -1,5 +1,6 @@
 package es.eucm.cytochallenge.view.widgets;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.Scaling;
 import es.eucm.cytochallenge.model.Challenge;
 import es.eucm.cytochallenge.model.Difficulty;
@@ -27,14 +29,14 @@ public class ChallengeButton extends TextButton {
     private final Image image;
     private final Label label;
 
-    public ChallengeButton(Challenge challenge, Skin skin) {
-        this(challenge, skin, false, "default");
+    public ChallengeButton(Challenge challenge, Skin skin, I18NBundle i18n) {
+        this(challenge, skin, false, "default", i18n);
     }
 
-    public ChallengeButton(Challenge challenge, Skin skin, boolean isCourse, String styleName) {
+    public ChallengeButton(Challenge challenge, Skin skin, boolean isCourse, String styleName, I18NBundle i18n) {
         super("", skin, styleName);
 
-        TextControl textControl = ((TextChallenge)challenge).getTextControl();
+        TextControl textControl = ((TextChallenge) challenge).getTextControl();
         setText(textControl.getText());
 
         label = getLabel();
@@ -64,20 +66,10 @@ public class ChallengeButton extends TextButton {
         left();
         defaults().space(defaultPad);
 
-        Color difficultyColor = null;
-        if (challenge.getDifficulty() == Difficulty.EASY) {
-            difficultyColor = Color.GREEN;
-        } else if (challenge.getDifficulty() == Difficulty.MEDIUM) {
-            difficultyColor = Color.ORANGE;
-        } else {
-            difficultyColor = Color.RED;
-        }
-        Image difficulty = new Image(skin.getDrawable(SkinConstants.IC_DIFFICULTY));
-        difficulty.setColor(difficultyColor);
-        difficulty.setScaling(Scaling.fit);
+        Label difficulty = WidgetBuilder.difficulty(challenge.getDifficulty(), i18n);
 
         float finalScore;
-        if(!isCourse) {
+        if (!isCourse) {
             finalScore = BaseScreen.prefs.getChallengeScore(challenge.getId());
         } else {
             finalScore = BaseScreen.prefs.getCourseChallengeScore(challenge.getId());
@@ -86,7 +78,7 @@ public class ChallengeButton extends TextButton {
 
 
         add(image).width(image.getWidth());
-        add(difficulty).width(difficulty.getWidth());
+        add(difficulty).width(Math.max(difficulty.getWidth(), Gdx.graphics.getWidth() * .12f));
         add(score);
         add(label);
         setSize(getPrefWidth(), getPrefHeight());
@@ -95,7 +87,7 @@ public class ChallengeButton extends TextButton {
     @Override
     public void layout() {
         super.layout();
-        if(label.getWidth() + label.getX() >= getWidth()) {
+        if (label.getWidth() + label.getX() >= getWidth()) {
             label.setWidth(getWidth() - label.getX());
         }
     }
