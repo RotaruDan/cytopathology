@@ -8,12 +8,15 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.utils.*;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import es.eucm.cytochallenge.model.Difficulty;
 import es.eucm.cytochallenge.model.course.Course;
 import sun.misc.BASE64Encoder;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DownloadChallenges {
 
@@ -31,6 +34,7 @@ public class DownloadChallenges {
     public static Array<String> IDS = new Array<String>();
     public static FileHandle TMP_FOLDER, CHALLENGES_FOLDER;
     public static int PROCESSED = 0;
+    public static Map<String, Array<Difficulty>> difficulties = new HashMap<String, Array<Difficulty>>();
 
     public static void main(String[] arg) {
 
@@ -99,7 +103,6 @@ public class DownloadChallenges {
         });
 
         do {
-
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -111,7 +114,7 @@ public class DownloadChallenges {
         json.setOutputType(JsonWriter.OutputType.json);
         FileHandle jsonChallenges = CHALLENGES_FOLDER.child("challenges.json");
         Array<String> currentChallenges = null;
-        if(jsonChallenges.exists()) {
+        if (jsonChallenges.exists()) {
             currentChallenges = json.fromJson(Array.class, jsonChallenges);
         } else {
             currentChallenges = new Array<String>();
@@ -129,13 +132,17 @@ public class DownloadChallenges {
         }
 
         json.toJson(currentChallenges, String[].class, jsonChallenges);
-        System.out.println(json.prettyPrint(currentChallenges));
 
-
+        for (int i = 0; i < courses.size; ++i) {
+            String courseId = courses.get(i).getCourseId();
+            Array<Difficulty> courseDiffs = difficulties.get(courseId);
+            if (courseDiffs != null) {
+                courses.get(i).getEstimatedDifficulty(courseDiffs);
+            }
+        }
 
         FileHandle coursesFile = CHALLENGES_FOLDER.child("courses.json");
         json.toJson(courses, Array.class, coursesFile);
-        System.out.println(json.prettyPrint(courses));
 
         // Cleaning
         TMP_FOLDER.deleteDirectory();
@@ -168,21 +175,46 @@ public class DownloadChallenges {
                         String id = challengeInfo.getString("_id");
 
                         if (id != null) {
-                            System.out.println("challenge = " + id);
                             IDS.add(id);
 
                             String courseId = challengeInfo.getString("_course");
 
+
+                            if (challengeInfo.hasChild("challengeFile")) {
+                                JsonValue challengeFile = challengeInfo.getChild("challengeFile");
+                                while(!challengeFile.name().equals("difficulty")) {
+                                    challengeFile = challengeFile.next();
+                                }
+
+                                String challengeDifficulty = challengeFile.asString();
+                                Difficulty diff;
+                                if (challengeDifficulty.equals("EASY")) {
+                                    diff = Difficulty.EASY;
+                                } else if (challengeDifficulty.equals("MEDIUM")) {
+                                    diff = Difficulty.MEDIUM;
+                                } else {
+                                    diff = Difficulty.HARD;
+                                }
+
+                                Array<Difficulty> courseDifficulties = difficulties.get(courseId);
+                                if (courseDifficulties == null) {
+                                    courseDifficulties = new Array<Difficulty>();
+                                    difficulties.put(courseId, courseDifficulties);
+                                }
+                                courseDifficulties.add(diff);
+
+                            }
+
                             for (int j = 0; j < courses.size; j++) {
                                 Course course = courses.get(j);
-                                if(course.getCourseId().equals(courseId)) {
+                                if (course.getCourseId().equals(courseId)) {
                                     Array<String> courseChallenges = course.getChallenges();
-                                    if(courseChallenges == null) {
+                                    if (courseChallenges == null) {
                                         courseChallenges = new Array<String>();
                                         course.setChallenges(courseChallenges);
                                     }
 
-                                    if(!courseChallenges.contains(id, false)) {
+                                    if (!courseChallenges.contains(id, false)) {
                                         courseChallenges.add(id);
                                     }
                                 }

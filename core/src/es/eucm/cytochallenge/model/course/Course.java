@@ -34,16 +34,17 @@ public class Course {
         this.challenges = challenges;
     }
 
-    public Difficulty getEstimatedDifficulty(Array<Challenge> challenges) {
+    public Difficulty getEstimatedDifficulty(Array<Difficulty> courseDiffs) {
         difficulty = Difficulty.EASY;
-        if(challenges != null) {
-            for(int i = 0; i < challenges.size; ++i) {
-                Difficulty challengeDifficulty = challenges.get(i).getDifficulty();
+        if(courseDiffs != null) {
+            for(int i = 0; i < courseDiffs.size; ++i) {
+                Difficulty challengeDifficulty = courseDiffs.get(i);
                 if(challengeDifficulty.ordinal() > difficulty.ordinal()) {
                     difficulty = challengeDifficulty;
                 }
             }
         }
+
         return difficulty;
     }
 

@@ -60,7 +60,6 @@ public class CourseList extends BaseScreen {
     private void loadCourses(final Gallery layout) {
 
         Json json = new Json();
-        float pad = WidgetBuilder.dpToPixels(24f);
         String challengesPath = "challenges/";
         String challengeJson = "courses.json";
         Array<Course> courses = json.fromJson(Array.class,
