@@ -57,4 +57,9 @@ public class Challenge {
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + difficulty;
+    }
 }

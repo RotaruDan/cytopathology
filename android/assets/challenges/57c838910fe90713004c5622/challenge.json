@@ -1,0 +1,15 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleImageAnswerControl",
+        "text": "",
+        "answers": [
+            "6.jpg",
+            "9.jpg",
+            "11.jpg",
+            "file.jpg"
+        ],
+        "correctAnswers": []
+    }
+}

@@ -35,7 +35,9 @@ public class Course {
     }
 
     public Difficulty getEstimatedDifficulty(Array<Difficulty> courseDiffs) {
-        difficulty = Difficulty.EASY;
+        if(difficulty == null) {
+            difficulty = Difficulty.EASY;
+        }
         if(courseDiffs != null) {
             for(int i = 0; i < courseDiffs.size; ++i) {
                 Difficulty challengeDifficulty = courseDiffs.get(i);
@@ -44,6 +46,8 @@ public class Course {
                 }
             }
         }
+
+
 
         return difficulty;
     }
