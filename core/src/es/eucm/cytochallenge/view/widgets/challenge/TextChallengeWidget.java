@@ -222,7 +222,9 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             for (int i = 0; i < correctAnswers.length; i++) {
                 int correctAnswer = correctAnswers[i];
 
-                imageGroup.getButtons().get(correctAnswer).setUserObject(true);
+                if (correctAnswer < imageGroup.getButtons().size) {
+                    imageGroup.getButtons().get(correctAnswer).setUserObject(true);
+                }
             }
 
             // TODO random shuffle
@@ -642,7 +644,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             root.clear();
             root.add(result).expand().fill();
 
-            if(completedListener != null) {
+            if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
         }
@@ -664,7 +666,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             root.clear();
             root.add(result).expand().fill();
 
-            if(completedListener != null) {
+            if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
         }
@@ -684,7 +686,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             root.clear();
             root.add(result).expand().fill();
 
-            if(completedListener != null) {
+            if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
         }
@@ -702,7 +704,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             root.clear();
             root.add(result).expand().fill();
 
-            if(completedListener != null) {
+            if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
         }
@@ -722,7 +724,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             root.clear();
             root.add(result).expand().fill();
 
-            if(completedListener != null) {
+            if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
         }
@@ -738,7 +740,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
     }
 
     public interface CompletedListener {
-         void completed(String challengeId, float score);
+        void completed(String challengeId, float score);
     }
 
     public void setCompletedListener(CompletedListener completedListener) {

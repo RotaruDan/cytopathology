@@ -80,7 +80,7 @@ public class MultipleImageAnswerResult extends ResultLayout<MultipleImageAnswerC
 
             Button imageButton = new Button(getSkin().get(SkinConstants.STYLE_CHECK,
                     Button.ButtonStyle.class));
-            Button originalButton = (Button)rootRightTable.getChildren().get(i);
+            Button originalButton = (Button) rootRightTable.getChildren().get(i);
             Image originalImage = (Image) originalButton.getChildren().first();
 
             Image imageActor = new Image(originalImage.getDrawable());
@@ -102,8 +102,10 @@ public class MultipleImageAnswerResult extends ResultLayout<MultipleImageAnswerC
         for (int i = 0; i < correctAnswers.length; i++) {
             int correctAnswer = correctAnswers[i];
 
-            Button button = (Button) rootTable.getChildren().get(correctAnswer);
-            button.setChecked(true);
+            if (correctAnswer < rootTable.getChildren().size) {
+                Button button = (Button) rootTable.getChildren().get(correctAnswer);
+                button.setChecked(true);
+            }
         }
 
         rootTable.pack();
