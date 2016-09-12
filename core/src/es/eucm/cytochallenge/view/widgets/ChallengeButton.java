@@ -29,12 +29,17 @@ public class ChallengeButton extends TextButton {
     private final Image image;
     private final Label label;
 
+    public ChallengeButton(Skin skin, I18NBundle i18n) {
+        this(null, skin, i18n);
+    }
+
     public ChallengeButton(Challenge challenge, Skin skin, I18NBundle i18n) {
         this(challenge, skin, false, "default", i18n);
     }
 
     public ChallengeButton(Challenge challenge, Skin skin, boolean isCourse, String styleName, I18NBundle i18n) {
         super("", skin, styleName);
+
 
         TextControl textControl = ((TextChallenge) challenge).getTextControl();
         setText(textControl.getText());
@@ -68,27 +73,21 @@ public class ChallengeButton extends TextButton {
 
         Label difficulty = WidgetBuilder.difficulty(challenge.getDifficulty(), i18n);
 
-        float finalScore;
-        if (!isCourse) {
-            finalScore = BaseScreen.prefs.getChallengeScore(challenge.getId());
-        } else {
-            finalScore = BaseScreen.prefs.getCourseChallengeScore(challenge.getId());
-        }
+        float finalScore = BaseScreen.prefs.getChallengeScore(challenge.getId());
         Label score = new Label(Grades.getGrade(finalScore) + "", skin);
-
 
         add(image).width(image.getWidth());
         add(difficulty).width(Math.max(difficulty.getWidth(), Gdx.graphics.getWidth() * .12f));
-        add(score);
-        add(label);
+        add(label).expandX().left();
+        add(score).width(image.getWidth());
         setSize(getPrefWidth(), getPrefHeight());
     }
 
     @Override
     public void layout() {
         super.layout();
-        if (label.getWidth() + label.getX() >= getWidth()) {
-            label.setWidth(getWidth() - label.getX());
+        if (label.getWidth() + label.getX() + image.getWidth()* 1.8f >= getWidth()) {
+            label.setWidth(getWidth() - label.getX() - image.getWidth() * 1.8f);
         }
     }
 

@@ -48,6 +48,8 @@ public class DragAndDropResult extends ResultLayout<DragAndDropControl> {
 
                 if (correctAnswer.equals(currentAnswer)) {
                     correctCount++;
+                } else {
+                    child.getChildren().first().setColor(Color.RED);
                 }
             }
         }

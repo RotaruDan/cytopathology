@@ -633,9 +633,13 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
         if (textControl instanceof MultipleAnswerControl) {
             MultipleAnswerControl multipleAnswerControl = ((MultipleAnswerControl) textControl);
 
-            group.getChecked().getLabel().setColor(Color.RED);
-            TextButton correctButton = group.getButtons().get(multipleAnswerControl.getCorrectAnswer());
-            correctButton.getLabel().setColor(Color.CHARTREUSE);
+            if(group.getChecked() != null) {
+                group.getChecked().getLabel().setColor(Color.RED);
+            }
+            if(multipleAnswerControl.getCorrectAnswer() < group.getButtons().size) {
+                TextButton correctButton = group.getButtons().get(multipleAnswerControl.getCorrectAnswer());
+                correctButton.getLabel().setColor(Color.CHARTREUSE);
+            }
             Table actor = (Table) root.getChildren().get(0);
             actor.getChildren().get(1).setTouchable(Touchable.disabled);
             MultipleAnswerResult result = new MultipleAnswerResult(skin,

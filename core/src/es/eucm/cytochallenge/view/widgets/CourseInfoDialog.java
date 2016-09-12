@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.Scaling;
@@ -23,6 +25,7 @@ import es.eucm.cytochallenge.model.hint.ImageInfo;
 import es.eucm.cytochallenge.model.hint.Info;
 import es.eucm.cytochallenge.model.hint.TextInfo;
 import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
+import es.eucm.cytochallenge.utils.Grades;
 import es.eucm.cytochallenge.view.screens.BaseScreen;
 
 public class CourseInfoDialog extends Table {
@@ -30,7 +33,9 @@ public class CourseInfoDialog extends Table {
     private final I18NBundle i18n;
     private Label.LabelStyle textStyle;
     private Table container;
-    private Label title;
+    private Label title, totalScore;
+    private int challenges;
+    private float totalChallengeScore;
 
     public CourseInfoDialog(Skin skin, I18NBundle i18n) {
         setSkin(skin);
@@ -64,10 +69,16 @@ public class CourseInfoDialog extends Table {
         row();
         add(ok).expandX().right().padTop(pad16dp);
         setFillParent(true);
+
+        totalScore = new Label("", skin);
+        totalScore.setAlignment(Align.right);
     }
 
     public void clearChallenges() {
+        totalChallengeScore = 0f;
+        challenges = 0;
         container.clearChildren();
+        container.add(totalScore).expandX().fillX().width(Gdx.graphics.getWidth() * .95f).center();
     }
 
     public void init(Course course) {
@@ -77,8 +88,18 @@ public class CourseInfoDialog extends Table {
 
     public void addChallenge(Challenge challenge, I18NBundle i18n) {
         ChallengeButton challengeButton = new ChallengeButton(challenge, getSkin(), true, "dialog", i18n);
-        container.add(challengeButton).expandX().fillX().width(Gdx.graphics.getWidth() * .95f).center();
+        challengeButton.setTouchable(Touchable.disabled);
+        container.getCell(totalScore).setActor(challengeButton).expandX().fillX().width(Gdx.graphics.getWidth() * .95f).center();
         container.row();
+        container.add(totalScore).expandX().width(Gdx.graphics.getWidth() * .95f).right();
+
+        totalChallengeScore += BaseScreen.prefs.getChallengeScore(challenge.getId());
+        ++challenges;
+
+        float finalScore = (totalChallengeScore / challenges);
+        totalScore.setText(i18n.get("totalScore") + ":    "
+                + finalScore + "    " +
+                Grades.getGrade(finalScore));
     }
 
     @Override

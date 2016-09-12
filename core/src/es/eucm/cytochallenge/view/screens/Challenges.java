@@ -142,11 +142,7 @@ public class Challenges extends BaseScreen {
                 currentChallenge.setCompletedListener(new TextChallengeWidget.CompletedListener() {
                     @Override
                     public void completed(String challengeId, float score) {
-                        if (currentCourse != null) {
-                            prefs.saveCourseChallengeScore(challengeId, score);
-                        } else {
                             prefs.saveChallengeScore(challengeId, score);
-                        }
                     }
                 });
                 currentChallenge.setChallengeResourceProvider(challengeResourceProvider);
