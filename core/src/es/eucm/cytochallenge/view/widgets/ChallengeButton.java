@@ -23,11 +23,17 @@ import es.eucm.cytochallenge.utils.Grades;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.screens.BaseScreen;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class ChallengeButton extends TextButton {
 
-    private final Image image;
-    private final Label label;
+    private static final DateFormat FORMATTER = new SimpleDateFormat("mm:ss");
+    private Label score, time;
+    private Image image;
+    private Label label;
 
     public ChallengeButton(Skin skin, I18NBundle i18n) {
         this(null, skin, i18n);
@@ -74,20 +80,37 @@ public class ChallengeButton extends TextButton {
         Label difficulty = WidgetBuilder.difficulty(challenge.getDifficulty(), i18n);
 
         float finalScore = BaseScreen.prefs.getChallengeScore(challenge.getId());
-        Label score = new Label(Grades.getGrade(finalScore) + "", skin);
+        score = new Label(Grades.getGrade(finalScore) + "", skin);
+        time = null;
+        if (isCourse) {
+            long timeValue = BaseScreen.prefs.getChallengeTime(challenge.getId());
+            String timeRes;
+            if (timeValue == 0l) {
+                timeRes = i18n.get("time");
+            } else {
+                Date date = new Date(timeValue);
+                String dateFormatted = FORMATTER.format(date);
+                timeRes = dateFormatted;
+            }
+            time = new Label(timeRes + "", skin);
+        }
 
         add(image).width(image.getWidth());
-        add(difficulty).width(Math.max(difficulty.getWidth(), Gdx.graphics.getWidth() * .12f));
-        add(label).expandX().left();
+        add(difficulty).width(Math.max(difficulty.getWidth(), Gdx.graphics.getWidth() * .10f));
+        add(label).expandX().left(). expandX();
         add(score).width(image.getWidth());
+        if(time != null) {
+            add(time).width(image.getWidth() * 2f);
+        }
         setSize(getPrefWidth(), getPrefHeight());
     }
 
     @Override
     public void layout() {
         super.layout();
-        if (label.getWidth() + label.getX() + image.getWidth()* 1.8f >= getWidth()) {
-            label.setWidth(getWidth() - label.getX() - image.getWidth() * 1.8f);
+        float scoreWidth = image.getWidth() * (time == null ? 1.8f : 4.5f);
+        if (label.getWidth() + label.getX() + scoreWidth >= getWidth()) {
+            label.setWidth(getWidth() - label.getX() - scoreWidth);
         }
     }
 

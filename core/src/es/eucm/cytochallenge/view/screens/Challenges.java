@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.TimeUtils;
 import es.eucm.cytochallenge.model.*;
 import es.eucm.cytochallenge.model.course.Course;
 import es.eucm.cytochallenge.model.hint.Hint;
@@ -27,6 +28,8 @@ public class Challenges extends BaseScreen {
     private Course currentCourse;
     private int challengeCount = 0;
     private ImageButton nextChallenge;
+
+    private long startChallengTime;
 
     public void setCurrentCourse(Course currentCourse) {
         this.currentCourse = currentCourse;
@@ -109,7 +112,7 @@ public class Challenges extends BaseScreen {
     @Override
     public void show() {
         super.show();
-
+        startChallengTime = TimeUtils.millis();
         if (currentCourse != null &&
                 currentCourse.getChallenges().size > 0 &&
                 (challengeResourceProvider instanceof InternalFilesChallengeResourceProvider)) {
@@ -142,7 +145,8 @@ public class Challenges extends BaseScreen {
                 currentChallenge.setCompletedListener(new TextChallengeWidget.CompletedListener() {
                     @Override
                     public void completed(String challengeId, float score) {
-                            prefs.saveChallengeScore(challengeId, score);
+                            prefs.saveChallengeScore(challengeId, score, startChallengTime);
+                        startChallengTime = TimeUtils.millis();
                     }
                 });
                 currentChallenge.setChallengeResourceProvider(challengeResourceProvider);
