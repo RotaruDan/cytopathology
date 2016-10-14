@@ -152,9 +152,10 @@ public class LoadManager extends BaseScreen {
 
                     i18n = am.get(I18N_SRC, I18NBundle.class);
 
-                    ChallengeResourceProvider challengeResourceProvide = game.getChallengeResourceProvider();
+                    ChallengeResourceProvider challengeResourceProvider = game.getChallengeResourceProvider();
+                    resolver = game.getResolver();
 
-                    if (challengeResourceProvide == null) {
+                    if (challengeResourceProvider == null) {
 
                         prefs = new Prefs();
 
@@ -179,7 +180,8 @@ public class LoadManager extends BaseScreen {
                     } else {
 
                         challenges = new Challenges();
-                        challenges.setChallengeResourceProvider(challengeResourceProvide);
+                        challenges.setCurrentCourse(null);
+                        challenges.setChallengeResourceProvider(challengeResourceProvider);
                         challenges.create();
                         game.changeScreen(challenges, null);
                     }

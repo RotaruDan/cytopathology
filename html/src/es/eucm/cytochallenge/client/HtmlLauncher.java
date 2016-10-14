@@ -19,7 +19,7 @@ public class HtmlLauncher extends GwtApplication {
     public ApplicationListener createApplicationListener() {
 
 
-        return new CytoChallenge(null) {
+        return new CytoChallenge(null, new HtmlResolver()) {
             @Override
             public void create() {
                 String challenge = Window.Location.getParameter("challenge");
@@ -47,15 +47,15 @@ public class HtmlLauncher extends GwtApplication {
                     challengeResourceProvider = new GWTPreviewChallengeResourceProvider(HtmlLauncher.this);
                     PreviewConfig prevConfig = new PreviewConfig();
 
-                    challenge += "/";
 
                     String protocol = Window.Location.getProtocol();
                     if (!protocol.endsWith("/")) {
                         protocol += "//";
                     }
                     String origin = protocol + Window.Location.getHost();
-                    prevConfig.setImagesHost(origin + "/uploads/" + challenge);
-                    prevConfig.setChallengeHost(origin + "/challenges/" + challenge);
+                    prevConfig.setImagesHost(origin + "/uploads/");
+                    prevConfig.setChallengeHost(origin + "/challenges/");
+                    prevConfig.setChallengeId(challenge);
 
                     challengeResourceProvider.setPreviewConfig(prevConfig);
                 }

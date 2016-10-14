@@ -28,11 +28,15 @@ public class GWTPreviewChallengeResourceProvider implements ChallengeResourcePro
         this.launcher = launcher;
     }
 
+    @Override
+    public String getCurrentChallengeId() {
+        return previewConfig.getChallengeId();
+    }
 
     @Override
     public void getTexture(final String imagePath, final ResourceProvidedCallback<Texture> callback) {
         final RootPanel root = RootPanel.get("embed-html");
-        final String url = previewConfig.getImagesHost() + imagePath;
+        final String url = previewConfig.getImagesHost() + getCurrentChallengeId() + "/"  + imagePath;
         final Image img = new Image(url);
         img.getElement().setAttribute("crossOrigin", "anonymous");
         img.addLoadHandler(new LoadHandler() {
@@ -50,7 +54,7 @@ public class GWTPreviewChallengeResourceProvider implements ChallengeResourcePro
     @Override
     public void getChallenge(String jsonPath, final ResourceProvidedCallback<Challenge> callback) {
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
-        final Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url(previewConfig.getChallengeHost()).build();
+        final Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url(previewConfig.getChallengeHost() + getCurrentChallengeId() + "/" ).build();
 
         Gdx.net.sendHttpRequest(httpRequest, new Net.HttpResponseListener() {
 

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.utils.*;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import es.eucm.cytochallenge.model.Challenge;
 import es.eucm.cytochallenge.model.PreviewConfig;
 import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
@@ -16,19 +17,33 @@ import java.net.URL;
 
 public class PreviewChallengeResourceProvider implements ChallengeResourceProvider {
 
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
+    public static String authorization = "";
     private PreviewConfig previewConfig;
     private Json json;
 
     public PreviewChallengeResourceProvider() {
         this.json = new Json();
+
+        String username = System.getenv(USERNAME);
+        String password = System.getenv(PASSWORD);
+        String auth = username + ":" + password;
+        authorization = "Basic " + Base64.encode(auth.getBytes());
     }
 
+    @Override
+    public String getCurrentChallengeId() {
+        return previewConfig.getChallengeId();
+    }
 
     @Override
     public void getTexture(final String imagePath, final ResourceProvidedCallback<Texture> callback) {
 
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
-        final Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url(previewConfig.getImagesHost() + imagePath).build();
+        final Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url(previewConfig.getImagesHost()
+                + getCurrentChallengeId() + "/" + imagePath.replace(" ", "%"))
+                .header("Authorization", authorization).build();
 
         Gdx.net.sendHttpRequest(httpRequest, new Net.HttpResponseListener() {
 
@@ -43,6 +58,7 @@ public class PreviewChallengeResourceProvider implements ChallengeResourceProvid
                     }
                     return readBytes;
                 } catch (Exception ex) {
+                    System.out.println("ex = " + ex);
                     return 0;
                 } finally {
                     StreamUtils.closeQuietly(inputStream);
@@ -84,7 +100,9 @@ public class PreviewChallengeResourceProvider implements ChallengeResourceProvid
     @Override
     public void getChallenge(String jsonPath, final ResourceProvidedCallback<Challenge> callback) {
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
-        final Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url(previewConfig.getChallengeHost()).build();
+
+        final Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url(previewConfig.getChallengeHost() + getCurrentChallengeId() + "/")
+                .header("Authorization", authorization).build();
 
         Gdx.net.sendHttpRequest(httpRequest, new Net.HttpResponseListener() {
 

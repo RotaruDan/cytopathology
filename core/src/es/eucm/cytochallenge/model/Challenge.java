@@ -8,7 +8,7 @@ import es.eucm.cytochallenge.model.hint.Hint;
  */
 public class Challenge {
 
-    private String id;
+    private String _id;
 
     private Difficulty difficulty = Difficulty.EASY;
 
@@ -17,6 +17,8 @@ public class Challenge {
     private String imagePath;
 
     private Hint hint;
+
+    private String name;
 
     public String getImagePath() {
         return imagePath;
@@ -51,11 +53,19 @@ public class Challenge {
     }
 
     public String getId() {
-        return id;
+        return _id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this._id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

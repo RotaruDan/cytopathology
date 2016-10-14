@@ -2,7 +2,7 @@ package es.eucm.cytochallenge.model;
 
 public class PreviewConfig {
 
-    private String imagesHost, challengeHost;
+    private String imagesHost, challengeHost, challengeId;
 
     public String getChallengeHost() {
         return challengeHost;
@@ -18,5 +18,13 @@ public class PreviewConfig {
 
     public void setImagesHost(String imagesHost) {
         this.imagesHost = imagesHost;
+    }
+
+    public String getChallengeId() {
+        return challengeId;
+    }
+
+    public void setChallengeId(String challengeId) {
+        this.challengeId = challengeId;
     }
 }

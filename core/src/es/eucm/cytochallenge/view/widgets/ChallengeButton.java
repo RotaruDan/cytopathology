@@ -20,6 +20,7 @@ import es.eucm.cytochallenge.model.control.TextControl;
 import es.eucm.cytochallenge.model.control.draganddrop.DragAndDropControl;
 import es.eucm.cytochallenge.model.control.filltheblank.FillTheBlankControl;
 import es.eucm.cytochallenge.utils.Grades;
+import es.eucm.cytochallenge.utils.Resolver;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.screens.BaseScreen;
 
@@ -30,20 +31,15 @@ import java.util.Date;
 
 public class ChallengeButton extends TextButton {
 
-    private static final DateFormat FORMATTER = new SimpleDateFormat("mm:ss");
     private Label score, time;
     private Image image;
     private Label label;
 
-    public ChallengeButton(Skin skin, I18NBundle i18n) {
-        this(null, skin, i18n);
+    public ChallengeButton(Challenge challenge, Skin skin, I18NBundle i18n, Resolver resolver) {
+        this(challenge, skin, false, "default", i18n, resolver);
     }
 
-    public ChallengeButton(Challenge challenge, Skin skin, I18NBundle i18n) {
-        this(challenge, skin, false, "default", i18n);
-    }
-
-    public ChallengeButton(Challenge challenge, Skin skin, boolean isCourse, String styleName, I18NBundle i18n) {
+    public ChallengeButton(Challenge challenge, Skin skin, boolean isCourse, String styleName, I18NBundle i18n, Resolver resolver) {
         super("", skin, styleName);
 
 
@@ -89,7 +85,7 @@ public class ChallengeButton extends TextButton {
                 timeRes = i18n.get("time");
             } else {
                 Date date = new Date(timeValue);
-                String dateFormatted = FORMATTER.format(date);
+                String dateFormatted = resolver.format("mm:ss", date);
                 timeRes = dateFormatted;
             }
             time = new Label(timeRes + "", skin);

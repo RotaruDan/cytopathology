@@ -136,7 +136,7 @@ public class Challenges extends BaseScreen {
             @Override
             public void loaded(Challenge resource) {
 
-                resource.setId(((InternalFilesChallengeResourceProvider) challengeResourceProvider).getCurrentChallengeId());
+                resource.setId(challengeResourceProvider.getCurrentChallengeId());
 
                 if (currentChallenge != null) {
                     currentChallenge.getWidget().remove();
@@ -145,7 +145,9 @@ public class Challenges extends BaseScreen {
                 currentChallenge.setCompletedListener(new TextChallengeWidget.CompletedListener() {
                     @Override
                     public void completed(String challengeId, float score) {
+                        if (prefs != null) {
                             prefs.saveChallengeScore(challengeId, score, startChallengTime);
+                        }
                         startChallengTime = TimeUtils.millis();
                     }
                 });
@@ -156,6 +158,14 @@ public class Challenges extends BaseScreen {
 
                 addButton = check;
                 challengeLayout.setCheckButton(check);
+
+                if (currentChallenge.getChallenge().getDifficulty() == Difficulty.EASY) {
+
+                } else if (currentChallenge.getChallenge().getDifficulty() == Difficulty.MEDIUM) {
+                    buildTimer(15.5f);
+                } else {
+                    buildTimer(10.5f);
+                }
             }
 
             @Override
@@ -163,14 +173,6 @@ public class Challenges extends BaseScreen {
 
             }
         });
-
-        if (currentChallenge.getChallenge().getDifficulty() == Difficulty.EASY) {
-
-        } else if (currentChallenge.getChallenge().getDifficulty() == Difficulty.MEDIUM) {
-            buildTimer(15.5f);
-        } else {
-            buildTimer(10.5f);
-        }
     }
 
     private void buildTimer(float startTime) {

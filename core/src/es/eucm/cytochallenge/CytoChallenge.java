@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import es.eucm.cytochallenge.model.PreviewConfig;
 import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
+import es.eucm.cytochallenge.utils.Resolver;
 import es.eucm.cytochallenge.view.screens.BaseScreen;
 import es.eucm.cytochallenge.view.screens.LoadManager;
 import es.eucm.cytochallenge.view.SkinConstants;
@@ -16,15 +17,14 @@ public class CytoChallenge extends ApplicationAdapter {
     private ChallengeResourceProvider resourceProvider;
     public BaseScreen showingScreen;
     private LoadManager loadManager;
+    private Resolver resolver;
     private TransitionManager transitionManager;
 
-    public CytoChallenge(ChallengeResourceProvider resourceProvider) {
+    public CytoChallenge(ChallengeResourceProvider resourceProvider, Resolver resolver) {
         this.resourceProvider = resourceProvider;
+        this.resolver = resolver;
     }
 
-    public CytoChallenge(){
-        this(null);
-    }
 
     @Override
     public void create() {
@@ -85,5 +85,9 @@ public class CytoChallenge extends ApplicationAdapter {
 
     public void setResourceProvider(ChallengeResourceProvider resourceProvider) {
         this.resourceProvider = resourceProvider;
+    }
+
+    public Resolver getResolver() {
+        return resolver;
     }
 }

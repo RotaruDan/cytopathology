@@ -9,6 +9,8 @@ public interface ChallengeResourceProvider {
 
     void getChallenge(String jsonPath, ResourceProvidedCallback<Challenge> callback);
 
+    String getCurrentChallengeId();
+
     interface ResourceProvidedCallback<T> {
 
         void loaded(T resource);

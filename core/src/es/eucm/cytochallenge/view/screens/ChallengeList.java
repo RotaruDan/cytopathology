@@ -52,7 +52,7 @@ public class ChallengeList extends BaseScreen {
         super.create();
 
         layout = new Table();
-        courseDialog = new CourseInfoDialog(skin, i18n);
+        courseDialog = new CourseInfoDialog(skin, i18n, resolver);
 
         ScrollPane scroll = new ScrollPane(layout, BaseScreen.skin, "verticalScroll");
         scroll.setScrollingDisabled(true, false);
@@ -111,7 +111,7 @@ public class ChallengeList extends BaseScreen {
     }
 
     private void playCourse() {
-        if (currentCourse == null) {
+        if (currentCourse == null || currentCourse.getChallenges() == null) {
             return;
         }
         challenges.setCurrentCourse(currentCourse);
@@ -157,6 +157,10 @@ public class ChallengeList extends BaseScreen {
             challengesPaths = currentCourse.getChallenges();
         }
 
+        if(challengesPaths == null) {
+            return;
+        }
+
         for (int i = 0; i < challengesPaths.size; i++) {
             final String challengeId = challengesPaths.get(i);
             final String challengeFolder = challengesPath + challengeId + "/";
@@ -174,7 +178,7 @@ public class ChallengeList extends BaseScreen {
                         TextChallenge textChallenge = (TextChallenge) challenge;
 
                         final Button button = new ChallengeButton(textChallenge,
-                                skin, i18n);
+                                skin, i18n, resolver);
                         button.setUserObject(challengeFolder);
                         Gdx.app.log("Files", "json challenge getTextControl: " + textChallenge.getTextControl());
 

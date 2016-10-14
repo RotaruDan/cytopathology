@@ -90,16 +90,17 @@ public class DesktopLauncher {
 		}
 
 
-		boolean test = true;
+		boolean test = false;
 		PreviewChallengeResourceProvider challengeResourceProvider = null;
 		if(test) {
 			challengeResourceProvider = new PreviewChallengeResourceProvider();
 			PreviewConfig prevConfig = new PreviewConfig();
-			prevConfig.setImagesHost("http://cytopathology.e-ucm.es/uploads/574f35915edc53130035eaef/");
-			prevConfig.setChallengeHost("http://cytopathology.e-ucm.es/challenges/574f35915edc53130035eaef/");
+			prevConfig.setImagesHost("http://localhost:3000/uploads/");
+			prevConfig.setChallengeHost("http://localhost:3000/challenges/");
+			prevConfig.setChallengeId("57e17c8814c57aa416a989a1");
 			challengeResourceProvider.setPreviewConfig(prevConfig);
 		}
 
-		new LwjglApplication(new CytoChallenge(challengeResourceProvider), config);
+		new LwjglApplication(new CytoChallenge(challengeResourceProvider, new DesktopResolver()), config);
 	}
 }

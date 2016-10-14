@@ -184,6 +184,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             final SlideEditor slideEditor = new SlideEditor(skin);
             slideEditor.setRootActor(rootTable);
 
+            rootTable.defaults().uniform();
             for (int i = 0; i < answers.length; i++) {
                 String answer = answers[i];
 
@@ -199,8 +200,8 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
                     public void loaded(Texture resource) {
                         super.loaded(resource);
 
-                        rootTable.setSize(rootTable.getPrefWidth(), rootTable.getPrefHeight());
-
+                      //  rootTable.setSize(rootTable.getPrefWidth(), rootTable.getPrefHeight());
+                        rootTable.pack();
                         slideEditor.setRootActor(rootTable);
                     }
                 });

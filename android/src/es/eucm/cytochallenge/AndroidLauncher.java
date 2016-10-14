@@ -12,7 +12,7 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new CytoChallenge(), config);
+		initialize(new CytoChallenge(null, new AndrodiResolver()), config);
 		Gdx.app.setLogLevel(Application.LOG_NONE);
 	}
 }

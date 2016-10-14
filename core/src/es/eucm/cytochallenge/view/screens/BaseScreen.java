@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.I18NBundle;
 import es.eucm.cytochallenge.CytoChallenge;
 import es.eucm.cytochallenge.utils.Prefs;
+import es.eucm.cytochallenge.utils.Resolver;
 import es.eucm.cytochallenge.view.transitions.Fade;
 
 public class BaseScreen {
@@ -25,6 +26,7 @@ public class BaseScreen {
     protected static I18NBundle i18n;
     public static ShapeRenderer shapeRenderer;
     public static Prefs prefs;
+    protected static Resolver resolver;
     
     protected static Menu menu;
     protected static Lab lab;

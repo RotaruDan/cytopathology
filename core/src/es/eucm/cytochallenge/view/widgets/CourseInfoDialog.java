@@ -26,19 +26,22 @@ import es.eucm.cytochallenge.model.hint.Info;
 import es.eucm.cytochallenge.model.hint.TextInfo;
 import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
 import es.eucm.cytochallenge.utils.Grades;
+import es.eucm.cytochallenge.utils.Resolver;
 import es.eucm.cytochallenge.view.screens.BaseScreen;
 
 public class CourseInfoDialog extends Table {
 
     private final I18NBundle i18n;
+    private Resolver resolver;
     private Label.LabelStyle textStyle;
     private Table container;
     private Label title, totalScore;
     private int challenges;
     private float totalChallengeScore;
 
-    public CourseInfoDialog(Skin skin, I18NBundle i18n) {
+    public CourseInfoDialog(Skin skin, I18NBundle i18n, Resolver resolver) {
         setSkin(skin);
+        this.resolver = resolver;
         this.i18n = i18n;
         CourseInfoDialogStyle style = skin.get(CourseInfoDialogStyle.class);
         background(style.background);
@@ -87,7 +90,7 @@ public class CourseInfoDialog extends Table {
     }
 
     public void addChallenge(Challenge challenge, I18NBundle i18n) {
-        ChallengeButton challengeButton = new ChallengeButton(challenge, getSkin(), true, "dialog", i18n);
+        ChallengeButton challengeButton = new ChallengeButton(challenge, getSkin(), true, "dialog", i18n, resolver);
         challengeButton.setTouchable(Touchable.disabled);
         container.getCell(totalScore).setActor(challengeButton).expandX().fillX().width(Gdx.graphics.getWidth() * .95f).center();
         container.row();
