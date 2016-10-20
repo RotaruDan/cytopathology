@@ -93,9 +93,6 @@ public class Challenges extends BaseScreen {
     }
 
     private void checkChallenge() {
-        currentChallenge.setUpScore();
-        addButton = hint;
-        check.remove();
         Hint hintInfo = currentChallenge.getChallenge().getHint();
         if (hintInfo != null) {
             challengeLayout.setCheckButton(hint);
@@ -103,6 +100,10 @@ public class Challenges extends BaseScreen {
         if (currentCourse != null) {
             challengeLayout.setNextChallenge(nextChallenge);
         }
+        currentChallenge.setUpResult();
+        addButton = hint;
+        check.remove();
+
         TimerWidget timer = challengeLayout.getTimer();
         if (timer != null) {
             timer.stop();
@@ -207,11 +208,6 @@ public class Challenges extends BaseScreen {
         super.hide();
         challengeLayout.setNextChallenge(null);
         challengeLayout.setTimer(null);
-    }
-
-    @Override
-    public void draw() {
-        super.draw();
     }
 
     @Override

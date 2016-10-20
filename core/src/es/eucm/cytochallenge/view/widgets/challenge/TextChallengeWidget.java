@@ -28,10 +28,7 @@ import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
 import es.eucm.cytochallenge.utils.Grades;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.screens.BaseScreen;
-import es.eucm.cytochallenge.view.widgets.IconButton;
-import es.eucm.cytochallenge.view.widgets.LinearLayout;
-import es.eucm.cytochallenge.view.widgets.RightToolbarLayout;
-import es.eucm.cytochallenge.view.widgets.TopToolbarLayout;
+import es.eucm.cytochallenge.view.widgets.*;
 import es.eucm.cytochallenge.view.widgets.challenge.filltheblank.FillTheBlankText;
 import es.eucm.cytochallenge.view.widgets.challenge.result.*;
 import es.eucm.cytochallenge.view.widgets.slide.SlideEditor;
@@ -626,9 +623,89 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
         }
     }
 
+    public void setUpResult() {
 
-    public void setUpScore() {
+        ResultDialog dialog = new ResultDialog(getChallenge().getHint(), 100, challengeResourceProvider, skin, i18n);
+        root.getStage().addActor(dialog);
+        dialog.show();
 
+
+        TextControl textControl = challenge.getTextControl();
+        if (textControl instanceof MultipleAnswerControl) {
+            MultipleAnswerControl multipleAnswerControl = ((MultipleAnswerControl) textControl);
+
+            if(group.getChecked() != null) {
+                group.getChecked().getLabel().setColor(Color.RED);
+            }
+            if(multipleAnswerControl.getCorrectAnswer() < group.getButtons().size) {
+                TextButton correctButton = group.getButtons().get(multipleAnswerControl.getCorrectAnswer());
+                correctButton.getLabel().setColor(Color.CHARTREUSE);
+            }
+            Table actor = (Table) root.getChildren().get(0);
+            actor.getChildren().get(1).setTouchable(Touchable.disabled);
+            MultipleAnswerResult result = new MultipleAnswerResult(skin,
+                    multipleAnswerControl, i18n, group, actor);
+
+        }
+
+        // MultipleImageAnswerControl
+        else if (textControl instanceof MultipleImageAnswerControl) {
+
+
+            TopToolbarLayout actor = (TopToolbarLayout) root.getChildren().get(0);
+            Container container = (Container) actor.getContainer();
+
+            SlideEditor editor = (SlideEditor) container.getActor();
+            Table rootRightTable = (Table) editor.getRootActor();
+            rootRightTable.setTouchable(Touchable.disabled);
+
+            MultipleImageAnswerResult result = new MultipleImageAnswerResult(skin,
+                    (MultipleImageAnswerControl) textControl, i18n, imageGroup, editor);
+
+        }
+
+        // DragAndDropControl
+        else if (textControl instanceof DragAndDropControl) {
+            RightToolbarLayout actor = (RightToolbarLayout) root.getChildren().get(0);
+            Container container = (Container) actor.getContainer();
+
+            SlideEditor editor = (SlideEditor) container.getActor();
+            Group rootRightTable = (Group) editor.getRootActor();
+            rootRightTable.setTouchable(Touchable.disabled);
+
+            DragAndDropResult result = new DragAndDropResult(skin,
+                    (DragAndDropControl) textControl, i18n, dragContainers, editor);
+
+        }
+
+        // FillTheBlankControl
+        else if (textControl instanceof FillTheBlankControl) {
+            FillTheBlankControl multipleAnswerControl = ((FillTheBlankControl) textControl);
+
+            TopToolbarLayout actor = (TopToolbarLayout) root.getChildren().get(0);
+            ScrollPane container = (ScrollPane) actor.getContainer();
+            container.getWidget().setTouchable(Touchable.disabled);
+            FillTheBlankResult result = new FillTheBlankResult(skin,
+                    multipleAnswerControl, i18n, ftbTexts, container);
+
+        }
+
+        // InteractiveZone
+        else if (textControl instanceof InteractiveZoneControl) {
+            TopToolbarLayout actor = (TopToolbarLayout) root.getChildren().get(0);
+            Container container = (Container) actor.getContainer();
+
+            SlideEditor editor = (SlideEditor) container.getActor();
+            Group rootRightTable = (Group) editor.getRootActor();
+            rootRightTable.setTouchable(Touchable.disabled);
+
+            InteractiveZoneResult result = new InteractiveZoneResult(skin,
+                    (InteractiveZoneControl) textControl, i18n, markers, editor);
+
+        }
+    }
+
+    private void setUpScore() {
 
         TextControl textControl = challenge.getTextControl();
         if (textControl instanceof MultipleAnswerControl) {
