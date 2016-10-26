@@ -13,6 +13,7 @@ import es.eucm.cytochallenge.utils.InternalFilesChallengeResourceProvider;
 import es.eucm.cytochallenge.view.*;
 import es.eucm.cytochallenge.view.transitions.Fade;
 import es.eucm.cytochallenge.view.widgets.HintDialog;
+import es.eucm.cytochallenge.view.widgets.ResultDialog;
 import es.eucm.cytochallenge.view.widgets.Toast;
 import es.eucm.cytochallenge.view.widgets.WidgetBuilder;
 import es.eucm.cytochallenge.view.widgets.challenge.ChallengeLayout;
@@ -66,14 +67,7 @@ public class Challenges extends BaseScreen {
         nextChallenge.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (currentCourse.getChallenges().size == challengeCount) {
-                    challengeLayout.setNextChallenge(null);
-                    challengeList.setShowCourseInfo(true);
-                    game.changeScreen(challengeList);
-                } else {
-                    challengeLayout.setNextChallenge(null);
-                    game.changeScreen(challenges);
-                }
+                goNextChallenge();
             }
         });
 
@@ -92,6 +86,17 @@ public class Challenges extends BaseScreen {
         root.add(challengeLayout).expand().fill();
     }
 
+    private void goNextChallenge() {
+        if (currentCourse.getChallenges().size == challengeCount) {
+            challengeLayout.setNextChallenge(null);
+            challengeList.setShowCourseInfo(true);
+            game.changeScreen(challengeList);
+        } else {
+            challengeLayout.setNextChallenge(null);
+            game.changeScreen(challenges);
+        }
+    }
+
     private void checkChallenge() {
         Hint hintInfo = currentChallenge.getChallenge().getHint();
         if (hintInfo != null) {
@@ -100,7 +105,31 @@ public class Challenges extends BaseScreen {
         if (currentCourse != null) {
             challengeLayout.setNextChallenge(nextChallenge);
         }
-        currentChallenge.setUpResult();
+
+
+        ResultDialog dialog = new ResultDialog(currentCourse != null, hintInfo, 100, challengeResourceProvider, skin, i18n);
+        root.getStage().addActor(dialog);
+        dialog.show();
+        dialog.addListener(new ResultDialog.ResultListener() {
+            @Override
+            public void nextChallenge() {
+                System.out.println("nextChallenge");
+                goNextChallenge();
+            }
+
+            @Override
+            public void backPressed() {
+                System.out.println("backPressed");
+                onBackPressed();
+            }
+
+            @Override
+            public void moreInfo() {
+                System.out.println("moreInfo");
+                currentChallenge.setUpScore();
+            }
+        });
+
         addButton = hint;
         check.remove();
 
@@ -132,7 +161,6 @@ public class Challenges extends BaseScreen {
         if (currentCourse == null) {
             challengeLayout.setNextChallenge(null);
         }
-
         challengeResourceProvider.getChallenge("challenge.json", new ChallengeResourceProvider.ResourceProvidedCallback<Challenge>() {
             @Override
             public void loaded(Challenge resource) {
