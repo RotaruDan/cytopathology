@@ -32,7 +32,7 @@ public interface SkinConstants {
     String DRAWABLE_DESK = "desk";
     String DRAWABLE_DOCTOR_BOARD = "doctor_board";
     String DRAWABLE_BOARD = "board";
-    String DRAWABLE_STAR = "clock";
+    String DRAWABLE_STAR = "star";
 
     // Buttons
     String DRAWABLE_BUTTON_CHECK_OFF = "button_check_off";
