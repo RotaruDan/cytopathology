@@ -1,0 +1,27 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "developer_visualizations_1.png",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.draganddrop.DragAndDropControl",
+        "text": "What's up",
+        "canvasWidth": 1024,
+        "canvasHeight": 552,
+        "answers": [
+            {
+                "text": "hey",
+                "x": 143.7137681159421,
+                "y": 567.786231884058,
+                "width": 52,
+                "height": 30
+            },
+            {
+                "text": "you",
+                "x": 685.1992753623189,
+                "y": 552.3152173913044,
+                "width": 52,
+                "height": 30
+            }
+        ]
+    }
+}

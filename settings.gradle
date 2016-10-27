@@ -1,3 +1,0 @@
-include 'desktop', 'android', 'html', 'core'
-include 'skin'
-

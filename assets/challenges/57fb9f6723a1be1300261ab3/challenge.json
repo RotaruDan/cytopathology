@@ -1,0 +1,20 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleImageAnswerControl",
+        "text": "which one is",
+        "answers": [
+            "developer_visualizations_1.png",
+            "developer_visualizations_2.png",
+            "developer_visualizations_3.png",
+            "teacher_visualizations_1.png"
+        ],
+        "correctAnswers": [
+            0,
+            1,
+            2,
+            3
+        ]
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "BGC1 superficial sq cell 60x.jpg",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
+        "text": "What type of cell is the pink cell in the center of the image?",
+        "answers": [
+            "Endocervical cell",
+            "Intermediate squamous cell",
+            "Superficial squamous cell",
+            "Parabasal cell"
+        ],
+        "correctAnswer": 0
+    },
+    "hint": {
+        "infos": [
+            {
+                "class": "es.eucm.cytochallenge.model.hint.TextInfo",
+                "text": "Superficial squamous cells are present near the surface of squamous epithelium; with Papanicolaou stain, the nucleus of the superficial cell is small, dark (pycnotic) and centrally placed in the abundant usually pink cytoplasm. So the hallmark of the superficial cell is the small, dark nucleus with no obvious nuclear detail."
+            }
+        ]
+    }
+}

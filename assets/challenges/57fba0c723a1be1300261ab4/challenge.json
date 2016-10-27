@@ -1,0 +1,23 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "difficulty": "EASY",
+    "imagePath": "",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.filltheblank.FillTheBlankControl",
+        "text": "fill in",
+        "statements": [
+            {
+                "text": "[0]you",
+                "options": [
+                    [
+                        "hey",
+                        "you"
+                    ]
+                ],
+                "correctAnswers": [
+                    0
+                ]
+            }
+        ]
+    }
+}

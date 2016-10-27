@@ -1,0 +1,16 @@
+[
+  {
+    "class": "es.eucm.cytochallenge.model.course.Course",
+    "courseId": "574de6290a85ff130060f40e",
+    "name": "Example Cytopathology Course",
+    "challenges": [
+      "57719c378ef62c1300ab1085",
+      "574f37555edc53130035eaf1",
+      "574f35de5edc53130035eaf0",
+      "574f35915edc53130035eaef",
+      "574ee8790a85ff130060f410",
+      "574de6390a85ff130060f40f"
+    ],
+    "difficulty": "EASY"
+  }
+]

@@ -1,0 +1,22 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "developer_visualizations_1.png",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
+        "text": "what's the right one?",
+        "answers": [
+            "you",
+            "Hello"
+        ],
+        "correctAnswer": 1
+    },
+    "hint": {
+        "infos": [
+            {
+                "class": "es.eucm.cytochallenge.model.hint.TextInfo",
+                "text": "This is a multiple choice challenge"
+            }
+        ]
+    }
+}
