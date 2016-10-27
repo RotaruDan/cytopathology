@@ -66,6 +66,9 @@ public class InteractiveZoneResult extends ResultLayout<InteractiveZoneControl> 
         Array markers = (Array) args[0];
         int results = checkInteractiveZoneResult(control, markers);
         int total = markers.size;
+        if(total == 0) {
+            total = 1;
+        }
 
         score = results / (float) total * 100;
 

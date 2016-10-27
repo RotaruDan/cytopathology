@@ -28,10 +28,7 @@ import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
 import es.eucm.cytochallenge.utils.Grades;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.screens.BaseScreen;
-import es.eucm.cytochallenge.view.widgets.IconButton;
-import es.eucm.cytochallenge.view.widgets.LinearLayout;
-import es.eucm.cytochallenge.view.widgets.RightToolbarLayout;
-import es.eucm.cytochallenge.view.widgets.TopToolbarLayout;
+import es.eucm.cytochallenge.view.widgets.*;
 import es.eucm.cytochallenge.view.widgets.challenge.filltheblank.FillTheBlankText;
 import es.eucm.cytochallenge.view.widgets.challenge.result.*;
 import es.eucm.cytochallenge.view.widgets.slide.SlideEditor;
@@ -626,10 +623,9 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
         }
     }
 
+    public float setUpScore() {
 
-    public void setUpScore() {
-
-
+        float score = 0f;
         TextControl textControl = challenge.getTextControl();
         if (textControl instanceof MultipleAnswerControl) {
             MultipleAnswerControl multipleAnswerControl = ((MultipleAnswerControl) textControl);
@@ -652,6 +648,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
+            score = result.getScore();
         }
 
         // MultipleImageAnswerControl
@@ -674,6 +671,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
+            score = result.getScore();
         }
 
         // DragAndDropControl
@@ -694,6 +692,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
+            score = result.getScore();
         }
 
         // FillTheBlankControl
@@ -712,6 +711,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
+            score = result.getScore();
         }
 
         // InteractiveZone
@@ -732,7 +732,10 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
+            score = result.getScore();
         }
+
+        return score;
     }
 
     @Override
