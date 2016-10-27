@@ -1,5 +1,6 @@
 package es.eucm.cytochallenge.view.screens;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -106,27 +107,26 @@ public class Challenges extends BaseScreen {
             challengeLayout.setNextChallenge(nextChallenge);
         }
 
+        float score = Math.max(0f, currentChallenge.setUpScore());
 
-        ResultDialog dialog = new ResultDialog(currentCourse != null, hintInfo, 100, challengeResourceProvider, skin, i18n);
+        System.out.println("score = " + score);
+
+        ResultDialog dialog = new ResultDialog(currentCourse != null, hintInfo, score, challengeResourceProvider, skin, i18n);
         root.getStage().addActor(dialog);
         dialog.show();
         dialog.addListener(new ResultDialog.ResultListener() {
             @Override
             public void nextChallenge() {
-                System.out.println("nextChallenge");
                 goNextChallenge();
             }
 
             @Override
             public void backPressed() {
-                System.out.println("backPressed");
                 onBackPressed();
             }
 
             @Override
             public void moreInfo() {
-                System.out.println("moreInfo");
-                currentChallenge.setUpScore();
             }
         });
 

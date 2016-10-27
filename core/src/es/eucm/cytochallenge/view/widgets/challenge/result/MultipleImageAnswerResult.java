@@ -55,6 +55,9 @@ public class MultipleImageAnswerResult extends ResultLayout<MultipleImageAnswerC
     protected Label buildLabel(MultipleImageAnswerControl control, Object... args) {
         int results = Math.max(0, checkMIAResult((ButtonGroup) args[0]));
         int total = control.getCorrectAnswers().length;
+        if(total == 0) {
+            total = 1;
+        }
 
         score = results / (float) total * 100;
         Label resultsLabel = new Label(Grades.getGrade(score) +

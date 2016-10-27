@@ -51,6 +51,9 @@ public class FillTheBlankResult extends ResultLayout<FillTheBlankControl> {
         Array<FillTheBlankText> ftbTexts = (Array<FillTheBlankText>) args[0];
         int results = checkFtBResult(ftbTexts);
         int total = checkFtBTotalCount(ftbTexts);
+        if(total == 0) {
+            total = 1;
+        }
         score = results / (float) total * 100;
 
         Label resultsLabel = new Label(Grades.getGrade(score) +

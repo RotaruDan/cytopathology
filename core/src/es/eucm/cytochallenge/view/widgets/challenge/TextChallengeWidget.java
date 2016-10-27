@@ -623,8 +623,9 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
         }
     }
 
-    public void setUpScore() {
+    public float setUpScore() {
 
+        float score = 0f;
         TextControl textControl = challenge.getTextControl();
         if (textControl instanceof MultipleAnswerControl) {
             MultipleAnswerControl multipleAnswerControl = ((MultipleAnswerControl) textControl);
@@ -647,6 +648,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
+            score = result.getScore();
         }
 
         // MultipleImageAnswerControl
@@ -669,6 +671,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
+            score = result.getScore();
         }
 
         // DragAndDropControl
@@ -689,6 +692,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
+            score = result.getScore();
         }
 
         // FillTheBlankControl
@@ -707,6 +711,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
+            score = result.getScore();
         }
 
         // InteractiveZone
@@ -727,7 +732,10 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             if (completedListener != null) {
                 completedListener.completed(challenge.getId(), result.getScore());
             }
+            score = result.getScore();
         }
+
+        return score;
     }
 
     @Override

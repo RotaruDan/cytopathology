@@ -61,6 +61,9 @@ public class DragAndDropResult extends ResultLayout<DragAndDropControl> {
         Array containers = (Array) args[0];
         int results = checkDnDResult(containers);
         int total = containers.size;
+        if(total == 0) {
+            total = 1;
+        }
 
         float finalGrade = results / (float) total * 100;
         score = finalGrade;

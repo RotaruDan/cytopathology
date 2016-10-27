@@ -32,7 +32,7 @@ public class ResultDialog extends Container<Table> {
     private Image star1, star2, star3;
     private float score;
 
-    public ResultDialog(boolean nextCourse, final Hint hint, int score, final ChallengeResourceProvider resourceProvider, final Skin skin, final I18NBundle i18n) {
+    public ResultDialog(boolean nextCourse, final Hint hint, float score, final ChallengeResourceProvider resourceProvider, final Skin skin, final I18NBundle i18n) {
         super(new Table());
         ResultDialogStyle style = skin.get(ResultDialogStyle.class);
         background(style.background);
@@ -75,12 +75,11 @@ public class ResultDialog extends Container<Table> {
             }
         });
 
-        Label scoreLabel = new Label(score + "", style.textStyle);
+        Label scoreLabel = new Label(i18n.get("score") + ": " + MathUtils.round(score) + "%", style.textStyle);
         container.add(scoreLabel);
         container.row();
-        container.add(explanation).expandX().right();
+        container.add(explanation);
         container.row();
-
         container.add(moreDetails);
 
         TextButton exit = WidgetBuilder.dialogButton(i18n.get("exit").toUpperCase(),
@@ -116,7 +115,7 @@ public class ResultDialog extends Container<Table> {
         Drawable starDrawable = skin.getDrawable(SkinConstants.DRAWABLE_STAR);
         star1 = new Image(starDrawable);
         star1.setColor(Color.YELLOW);
-        root.add(container).padTop(star1.getHeight() + pad16dp).expand().fill().colspan(2);
+        root.add(container).padTop(star1.getHeight() * .5f + pad16dp).expand().fill().colspan(2);
         root.row();
         root.add(exit).expandX().right().padTop(pad16dp);
         root.add(next).right().padTop(pad16dp);
@@ -163,10 +162,10 @@ public class ResultDialog extends Container<Table> {
         root.addAction(Actions.sequence(Actions.moveTo(root.getX(), y, 0.33f, Interpolation.exp5Out), Actions.run(new Runnable() {
             @Override
             public void run() {
-                if (score > 40) {
+                if (score > 15) {
                     star1.addAction(Actions.parallel(Actions.scaleTo(1f, 1f, .5f, Interpolation.bounceOut), Actions.alpha(1f, .4f)));
                 }
-                if (score > 65) {
+                if (score > 60) {
                     star2.addAction(Actions.delay(.6f, Actions.parallel(Actions.scaleTo(1f, 1f, .5f, Interpolation.bounceOut), Actions.alpha(1f, .4f))));
                 }
                 if (score > 90) {

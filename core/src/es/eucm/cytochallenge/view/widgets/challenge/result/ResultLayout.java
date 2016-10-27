@@ -19,7 +19,7 @@ public abstract class ResultLayout<T extends TextControl> extends AbstractWidget
     protected Container<Actor> topRow;
     protected Tabs tabs;
     protected Container<Actor> content;
-    protected float score;
+    protected float score = 0f;
 
     public ResultLayout(Skin skin, T control, I18NBundle i18n, Object... args) {
         toolbar = new Table(skin);
