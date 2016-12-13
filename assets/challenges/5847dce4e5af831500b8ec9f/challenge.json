@@ -1,0 +1,79 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "difficulty": "EASY",
+    "imagePath": "",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.filltheblank.FillTheBlankControl",
+        "text": "",
+        "statements": [
+            {
+                "text": "Screen the slide using a[0]objective",
+                "options": [
+                    [
+                        "15X",
+                        "10X",
+                        "5X"
+                    ]
+                ],
+                "correctAnswers": [
+                    1
+                ]
+            },
+            {
+                "text": "And a[0]ocular lenses",
+                "options": [
+                    [
+                        "5X",
+                        "15X",
+                        "25X"
+                    ]
+                ],
+                "correctAnswers": [
+                    1
+                ]
+            },
+            {
+                "text": "Evaluation of the Pap smear for adequacy may be done with a[0]",
+                "options": [
+                    [
+                        "4X",
+                        "8X",
+                        "12X"
+                    ]
+                ],
+                "correctAnswers": [
+                    0
+                ]
+            },
+            {
+                "text": "Examine areas in question using the[0]objective",
+                "options": [
+                    [
+                        "30X",
+                        "35X",
+                        "40X"
+                    ]
+                ],
+                "correctAnswers": [
+                    2
+                ]
+            }
+        ]
+    },
+    "hint": {
+        "infos": [
+            {
+                "class": "es.eucm.cytochallenge.model.hint.TextInfo",
+                "text": "Review of a smear for diagnostic purposes is a very important responsibility."
+            },
+            {
+                "class": "es.eucm.cytochallenge.model.hint.TextInfo",
+                "text": "A standardized screening procedure ensures that slides are screened thoroughly, reducing the risk of diagnostic error."
+            },
+            {
+                "class": "es.eucm.cytochallenge.model.hint.TextInfo",
+                "text": "Marking of diagnostic areas is equally important by assisting the subsequent reviewers (Cytotechnologist or Pathologist) in locating which cells are of concern to the original screener."
+            }
+        ]
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "40yrold.jpg",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
+        "text": "Cervical smear. 40 year old female. LMP:Day 17. These findings are most consistent with:",
+        "answers": [
+            "Follicular cervicitis",
+            "ASC-US",
+            "LGSIL CIN I"
+        ],
+        "correctAnswer": 0
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "28yrold.jpg",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
+        "text": "Cervical smear. 28 year old female. LMP:Day 16. These findings are most consistent with:",
+        "answers": [
+            "RCC",
+            "ASC-US",
+            "LGSIL CIN I"
+        ],
+        "correctAnswer": 0
+    }
+}

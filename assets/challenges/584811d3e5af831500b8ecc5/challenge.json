@@ -1,0 +1,19 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "34yr.jpg",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
+        "text": "Cervical smear. 34 year old woman on day 15. What is your diagnosis according to TBS 2001?",
+        "answers": [
+            "Normal or benign",
+            "ASCUS",
+            "LSIL",
+            "HSIL",
+            "Squamous cell carcinoma",
+            "AGC",
+            "Adenocarcinoma"
+        ],
+        "correctAnswer": 0
+    }
+}

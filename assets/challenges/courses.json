@@ -1,16 +1,1 @@
-[
-  {
-    "class": "es.eucm.cytochallenge.model.course.Course",
-    "courseId": "574de6290a85ff130060f40e",
-    "name": "Example Cytopathology Course",
-    "challenges": [
-      "57719c378ef62c1300ab1085",
-      "574f37555edc53130035eaf1",
-      "574f35de5edc53130035eaf0",
-      "574f35915edc53130035eaef",
-      "574ee8790a85ff130060f410",
-      "574de6390a85ff130060f40f"
-    ],
-    "difficulty": "EASY"
-  }
-]
+[{"class":"es.eucm.cytochallenge.model.course.Course","courseId":"58482a0ae5af831500b8eccc","name":"Ovarian Menstrual Cycle","challenges":["584832d6e5af831500b8ecd5","5848327ae5af831500b8ecd4","5848323ce5af831500b8ecd3","58482de8e5af831500b8ecd2","58482d8be5af831500b8ecd1","58482d56e5af831500b8ecd0","58482d12e5af831500b8eccf","58482a61e5af831500b8ecce","58482a18e5af831500b8eccd"],"difficulty":"EASY"},{"class":"es.eucm.cytochallenge.model.course.Course","courseId":"58481119e5af831500b8ecc3","name":"HSIL","challenges":["58481389e5af831500b8eccb","5848132ee5af831500b8ecca","584812ebe5af831500b8ecc9","584812a4e5af831500b8ecc8","5848125ce5af831500b8ecc7","5848121ae5af831500b8ecc6","584811d3e5af831500b8ecc5","5848112be5af831500b8ecc4"],"difficulty":"EASY"},{"class":"es.eucm.cytochallenge.model.course.Course","courseId":"5847e5afe5af831500b8eca4","name":"Diferential Diagnosis","challenges":["5847f0f2e5af831500b8ecc2","5847f08fe5af831500b8ecc1","5847f058e5af831500b8ecc0","5847f01ee5af831500b8ecbf","5847efdbe5af831500b8ecbe","5847ef63e5af831500b8ecbd","5847ef2de5af831500b8ecbc","5847eef8e5af831500b8ecbb","5847ee36e5af831500b8ecba","5847edefe5af831500b8ecb9","5847ed9be5af831500b8ecb8","5847ed60e5af831500b8ecb7","5847ed17e5af831500b8ecb6","5847ecd2e5af831500b8ecb5","5847ec76e5af831500b8ecb4","5847ec40e5af831500b8ecb3","5847ebfbe5af831500b8ecb2","5847ebbce5af831500b8ecb1","5847eb6ce5af831500b8ecb0","5847eb11e5af831500b8ecaf","5847ead4e5af831500b8ecae","5847ea83e5af831500b8ecad","5847ea30e5af831500b8ecac","5847e9d7e5af831500b8ecab","5847e95ae5af831500b8ecaa","5847e916e5af831500b8eca9","5847e8d0e5af831500b8eca8","5847e7c3e5af831500b8eca7","5847e6f3e5af831500b8eca6","5847e5c5e5af831500b8eca5"],"difficulty":"EASY"},{"class":"es.eucm.cytochallenge.model.course.Course","courseId":"5847e3dde5af831500b8eca0","name":"ASC-US","challenges":["5847e4e1e5af831500b8eca3","5847e493e5af831500b8eca2","5847e40fe5af831500b8eca1"],"difficulty":"EASY"},{"class":"es.eucm.cytochallenge.model.course.Course","courseId":"5845949ae5af831500b8ec93","name":"Cervical Carcinoma","challenges":["58459cdce5af831500b8ec9e","58459c76e5af831500b8ec9d","58459c17e5af831500b8ec9c","58459bd8e5af831500b8ec9b","58459b8ee5af831500b8ec9a","58459b35e5af831500b8ec99","58459ad8e5af831500b8ec98","58459a9ae5af831500b8ec97","58459a55e5af831500b8ec96","584599dbe5af831500b8ec95","58459578e5af831500b8ec94"],"difficulty":"EASY"},{"class":"es.eucm.cytochallenge.model.course.Course","courseId":"58453be3e5af831500b8ec8e","name":"1 - Introduction","challenges":["5847dce4e5af831500b8ec9f","58459167e5af831500b8ec92","58458d86e5af831500b8ec91","58458a96e5af831500b8ec90","58453fb6e5af831500b8ec8f"],"difficulty":"EASY"},{"class":"es.eucm.cytochallenge.model.course.Course","courseId":"574de6290a85ff130060f40e","name":"Example Cytopathology Course","challenges":["57719c378ef62c1300ab1085","574f37555edc53130035eaf1","574f35de5edc53130035eaf0","574f35915edc53130035eaef","574ee8790a85ff130060f410","574de6390a85ff130060f40f"],"difficulty":"EASY"}]

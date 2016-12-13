@@ -1,0 +1,15 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "73yrold.jpg",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
+        "text": "Cervical smear. 73 year old female. LMP: 23 years ago. These findings are most consistent with:",
+        "answers": [
+            "Inflammatory changes",
+            "ASC-US",
+            "HGSIL CIN III"
+        ],
+        "correctAnswer": 0
+    }
+}

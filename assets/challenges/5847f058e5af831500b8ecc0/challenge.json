@@ -1,0 +1,15 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "38yrold3.jpg",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
+        "text": "Cervical smear. Age: 38 LMP: 13 days ago. This pattern is consistent with",
+        "answers": [
+            "HSIL/CIN III/CIS",
+            "HSIL/CIN II/moderate dysplasia",
+            "ASC-H"
+        ],
+        "correctAnswer": 0
+    }
+}
