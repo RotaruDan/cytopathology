@@ -362,16 +362,23 @@ ic_undo
   orig: 24, 24
   offset: 0, 0
   index: -1
-ic_volume
+ic_upp
   rotate: false
   xy: 995, 322
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
-knob
+ic_volume
   rotate: false
   xy: 995, 296
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+knob
+  rotate: false
+  xy: 995, 270
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -420,7 +427,7 @@ logo
   index: -1
 map-marker
   rotate: false
-  xy: 995, 270
+  xy: 724, 85
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -469,6 +476,13 @@ selected_tab
   orig: 2, 2
   offset: 0, 0
   index: -1
+small_star
+  rotate: false
+  xy: 724, 59
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
 spinner_default
   rotate: false
   xy: 478, 437
@@ -508,7 +522,7 @@ switch_bar_on
   index: -1
 switch_circle
   rotate: false
-  xy: 724, 85
+  xy: 724, 33
   size: 24, 24
   orig: 24, 24
   offset: 0, 0

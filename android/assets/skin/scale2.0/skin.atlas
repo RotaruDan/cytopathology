@@ -41,7 +41,7 @@ bg48
   index: -1
 blank
   rotate: false
-  xy: 296, 146
+  xy: 1898, 1218
   size: 2, 2
   orig: 2, 2
   offset: 0, 0
@@ -376,23 +376,30 @@ ic_undo
   orig: 48, 48
   offset: 0, 0
   index: -1
-ic_volume
+ic_upp
   rotate: false
   xy: 1786, 706
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-knob
+ic_volume
   rotate: false
   xy: 1786, 656
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
+knob
+  rotate: false
+  xy: 1786, 606
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 knob_after
   rotate: false
-  xy: 1538, 454
+  xy: 980, 934
   size: 10, 18
   split: 1, 1, 1, 12
   pad: 1, 1, 1, 1
@@ -401,7 +408,7 @@ knob_after
   index: -1
 knob_background
   rotate: false
-  xy: 1202, 438
+  xy: 1538, 454
   size: 18, 18
   split: 6, 6, 6, 6
   pad: 6, 6, 1, 1
@@ -410,7 +417,7 @@ knob_background
   index: -1
 knob_before
   rotate: false
-  xy: 980, 934
+  xy: 296, 130
   size: 10, 18
   split: 2, 2, 1, 12
   pad: 2, 2, 1, 1
@@ -434,14 +441,14 @@ logo
   index: -1
 map-marker
   rotate: false
-  xy: 1786, 606
+  xy: 1786, 556
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 page
   rotate: false
-  xy: 1994, 1542
+  xy: 1202, 428
   size: 28, 28
   split: 12, 12, 12, 12
   pad: 8, 8, 8, 8
@@ -483,6 +490,13 @@ selected_tab
   orig: 4, 4
   offset: 0, 0
   index: -1
+small_star
+  rotate: false
+  xy: 1994, 1522
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 spinner_default
   rotate: false
   xy: 594, 220
@@ -522,7 +536,7 @@ switch_bar_on
   index: -1
 switch_circle
   rotate: false
-  xy: 1786, 556
+  xy: 1994, 1472
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
