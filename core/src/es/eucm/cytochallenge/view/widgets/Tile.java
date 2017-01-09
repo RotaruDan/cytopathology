@@ -3,21 +3,18 @@ package es.eucm.cytochallenge.view.widgets;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 public class Tile extends AbstractWidget {
 
-    private Actor background, bottom, marker;
+    protected Actor background, bottom, marker;
 
-    private Label label;
+    protected Label label;
 
-    private Container<Label> labelContainer;
+    protected Table labelContainer;
 
     private TileStyle style;
 
@@ -28,8 +25,9 @@ public class Tile extends AbstractWidget {
     }
 
     public Tile(TileStyle tileStyle) {
-        labelContainer = new Container<Label>(label = new Label("",
-                tileStyle.labelStyle));
+        label = new Label("", tileStyle.labelStyle);
+        labelContainer = new Table();
+        labelContainer.add(label).expandX().fillX();
         label.setEllipsis(true);
         this.style = tileStyle;
         labelContainer.setBackground(tileStyle.labelBackground);
@@ -38,7 +36,7 @@ public class Tile extends AbstractWidget {
         addActor(labelContainer);
         addListener(clickListener);
 
-        if(tileStyle.background != null) {
+        if (tileStyle.background != null) {
             Image bg = new Image(tileStyle.background);
             setBackground(bg);
         }
@@ -117,7 +115,7 @@ public class Tile extends AbstractWidget {
             setBounds(background, 0, 0, width, height);
         }
         setBounds(labelContainer, 0, 0, width, getPrefHeight(labelContainer));
-        labelContainer.width(labelContainer.getWidth() * .95f);
+        //labelContainer.getCell(label).width(labelContainer.getWidth() * .95f);
         if (bottom != null) {
             float topPrefH = getPrefHeight(bottom);
             setBounds(bottom, 0, 0, width, topPrefH);

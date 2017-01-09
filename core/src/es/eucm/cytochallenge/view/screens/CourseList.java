@@ -17,16 +17,18 @@ import es.eucm.cytochallenge.utils.InternalFilesChallengeResourceProvider;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.transitions.Fade;
 import es.eucm.cytochallenge.view.widgets.*;
+import es.eucm.cytochallenge.view.widgets.challenge.CourseTile;
 
 public class CourseList extends BaseScreen {
+
+    private Gallery gallery;
 
     @Override
     public void create() {
         super.create();
 
-        Gallery gallery = new Gallery(3, 3, skin.get("navigation", Gallery.GalleryStyle.class));
+        gallery = new Gallery(3, 3, skin.get("navigation", Gallery.GalleryStyle.class));
 
-        loadCourses(gallery);
 
         ScrollPane scroll = new ScrollPane(gallery, BaseScreen.skin, "verticalScroll");
         scroll.setScrollingDisabled(true, false);
@@ -57,8 +59,15 @@ public class CourseList extends BaseScreen {
         root.add(rootLayout).expand().fill();
     }
 
-    private void loadCourses(final Gallery layout) {
+    @Override
+    public void show() {
+        super.show();
+        loadCourses();
+    }
 
+    private void loadCourses() {
+
+        gallery.clearChildren();
         Json json = new Json();
         String challengesPath = "challenges/";
         String challengeJson = "courses.json";
@@ -68,12 +77,9 @@ public class CourseList extends BaseScreen {
         for (int i = 0; i < courses.size; i++) {
             final Course course = courses.get(i);
 
-            Tile tile = new Tile(skin);
-            tile.setText(course.getName());
+            CourseTile tile = new CourseTile(course, skin, i18n, prefs);
 
-            tile.setMarker(WidgetBuilder.difficulty(course.getEstimatedDifficulty(null), i18n));
-
-            layout.add(tile);
+            gallery.add(tile);
             tile.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {

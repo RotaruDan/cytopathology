@@ -18,7 +18,7 @@ public class Prefs {
             String key = "challenge_" + challengeId;
             float currentScore = prefs.getFloat(key, 0);
             long time = getChallengeTime(challengeId);
-            if(time == 0l){
+            if (time == 0l) {
                 prefs.putLong("challengeTime_" + challengeId, TimeUtils.millis() - startTime);
             }
             if (currentScore < score) {

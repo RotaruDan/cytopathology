@@ -3,10 +3,13 @@ package es.eucm.cytochallenge.view.widgets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.Scaling;
@@ -32,7 +35,7 @@ import java.util.Date;
 public class ChallengeButton extends TextButton {
 
     private Label score, time;
-    private Image image;
+    private Image image, star1, star2, star3;
     private Label label;
 
     public ChallengeButton(Challenge challenge, Skin skin, I18NBundle i18n, Resolver resolver) {
@@ -78,8 +81,13 @@ public class ChallengeButton extends TextButton {
         float finalScore = BaseScreen.prefs.getChallengeScore(challenge.getId());
         score = new Label(Grades.getGrade(finalScore) + "", skin);
         time = null;
+
+        boolean disabled = true;
+        long timeValue = BaseScreen.prefs.getChallengeTime(challenge.getId());
+        if (timeValue > 0l) {
+            disabled = false;
+        }
         if (isCourse) {
-            long timeValue = BaseScreen.prefs.getChallengeTime(challenge.getId());
             String timeRes;
             if (timeValue == 0l) {
                 timeRes = i18n.get("time");
@@ -90,15 +98,60 @@ public class ChallengeButton extends TextButton {
             }
             time = new Label(timeRes + "", skin);
         }
+        setDisabled(disabled);
+        if(disabled) {
+            difficulty.setColor(Color.LIGHT_GRAY);
+            score.setColor(Color.LIGHT_GRAY);
+            label.setColor(Color.LIGHT_GRAY);
+            if (time != null) {
+                time.setColor(Color.LIGHT_GRAY);
+            }
+        }
 
         add(image).width(image.getWidth());
         add(difficulty).width(Math.max(difficulty.getWidth(), Gdx.graphics.getWidth() * .10f));
-        add(label).expandX().left(). expandX();
+        add(label).expandX().left().expandX();
         add(score).width(image.getWidth());
-        if(time != null) {
+        if (time != null) {
             add(time).width(image.getWidth() * 2f);
         }
         setSize(getPrefWidth(), getPrefHeight());
+
+        setUpStars(skin, finalScore);
+    }
+
+    private void setUpStars(Skin skin, float finalScore) {
+
+        Drawable starDrawable = skin.getDrawable(SkinConstants.DRAWABLE_SMALL_STAR);
+        int stars = Grades.getStars(finalScore);
+
+        if (stars > 2) {
+            star3 = new Image(starDrawable);
+            star3.setColor(Color.YELLOW);
+            star3.setOrigin(Align.center);
+            star3.setX(-100f);
+            star3.addAction(Actions.sequence(Actions.delay(1.2f), Actions.moveTo(star3.getWidth() * 2f, 0, .75f, Interpolation.swingOut)));
+            addActor(star3);
+
+        }
+        if (stars > 1) {
+            star2 = new Image(starDrawable);
+            star2.setColor(Color.YELLOW);
+            star2.setOrigin(Align.center);
+            star2.setX(-100f);
+            star2.addAction(Actions.sequence(Actions.delay(.6f), Actions.moveTo(star2.getWidth(), 0, .75f, Interpolation.swingOut)));
+            addActor(star2);
+
+        }
+        if (stars > 0) {
+            star1 = new Image(starDrawable);
+            star1.setColor(Color.YELLOW);
+            star1.setOrigin(Align.center);
+            star1.setX(-100f);
+            star1.addAction(Actions.moveTo(0, 0, .75f, Interpolation.swingOut));
+            addActor(star1);
+
+        }
     }
 
     @Override
@@ -112,10 +165,19 @@ public class ChallengeButton extends TextButton {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        if (isPressed())
-            image.setColor(Color.WHITE);
-        else
-            image.setColor(SkinConstants.COLOR_BUTTON);
+        if (!isDisabled()) {
+            if (isPressed())
+                image.setColor(Color.WHITE);
+            else
+                image.setColor(SkinConstants.COLOR_BUTTON);
+        } else {
+            image.setColor(Color.LIGHT_GRAY);
+        }
         super.draw(batch, parentAlpha);
+    }
+
+    @Override
+    public void setDisabled(boolean isDisabled) {
+        super.setDisabled(isDisabled);
     }
 }

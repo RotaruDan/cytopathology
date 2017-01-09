@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -99,7 +100,7 @@ public class CourseInfoDialog extends Table {
         totalChallengeScore += BaseScreen.prefs.getChallengeScore(challenge.getId());
         ++challenges;
 
-        float finalScore = (totalChallengeScore / challenges);
+        int finalScore = MathUtils.round(totalChallengeScore / challenges);
         totalScore.setText(i18n.get("totalScore") + ":    "
                 + finalScore + "    " +
                 Grades.getGrade(finalScore));

@@ -24,6 +24,7 @@ import es.eucm.cytochallenge.model.hint.ImageInfo;
 import es.eucm.cytochallenge.model.hint.Info;
 import es.eucm.cytochallenge.model.hint.TextInfo;
 import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
+import es.eucm.cytochallenge.utils.Grades;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.widgets.challenge.TextChallengeWidget;
 
@@ -82,8 +83,9 @@ public class ResultDialog extends Container<Table> {
         container.row();
         container.add(moreDetails);
 
+        TextButton.TextButtonStyle exitStyle = new TextButton.TextButtonStyle(style.buttonStyle);
         TextButton exit = WidgetBuilder.dialogButton(i18n.get("exit").toUpperCase(),
-                style.buttonStyle);
+                exitStyle);
         exit.getLabel().setColor(Color.LIGHT_GRAY);
         TextButton next = null;
         if(nextCourse) {
@@ -162,13 +164,14 @@ public class ResultDialog extends Container<Table> {
         root.addAction(Actions.sequence(Actions.moveTo(root.getX(), y, 0.33f, Interpolation.exp5Out), Actions.run(new Runnable() {
             @Override
             public void run() {
-                if (score > 15) {
+                int stars = Grades.getStars(score);
+                if (stars > 0) {
                     star1.addAction(Actions.parallel(Actions.scaleTo(1f, 1f, .5f, Interpolation.bounceOut), Actions.alpha(1f, .4f)));
                 }
-                if (score > 60) {
+                if (stars > 1) {
                     star2.addAction(Actions.delay(.6f, Actions.parallel(Actions.scaleTo(1f, 1f, .5f, Interpolation.bounceOut), Actions.alpha(1f, .4f))));
                 }
-                if (score > 90) {
+                if (stars > 2) {
                     star3.addAction(Actions.delay(1.2f, Actions.parallel(Actions.scaleTo(1f, 1f, .5f, Interpolation.bounceOut), Actions.alpha(1f, .4f))));
                 }
                 star1.setPosition(MathUtils.round(-star1.getWidth() * .5f), MathUtils.round(root.getHeight() - star1.getWidth() * .75f));

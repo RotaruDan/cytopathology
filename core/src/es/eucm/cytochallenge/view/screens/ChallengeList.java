@@ -23,13 +23,11 @@ import es.eucm.cytochallenge.model.control.draganddrop.DragAndDropControl;
 import es.eucm.cytochallenge.model.control.filltheblank.FillTheBlankControl;
 import es.eucm.cytochallenge.model.course.Course;
 import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
+import es.eucm.cytochallenge.utils.Grades;
 import es.eucm.cytochallenge.utils.InternalFilesChallengeResourceProvider;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.transitions.Fade;
-import es.eucm.cytochallenge.view.widgets.ChallengeButton;
-import es.eucm.cytochallenge.view.widgets.CourseInfoDialog;
-import es.eucm.cytochallenge.view.widgets.TopToolbarLayout;
-import es.eucm.cytochallenge.view.widgets.WidgetBuilder;
+import es.eucm.cytochallenge.view.widgets.*;
 
 public class ChallengeList extends BaseScreen {
 
@@ -157,7 +155,7 @@ public class ChallengeList extends BaseScreen {
             challengesPaths = currentCourse.getChallenges();
         }
 
-        if(challengesPaths == null) {
+        if (challengesPaths == null) {
             return;
         }
 
@@ -185,11 +183,15 @@ public class ChallengeList extends BaseScreen {
                         button.addListener(new ClickListener() {
                             @Override
                             public void clicked(InputEvent event, float x, float y) {
-                                challenges.setCurrentCourse(null);
-                                challengeResourceProvider.setResourcePath(button.getUserObject().toString());
-                                challengeResourceProvider.setCurrentChallengeId(challengeId);
-                                challenges.setChallengeResourceProvider(challengeResourceProvider);
-                                game.changeScreen(challenges);
+                                if (button.isDisabled()) {
+                                    playCourseToast();
+                                } else {
+                                    challenges.setCurrentCourse(null);
+                                    challengeResourceProvider.setResourcePath(button.getUserObject().toString());
+                                    challengeResourceProvider.setCurrentChallengeId(challengeId);
+                                    challenges.setChallengeResourceProvider(challengeResourceProvider);
+                                    game.changeScreen(challenges);
+                                }
                             }
                         });
 
@@ -205,6 +207,13 @@ public class ChallengeList extends BaseScreen {
             });
 
         }
+    }
+
+    private void playCourseToast() {
+        Toast toast = new Toast(skin);
+        toast.setText(i18n.get("playCourseToUnlockChallenge"));
+        stage.addActor(toast);
+        toast.show();
     }
 
     @Override

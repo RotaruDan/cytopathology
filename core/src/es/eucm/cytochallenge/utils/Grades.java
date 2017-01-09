@@ -34,4 +34,16 @@ public class Grades {
 
         return grade;
     }
+
+    public static int getStars(float score) {
+        int stars = 0;
+        if (score > 90) {
+            stars = 3;
+        } else if (score > 60) {
+            stars = 2;
+        } else if (score > 20) {
+            stars = 1;
+        }
+        return stars;
+    }
 }

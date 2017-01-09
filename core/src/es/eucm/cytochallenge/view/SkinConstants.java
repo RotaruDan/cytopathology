@@ -33,6 +33,7 @@ public interface SkinConstants {
     String DRAWABLE_DOCTOR_BOARD = "doctor_board";
     String DRAWABLE_BOARD = "board";
     String DRAWABLE_STAR = "star";
+    String DRAWABLE_SMALL_STAR = "small_star";
 
     // Buttons
     String DRAWABLE_BUTTON_CHECK_OFF = "button_check_off";
@@ -53,6 +54,7 @@ public interface SkinConstants {
     String DRAWABLE_9P_BLANK75 = "blank75";
     String DRAWABLE_9P_BLANK_GREY_BORDER = "blank_grey_border";
     String DRAWABLE_9P_PAGE_RIGHT = "page_right";
+    String DRAWABLE_9P_PAGE_UP = "page_up";
     String DRAWABLE_9P_TOOLBAR = "toolbar";
 
     // Buttons
@@ -77,6 +79,7 @@ public interface SkinConstants {
     String IC_REPLAY = "ic_replay";
     String IC_FIT = "ic_fit";
     String IC_UNDO = "ic_undo";
+    String IC_UPP = "ic_upp";
     String IC_MCQ = "ic_mcq";
     String IC_FTB = "ic_ftb";
     String IC_DND = "ic_dnd";
@@ -119,6 +122,7 @@ public interface SkinConstants {
     String STYLE_BIG = "big";
     String STYLE_DRAGANDDROP = "drag-n-drop";
     String STYLE_CHALLENGELIST = "challenge_list";
+    String STYLE_COURSE = "course";
 
     /**
      *  Colors

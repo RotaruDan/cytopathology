@@ -1,6 +1,6 @@
 package es.eucm.cytochallenge.view.screens;
 
-import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -13,10 +13,7 @@ import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
 import es.eucm.cytochallenge.utils.InternalFilesChallengeResourceProvider;
 import es.eucm.cytochallenge.view.*;
 import es.eucm.cytochallenge.view.transitions.Fade;
-import es.eucm.cytochallenge.view.widgets.HintDialog;
-import es.eucm.cytochallenge.view.widgets.ResultDialog;
-import es.eucm.cytochallenge.view.widgets.Toast;
-import es.eucm.cytochallenge.view.widgets.WidgetBuilder;
+import es.eucm.cytochallenge.view.widgets.*;
 import es.eucm.cytochallenge.view.widgets.challenge.ChallengeLayout;
 import es.eucm.cytochallenge.view.widgets.challenge.TextChallengeWidget;
 
@@ -25,6 +22,8 @@ public class Challenges extends BaseScreen {
     private ChallengeLayout challengeLayout = new ChallengeLayout();
     private TextChallengeWidget currentChallenge;
     private Button check, hint;
+    private CourseProgressBar showProgressBar;
+    private ProgressBar progressBar;
     private Button addButton;
     private ChallengeResourceProvider challengeResourceProvider;
     private Course currentCourse;
@@ -36,6 +35,13 @@ public class Challenges extends BaseScreen {
     public void setCurrentCourse(Course currentCourse) {
         this.currentCourse = currentCourse;
         challengeCount = 0;
+        if (currentCourse != null) {
+            progressBar = new ProgressBar(0f, (float) currentCourse.getChallenges().size, 1f, false, skin);
+            showProgressBar.setProgressBar(progressBar);
+            challengeLayout.setShowProgressBar(showProgressBar);
+        } else {
+            challengeLayout.setShowProgressBar(null);
+        }
     }
 
     @Override
@@ -85,9 +91,15 @@ public class Challenges extends BaseScreen {
         challengeLayout.setBackButton(back);
 
         root.add(challengeLayout).expand().fill();
+
+        showProgressBar = new CourseProgressBar(SkinConstants.IC_UPP, skin);
     }
 
     private void goNextChallenge() {
+
+        if (currentCourse != null) {
+            showProgressBar.hideProgress();
+        }
         if (currentCourse.getChallenges().size == challengeCount) {
             challengeLayout.setNextChallenge(null);
             challengeList.setShowCourseInfo(true);
@@ -130,6 +142,10 @@ public class Challenges extends BaseScreen {
             }
         });
 
+        if (currentCourse != null) {
+            progressBar.setValue((float)challengeCount);
+            showProgressBar.showProgress();
+        }
         addButton = hint;
         check.remove();
 
@@ -236,6 +252,7 @@ public class Challenges extends BaseScreen {
         super.hide();
         challengeLayout.setNextChallenge(null);
         challengeLayout.setTimer(null);
+        showProgressBar.hideProgress();
     }
 
     @Override

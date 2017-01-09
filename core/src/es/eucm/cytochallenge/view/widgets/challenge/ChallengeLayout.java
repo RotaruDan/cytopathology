@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import es.eucm.cytochallenge.view.SkinConstants;
@@ -14,7 +15,7 @@ import es.eucm.cytochallenge.view.widgets.WidgetBuilder;
 
 public class ChallengeLayout extends AbstractWidget {
 
-    Button backButton, nextChallenge, checkButton;
+    Button backButton, nextChallenge, checkButton, showProgressBar;
     Actor content;
     TimerWidget timer;
 
@@ -45,6 +46,10 @@ public class ChallengeLayout extends AbstractWidget {
         if(timer != null) {
             float timerPrefHeight = getPrefHeight(timer);
             setBounds(timer, 0, backButton.getY() - timerPrefHeight, getPrefWidth(timer), timerPrefHeight);
+        }
+
+        if(showProgressBar != null) {
+            setBounds(showProgressBar, 0, 0, getPrefWidth(showProgressBar), getPrefHeight(showProgressBar));
         }
     }
 
@@ -102,6 +107,16 @@ public class ChallengeLayout extends AbstractWidget {
         this.timer = timer;
         if(timer != null) {
             addActor(timer);
+        }
+    }
+
+    public void setShowProgressBar(Button showProgressBar) {
+        if(this.showProgressBar != null) {
+            this.showProgressBar.remove();
+        }
+        this.showProgressBar = showProgressBar;
+        if(showProgressBar != null) {
+            addActor(showProgressBar);
         }
     }
 
