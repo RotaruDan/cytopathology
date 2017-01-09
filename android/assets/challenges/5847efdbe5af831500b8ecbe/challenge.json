@@ -1,0 +1,15 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "42yrold.jpg",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
+        "text": "Cervical smear. Age: 42 LMP: 6 days ago. This pattern is consistent with",
+        "answers": [
+            "ASC-H",
+            "Stromal cells",
+            "HSIL/CINII"
+        ],
+        "correctAnswer": 0
+    }
+}

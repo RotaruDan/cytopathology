@@ -1,0 +1,16 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "case34yr.png",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
+        "text": "Cervical Smear from a 34 year old woman on day 17. Your diagnosis is",
+        "answers": [
+            "Reactive metaplasia",
+            "ASC-US",
+            "HSIL, CIN III, Severe dysplasia",
+            "LSIL"
+        ],
+        "correctAnswer": 0
+    }
+}
