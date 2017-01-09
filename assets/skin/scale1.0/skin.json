@@ -197,6 +197,14 @@
             "name": "bg48",
             "color": "blue"
         },
+        "progress_bar_bg": {
+            "name": "selected_tab",
+            "color": "semi_dark_brown_moka"
+        },
+        "progress_bar_knob_before": {
+            "name": "selected_tab",
+            "color": "blue"
+        },
         "edition_pressed_48_bg": {
             "name": "bg48",
             "color": "semi_transparent"
@@ -535,6 +543,16 @@
             "fontColor": "gray"
         }
     },
+    "com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle": {
+        "default-horizontal": {
+            "background": "knob_after",
+            "knobBefore": "knob_before"
+        },
+        "course": {
+            "background": "progress_bar_bg",
+            "knobBefore": "progress_bar_knob_before"
+        }
+    },
     "es.eucm.cytochallenge.view.widgets.IconButton$IconButtonStyle": {
         "default": {
             "disabledColor": "gray",
@@ -671,6 +689,14 @@
             "background": "light_gray_bg",
             "checked": "deep_orange_semi_bg",
             "pressed": "light_blue_semi_bg"
+        }
+    },
+    "es.eucm.cytochallenge.view.widgets.CourseProgressBar$CourseProgressBarStyle": {
+        "default": {
+            "panelBackground": "page_up",
+            "up": "transparent_48_bg",
+            "down": "pressed_48_bg",
+            "color": "gray"
         }
     }
 }
