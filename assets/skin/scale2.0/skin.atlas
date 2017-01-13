@@ -41,7 +41,7 @@ bg48
   index: -1
 blank
   rotate: false
-  xy: 1898, 1218
+  xy: 296, 146
   size: 2, 2
   orig: 2, 2
   offset: 0, 0
@@ -294,28 +294,28 @@ ic_ftb
   index: -1
 ic_home
   rotate: false
-  xy: 594, 96
+  xy: 594, 38
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 ic_interaction
   rotate: false
-  xy: 1670, 498
+  xy: 1780, 806
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 ic_mcq
   rotate: false
-  xy: 594, 46
+  xy: 1736, 756
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 ic_micq
   rotate: false
-  xy: 1780, 806
+  xy: 1736, 706
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -327,30 +327,37 @@ ic_play
   orig: 96, 96
   offset: 0, 0
   index: -1
+ic_play_big
+  rotate: false
+  xy: 1538, 450
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
 ic_redo
-  rotate: false
-  xy: 1736, 756
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: -1
-ic_replay
-  rotate: false
-  xy: 1736, 706
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: -1
-ic_settings
   rotate: false
   xy: 1736, 656
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-ic_share
+ic_replay
   rotate: false
   xy: 1736, 606
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+ic_settings
+  rotate: false
+  xy: 1736, 556
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+ic_share
+  rotate: false
+  xy: 1786, 756
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -364,42 +371,42 @@ ic_tablet
   index: -1
 ic_text
   rotate: false
-  xy: 1736, 556
+  xy: 1786, 706
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 ic_undo
   rotate: false
-  xy: 1786, 756
+  xy: 1786, 656
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 ic_upp
   rotate: false
-  xy: 1786, 706
+  xy: 1786, 606
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 ic_volume
   rotate: false
-  xy: 1786, 656
+  xy: 1786, 556
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 knob
   rotate: false
-  xy: 1786, 606
+  xy: 1994, 1522
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 knob_after
   rotate: false
-  xy: 980, 934
+  xy: 1710, 528
   size: 10, 18
   split: 1, 1, 1, 12
   pad: 1, 1, 1, 1
@@ -408,7 +415,7 @@ knob_after
   index: -1
 knob_background
   rotate: false
-  xy: 1538, 454
+  xy: 1636, 454
   size: 18, 18
   split: 6, 6, 6, 6
   pad: 6, 6, 1, 1
@@ -417,7 +424,7 @@ knob_background
   index: -1
 knob_before
   rotate: false
-  xy: 296, 130
+  xy: 980, 934
   size: 10, 18
   split: 2, 2, 1, 12
   pad: 2, 2, 1, 1
@@ -441,7 +448,7 @@ logo
   index: -1
 map-marker
   rotate: false
-  xy: 1786, 556
+  xy: 1994, 1472
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -492,7 +499,7 @@ selected_tab
   index: -1
 small_star
   rotate: false
-  xy: 1994, 1522
+  xy: 1994, 1422
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -536,7 +543,7 @@ switch_bar_on
   index: -1
 switch_circle
   rotate: false
-  xy: 1994, 1472
+  xy: 1956, 1230
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -550,7 +557,7 @@ switch_off
   index: -1
 switch_on
   rotate: false
-  xy: 1612, 490
+  xy: 594, 88
   size: 56, 56
   orig: 56, 56
   offset: 0, 0
@@ -574,7 +581,7 @@ text_field_cursor
   index: -1
 toolbar
   rotate: false
-  xy: 1538, 474
+  xy: 1636, 474
   size: 72, 72
   split: 30, 30, 20, 32
   pad: 1, 1, 1, 13
