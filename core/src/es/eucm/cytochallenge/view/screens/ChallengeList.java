@@ -71,13 +71,15 @@ public class ChallengeList extends BaseScreen {
         });
 
 
-        Button play = es.eucm.cytochallenge.view.widgets.WidgetBuilder.toolbarIcon(SkinConstants.IC_PLAY);
+        Button play = es.eucm.cytochallenge.view.widgets.WidgetBuilder.circleButton(SkinConstants.IC_PLAY);
         play.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playCourse();
             }
         });
+        float dpSpace = WidgetBuilder.dpToPixels(6f);
+        play.setPosition(Gdx.graphics.getWidth() - play.getWidth() - dpSpace, dpSpace);
 
         courseInfo = es.eucm.cytochallenge.view.widgets.WidgetBuilder.toolbarIcon(SkinConstants.IC_ERROR);
         courseInfo.addListener(new ClickListener() {
@@ -93,11 +95,11 @@ public class ChallengeList extends BaseScreen {
         topTable.add(title)
                 .expandX();
         topTable.add(courseInfo);
-        topTable.add(play);
 
         TopToolbarLayout rootLayout = new TopToolbarLayout();
         rootLayout.setTopToolbar(topTable);
         rootLayout.setContainer(scroll);
+        rootLayout.setCheckButton(play);
 
         root.add(rootLayout).expand().fill();
     }

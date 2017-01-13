@@ -1,6 +1,7 @@
 package es.eucm.cytochallenge.view.widgets;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import es.eucm.cytochallenge.view.widgets.AbstractWidget;
@@ -10,6 +11,7 @@ public class TopToolbarLayout extends AbstractWidget {
 
     private Table topToolbar;
     private Actor container;
+    private Actor check;
 
     @Override
     public void layout() {
@@ -28,6 +30,12 @@ public class TopToolbarLayout extends AbstractWidget {
 
         setBounds(container, 0, 0,
                 getWidth(), getHeight() - height);
+
+        if(check != null) {
+            float offset = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(16);
+            setBounds(check, getWidth() - getPrefWidth(check) - offset, offset,
+                    getPrefWidth(check), getPrefHeight(check));
+        }
     }
 
     public void setTopToolbar(Table topToolbar) {
@@ -38,6 +46,11 @@ public class TopToolbarLayout extends AbstractWidget {
     public void setContainer(Actor container) {
         this.container = container;
         addActorAt(0, container);
+    }
+
+    public void setCheckButton(Button checkButton) {
+        this.check = checkButton;
+        addActor(checkButton);
     }
 
     public Actor getContainer() {

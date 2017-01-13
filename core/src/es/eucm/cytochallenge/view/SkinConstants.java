@@ -75,6 +75,7 @@ public interface SkinConstants {
     String IC_ERROR = "ic_error";
     String IC_SETTINGS = "ic_settings";
     String IC_PLAY = "ic_play";
+    String IC_PLAY_BIG = "ic_play_big";
     String IC_CELL_WITH_RECEPTORS = "ic_cell_with_receptors";
     String IC_REPLAY = "ic_replay";
     String IC_FIT = "ic_fit";

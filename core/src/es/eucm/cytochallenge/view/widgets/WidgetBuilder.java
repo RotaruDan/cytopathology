@@ -76,7 +76,7 @@ public class WidgetBuilder {
         imageButtonStyle.imageUp = BaseScreen.skin.getDrawable(SkinConstants.IC_PLAY);
         ImageButton imageButton = new ImageButton(imageButtonStyle);
         imageButton.getImage().setScaling(Scaling.none);
-        imageButton.setName(SkinConstants.IC_PLAY);
+        imageButton.setName(SkinConstants.IC_PLAY_BIG);
         return imageButton;
     }
 
