@@ -121,8 +121,6 @@ public class Challenges extends BaseScreen {
 
         float score = Math.max(0f, currentChallenge.setUpScore());
 
-        System.out.println("score = " + score);
-
         ResultDialog dialog = new ResultDialog(currentCourse != null, hintInfo, score, challengeResourceProvider, skin, i18n);
         root.getStage().addActor(dialog);
         dialog.show();

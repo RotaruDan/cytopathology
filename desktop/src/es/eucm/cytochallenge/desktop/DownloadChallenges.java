@@ -82,6 +82,7 @@ public class DownloadChallenges {
                             Course course = new Course();
                             course.setCourseId(id);
                             course.setName(courseInfo.getString("name"));
+                            course.setTimePerChallenge(courseInfo.getInt("timePerChallenge", 0));
 
                             courses.add(course);
                         }
@@ -182,7 +183,7 @@ public class DownloadChallenges {
 
                             if (challengeInfo.hasChild("challengeFile")) {
                                 JsonValue challengeFile = challengeInfo.getChild("challengeFile");
-                                while(!challengeFile.name().equals("difficulty")) {
+                                while (!challengeFile.name().equals("difficulty")) {
                                     challengeFile = challengeFile.next();
                                 }
 

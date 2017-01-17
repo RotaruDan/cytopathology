@@ -9,6 +9,7 @@ public class Course {
     private String courseId, name;
     private Array<String> challenges;
     private Difficulty difficulty;
+    private int timePerChallenge;
 
     public String getCourseId() {
         return courseId;
@@ -52,4 +53,23 @@ public class Course {
         return difficulty;
     }
 
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public int courseCompletionTime() {
+        if(timePerChallenge == 0) {
+            return -1;
+        }
+
+        return timePerChallenge * challenges.size;
+    }
+
+    public void setTimePerChallenge(int timePerChallenge) {
+        this.timePerChallenge = timePerChallenge;
+    }
 }

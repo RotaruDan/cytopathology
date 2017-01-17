@@ -16,6 +16,7 @@ public class CourseProgressBar extends IconButton {
     private Table progressBarPanel;
     private Cell<ProgressBar> progressBarCell;
     private Label progressBarLabel;
+    private float timeout = -1;
 
     public CourseProgressBar(String icon, Skin skin) {
         this(icon, skin, "default");
@@ -86,5 +87,14 @@ public class CourseProgressBar extends IconButton {
     static public class CourseProgressBarStyle extends IconButtonStyle {
         public Drawable panelBackground;
 
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (timeout > 0) {
+            timeout -= delta;
+
+        }
     }
 }
