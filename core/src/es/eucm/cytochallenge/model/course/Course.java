@@ -61,7 +61,7 @@ public class Course {
         this.difficulty = difficulty;
     }
 
-    public int courseCompletionTime() {
+    public int getCourseCompletionTime() {
         if(timePerChallenge == 0) {
             return -1;
         }

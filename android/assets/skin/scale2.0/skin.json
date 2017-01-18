@@ -665,6 +665,13 @@
             "buttonStyle": "dialog"
         }
     },
+    "es.eucm.cytochallenge.view.widgets.StartCourseDialog$StartCourseDialogStyle": {
+        "default": {
+            "background": "light_gray_bg",
+            "panelBackground": "page_up",
+            "textStyle": "edition"
+        }
+    },
     "es.eucm.cytochallenge.view.widgets.CourseInfoDialog$CourseInfoDialogStyle": {
         "default": {
             "background": "page_up",

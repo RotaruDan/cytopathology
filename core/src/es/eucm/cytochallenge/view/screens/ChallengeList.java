@@ -114,9 +114,18 @@ public class ChallengeList extends BaseScreen {
         if (currentCourse == null || currentCourse.getChallenges() == null) {
             return;
         }
-        challenges.setCurrentCourse(currentCourse);
-        challenges.setChallengeResourceProvider(challengeResourceProvider);
-        game.changeScreen(challenges);
+
+        StartCourseDialog startDialog = new StartCourseDialog(currentCourse, skin, i18n, resolver);
+        startDialog.setOnFinishedCallback(new Runnable() {
+            @Override
+            public void run() {
+                challenges.setCurrentCourse(currentCourse);
+                challenges.setChallengeResourceProvider(challengeResourceProvider);
+                game.changeScreen(challenges);
+            }
+        });
+        menu.getStage().addActor(startDialog);
+        startDialog.show();
     }
 
     @Override
