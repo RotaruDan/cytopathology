@@ -1,0 +1,15 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "21yrold2.jpg",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
+        "text": "Cervical smear. Age: 21 LMP: 16 days ago. This pattern is consistent with",
+        "answers": [
+            "HSIL/CIN II",
+            "LSIL/CIN I",
+            "ASC-US"
+        ],
+        "correctAnswer": 0
+    }
+}

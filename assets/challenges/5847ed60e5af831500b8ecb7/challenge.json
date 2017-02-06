@@ -1,15 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "39yrold.jpg",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "Cervical smear. 39 year old female. LMP:day 18. These findings are most consistent with:",
-        "answers": [
-            "RCC",
-            "ASC-US",
-            "HGSIL CIN III"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"39yrold.jpg","name":"Cervical smear, 39 year old female","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"Cervical smear. 39 year old female. LMP:day 18. These findings are most consistent with:","answers":["RCC","ASC-US","HGSIL CIN III"]}}

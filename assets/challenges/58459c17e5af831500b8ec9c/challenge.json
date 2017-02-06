@@ -1,16 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "case32year.jpg",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "Cervical smear from a 32 year old woman. This pattern is consistent with",
-        "answers": [
-            "ASC-H",
-            "HSIL, Severe dysplasia, CIN III",
-            "Superficial stromal cells",
-            "Small cell carcinoma"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"case32year.jpg","name":"Case 32 year old woman","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"Cervical smear from a 32 year old woman. This pattern is consistent with","answers":["ASC-H","HSIL, Severe dysplasia, CIN III","Superficial stromal cells","Small cell carcinoma"]}}

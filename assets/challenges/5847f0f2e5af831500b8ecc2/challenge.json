@@ -1,15 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "29yrold2.jpg",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "Slide 40\u000bCervical smear. Age: 29. LMP: 5 days ago. This pattern is consistent with",
-        "answers": [
-            "Endometrial cells in a  menstrual smear",
-            "Histiocytes",
-            "ASC-H"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"29yrold2.jpg","name":"Cervical smear, 29 year old","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"Slide 40Cervical smear. Age: 29. LMP: 5 days ago. This pattern is consistent with","answers":["Endometrial cells in a  menstrual smear","Histiocytes","ASC-H"]}}

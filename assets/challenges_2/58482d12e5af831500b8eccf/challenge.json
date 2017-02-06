@@ -1,0 +1,19 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "day1.jpg",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
+        "text": "Which day of the menstrual cycle corresponds the following image",
+        "answers": [
+            "1",
+            "5",
+            "6-10",
+            "11",
+            "14",
+            "16",
+            "24"
+        ],
+        "correctAnswer": 0
+    }
+}

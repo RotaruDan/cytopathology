@@ -1,15 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "19yrold.jpg",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "Cervical smear. 19 year old. These findings are consistent with:",
-        "answers": [
-            "RCC",
-            "ASC-US",
-            "HGSIL, CIN III"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"19yrold.jpg","name":"Cervical smear, 19 year old","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"Cervical smear. 19 year old. These findings are consistent with:","answers":["RCC","ASC-US","HGSIL, CIN III"]}}

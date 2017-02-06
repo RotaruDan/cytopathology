@@ -1,0 +1,16 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "case21year.jpg",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
+        "text": "Cervical smear from a 21 year  old woman, 6 months pregnant. Her clinical symptoms might include",
+        "answers": [
+            "Greenish foul smelling discharge",
+            "Weakness and lethargy",
+            "White cheezy discharge",
+            "Post-coital bleeding"
+        ],
+        "correctAnswer": 0
+    }
+}

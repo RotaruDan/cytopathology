@@ -1,15 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "32yrold.jpg",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "Cervical Smear. Age: 32. LMP: 14 days ago. This pattern is consistent with",
-        "answers": [
-            "ASC-H",
-            "RCC",
-            "HSIL, CIN II"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"32yrold.jpg","name":"Cervical smear, 32 year old","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"Cervical Smear. Age: 32. LMP: 14 days ago. This pattern is consistent with","answers":["ASC-H","RCC","HSIL, CIN II"]}}

@@ -1,15 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "59yrold.jpg",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "Cervical smear. Age: 59. LMP: 7 yrs ago. This pattern is consistent with:",
-        "answers": [
-            "Atrophy",
-            "HSIL/CIN III/CIS",
-            "Endocervical cells"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"59yrold.jpg","name":"Cervical smear, 59 year old","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"Cervical smear. Age: 59. LMP: 7 yrs ago. This pattern is consistent with:","answers":["Atrophy","HSIL/CIN III/CIS","Endocervical cells"]}}

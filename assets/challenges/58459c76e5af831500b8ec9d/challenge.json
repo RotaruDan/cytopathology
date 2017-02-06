@@ -1,16 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "case19year.jpg",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "Cervical smear from a 19 year old. Cytologic pattern with this type of cells will be consistent with",
-        "answers": [
-            "ASC-US",
-            "LSIL, Mild dysplasia, CIN I",
-            "Reactive cellular changes",
-            "Folic acid deficiency"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"case19year.jpg","name":"Case 19 year old","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"Cervical smear from a 19 year old. Cytologic pattern with this type of cells will be consistent with","answers":["ASC-US","LSIL, Mild dysplasia, CIN I","Reactive cellular changes","Folic acid deficiency"]}}

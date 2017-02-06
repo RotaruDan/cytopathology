@@ -1,15 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "18yrold.jpg",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "Cervical smear. 18 year old female. LMP:Day 18. These findings are most consistent with:",
-        "answers": [
-            "RCC",
-            "ASC-US",
-            "LGSIL CIN I"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"18yrold.jpg","name":"Cervical smear, 18 year old female","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"Cervical smear. 18 year old female. LMP:Day 18. These findings are most consistent with:","answers":["RCC","ASC-US","LGSIL CIN I"]}}

@@ -1,16 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "case21yr.png",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "Cervical Smear from a 21 year old woman on day 13. Your diagnosis is",
-        "answers": [
-            "Reactive metaplasia",
-            "ASC-H",
-            "HSIL, CIN III, Severe dysplasia",
-            "ASC-US"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"case21yr.png","name":"Case 21 year old woman","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"Cervical Smear from a 21 year old woman on day 13. Your diagnosis is","answers":["Reactive metaplasia","ASC-H","HSIL, CIN III, Severe dysplasia","ASC-US"]}}

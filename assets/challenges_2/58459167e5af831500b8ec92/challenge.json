@@ -1,0 +1,55 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "anatomy.jpg",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.draganddrop.DragAndDropControl",
+        "text": "Female Anatomy",
+        "canvasWidth": 1024,
+        "canvasHeight": 552,
+        "answers": [
+            {
+                "text": "Uterine corpus",
+                "x": 641.5697959125905,
+                "y": 446.5688405797101,
+                "width": 145.05859375,
+                "height": 30
+            },
+            {
+                "text": "Fallopian tube",
+                "x": 643.5449289515399,
+                "y": 376.7644927536232,
+                "width": 140.64453125,
+                "height": 30
+            },
+            {
+                "text": "Ovary",
+                "x": 673.2138742640399,
+                "y": 272.05797101449275,
+                "width": 68.33984375,
+                "height": 30
+            },
+            {
+                "text": "Cervix",
+                "x": 674.4085675668025,
+                "y": 194.19927536231884,
+                "width": 71.669921875,
+                "height": 30
+            },
+            {
+                "text": "Vagina",
+                "x": 680.6188752547554,
+                "y": 97.54710144927536,
+                "width": 75.791015625,
+                "height": 30
+            },
+            {
+                "text": "Introitus",
+                "x": 671.5122884114583,
+                "y": 26.847826086956523,
+                "width": 86.142578125,
+                "height": 30
+            }
+        ]
+    }
+}

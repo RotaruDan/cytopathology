@@ -1,0 +1,16 @@
+{
+    "class": "es.eucm.cytochallenge.model.TextChallenge",
+    "imagePath": "case28yr.png",
+    "difficulty": "EASY",
+    "textControl": {
+        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
+        "text": "Cervical Smear from a 28 year old woman on day 16. Your diagnosis is",
+        "answers": [
+            "Reactive metaplasia",
+            "ASC-H",
+            "HSIL, CIN III, Severe dysplasia",
+            "Negative"
+        ],
+        "correctAnswer": 0
+    }
+}

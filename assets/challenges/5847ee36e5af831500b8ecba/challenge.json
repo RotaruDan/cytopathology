@@ -1,15 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "26yrold2.jpg",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "Cervical Smear. Age: 26  LMP: 16 days ago. This pattern is consistent with",
-        "answers": [
-            "Inflammatory changes",
-            "LSIL, CIN I",
-            "ASC-US"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"26yrold2.jpg","name":"Cervical smear, 26 year old","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"Cervical Smear. Age: 26  LMP: 16 days ago. This pattern is consistent with","answers":["Inflammatory changes","LSIL, CIN I","ASC-US"]}}
