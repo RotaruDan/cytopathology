@@ -35,7 +35,7 @@ public class FillTheBlankText extends TextButton {
 
         String[][] options = statement.getOptions();
 
-        float leftPad = WidgetBuilder.dpToPixels(8f);
+        float leftPad = WidgetBuilder.dp8ToPixels();
         int tokeenOffset = 0;
         for (int i = 0; i < options.length; i++) {
 

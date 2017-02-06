@@ -30,6 +30,8 @@ import es.eucm.cytochallenge.utils.Grades;
 import es.eucm.cytochallenge.utils.Resolver;
 import es.eucm.cytochallenge.view.screens.BaseScreen;
 
+import java.util.Date;
+
 public class CourseInfoDialog extends Table {
 
     private final I18NBundle i18n;
@@ -39,6 +41,7 @@ public class CourseInfoDialog extends Table {
     private Label title, totalScore;
     private int challenges;
     private float totalChallengeScore;
+    private long totalCourseTime;
 
     public CourseInfoDialog(Skin skin, I18NBundle i18n, Resolver resolver) {
         setSkin(skin);
@@ -46,15 +49,15 @@ public class CourseInfoDialog extends Table {
         this.i18n = i18n;
         CourseInfoDialogStyle style = skin.get(CourseInfoDialogStyle.class);
         background(style.background);
-        float pad24dp = WidgetBuilder.dpToPixels(24);
-        float pad16dp = WidgetBuilder.dpToPixels(16);
-        pad(pad24dp, pad24dp, pad16dp, pad24dp);
+        float pad16dp = WidgetBuilder.dp16ToPixels();
+        float pad8dp = WidgetBuilder.dp8ToPixels();
+        pad(pad16dp, pad16dp, pad8dp, pad16dp);
 
         textStyle = style.textStyle;
         title = new Label("", textStyle);
         container = new Table();
-        container.defaults().space(pad24dp);
-        container.pad(pad16dp);
+        container.defaults().space(pad16dp);
+        container.pad(pad8dp);
         ScrollPane scroll = new ScrollPane(container);
         scroll.setScrollingDisabled(true, false);
 
@@ -71,11 +74,12 @@ public class CourseInfoDialog extends Table {
         row();
         add(scroll).expand().fill();
         row();
-        add(ok).expandX().right().padTop(pad16dp);
+        add(ok).expandX().right().padTop(pad8dp);
         setFillParent(true);
 
         totalScore = new Label("", skin);
         totalScore.setAlignment(Align.right);
+        totalCourseTime = 0l;
     }
 
     public void clearChallenges() {
@@ -87,6 +91,7 @@ public class CourseInfoDialog extends Table {
 
     public void init(Course course) {
         clearChallenges();
+        totalCourseTime = 0l;
         title.setText(i18n.get("exam") + ": " + course.getName());
     }
 
@@ -100,10 +105,12 @@ public class CourseInfoDialog extends Table {
         totalChallengeScore += BaseScreen.prefs.getChallengeScore(challenge.getId());
         ++challenges;
 
+        totalCourseTime += BaseScreen.prefs.getChallengeTime(challenge.getId());
+
         int finalScore = MathUtils.round(totalChallengeScore / challenges);
-        totalScore.setText(i18n.get("totalScore") + ":    "
+        totalScore.setText(i18n.get("total") + ":    "
                 + finalScore + "    " +
-                Grades.getGrade(finalScore));
+                Grades.getGrade(finalScore) + "    " + resolver.format("mm:ss", new Date(totalCourseTime)));
     }
 
     @Override

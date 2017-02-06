@@ -44,7 +44,7 @@ public abstract class ResultLayout<T extends TextControl> extends AbstractWidget
     private void addResultRow() {
         toolbar.add(topRow).expandX().fillX();
         if (tabs != null) {
-            toolbar.add(tabs).right();
+            toolbar.add(tabs).right().expandY().fillY();
         }
     }
 

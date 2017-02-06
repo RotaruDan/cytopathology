@@ -26,13 +26,13 @@ public class HintDialog extends Table {
     public HintDialog(Skin skin, Hint hint, I18NBundle i18n, ChallengeResourceProvider challengeResourceProvider) {
         HintDialogStyle style = skin.get(HintDialogStyle.class);
         background(style.background);
-        float pad24dp = WidgetBuilder.dpToPixels(24);
-        float pad16dp = WidgetBuilder.dpToPixels(16);
-        pad(pad24dp, pad24dp, pad16dp, pad24dp);
+        float pad16dp = WidgetBuilder.dp16ToPixels();
+        float pad8dp = WidgetBuilder.dp8ToPixels();
+        pad(pad16dp, pad16dp, pad8dp, pad16dp);
 
         Table container = new Table();
-        container.defaults().space(pad24dp);
-        container.pad(pad16dp);
+        container.defaults().space(pad16dp);
+        container.pad(pad8dp);
         ScrollPane scroll = new ScrollPane(container);
         scroll.setScrollingDisabled(true, false);
 
@@ -78,7 +78,7 @@ public class HintDialog extends Table {
         });
         add(scroll).expand().fill();
         row();
-        add(ok).expandX().right().padTop(pad16dp);
+        add(ok).expandX().right().padTop(pad8dp);
         setFillParent(true);
     }
 

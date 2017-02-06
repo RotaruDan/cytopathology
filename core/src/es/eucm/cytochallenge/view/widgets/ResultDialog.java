@@ -42,14 +42,13 @@ public class ResultDialog extends Container<Table> {
         Table root = getActor();
         root.setBackground(style.panelBackground);
 
-        float pad24dp = WidgetBuilder.dpToPixels(24);
-        float pad16dp = WidgetBuilder.dpToPixels(16);
-        float pad48dp = WidgetBuilder.dpToPixels(48);
-        root.pad(pad48dp, pad48dp, pad48dp, pad48dp);
+        float pad16dp = WidgetBuilder.dp16ToPixels();
+        float pad8dp = WidgetBuilder.dp8ToPixels();
+        root.pad(pad16dp, pad16dp, pad16dp, pad16dp);
 
         Table container = new Table();
-        container.defaults().space(pad24dp);
-        container.pad(pad16dp);
+        container.defaults().space(pad16dp);
+        container.pad(pad8dp);
         TextButton explanation = null;
         if (hint != null) {
             explanation = WidgetBuilder.dialogButton(i18n.get("explanation"),
@@ -117,10 +116,10 @@ public class ResultDialog extends Container<Table> {
         Drawable starDrawable = skin.getDrawable(SkinConstants.DRAWABLE_STAR);
         star1 = new Image(starDrawable);
         star1.setColor(Color.YELLOW);
-        root.add(container).padTop(star1.getHeight() * .5f + pad16dp).expand().fill().colspan(2);
+        root.add(container).padTop(star1.getHeight() * .5f + pad8dp).expand().fill().colspan(2);
         root.row();
-        root.add(exit).expandX().right().padTop(pad16dp);
-        root.add(next).right().padTop(pad16dp);
+        root.add(exit).expandX().right().padTop(pad8dp);
+        root.add(next).right().padTop(pad8dp);
 
         star2 = new Image(starDrawable);
         star2.setColor(Color.YELLOW);

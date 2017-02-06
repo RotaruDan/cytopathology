@@ -24,7 +24,7 @@ public class Menu extends BaseScreen {
 
         final Button play, settings;
         play = WidgetBuilder.playButton();
-        float yOffset = WidgetBuilder.dpToPixels(60f);
+        float yOffset = WidgetBuilder.dp24ToPixels();
         play.addAction(Actions.forever(Actions.sequence(Actions.moveBy(0, -yOffset, 4f, Interpolation.exp10), Actions.moveBy(0, yOffset, 5f, Interpolation.circle))));
 
         Container<Button> settingsContainer = new Container<Button>();
@@ -52,7 +52,7 @@ public class Menu extends BaseScreen {
                     return;
                 }
 
-                game.changeScreen(next, Fade.init(1f, true));
+                game.changeScreen(next, Fade.init(1f));
             }
 
             private BaseScreen getNextScreen(Actor target) {

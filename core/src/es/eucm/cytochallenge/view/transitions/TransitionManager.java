@@ -64,10 +64,18 @@ public class TransitionManager extends BaseScreen {
 
         nextScreen.show();
         nextFbo.begin();
+        nextScreen.update();
         nextScreen.draw();
         nextFbo.end();
 
         return this;
+    }
+
+    private void updateNextScreenTexture() {
+        nextFbo.begin();
+        nextScreen.update();
+        nextScreen.draw();
+        nextFbo.end();
     }
 
     public void update(){
@@ -85,6 +93,7 @@ public class TransitionManager extends BaseScreen {
             // render transition effect to screen
             float alpha = time / duration;
             batch.setColor(1f, 1f, 1f, 1f);
+            updateNextScreenTexture();
             batch.setProjectionMatrix(originalViewport);
             screenTransition.render(batch, currTex, nexTex, alpha);
         }

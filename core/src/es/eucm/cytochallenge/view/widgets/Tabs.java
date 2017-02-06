@@ -43,8 +43,8 @@ public class Tabs extends Table {
     public void setItems(String... items) {
         clearChildren();
         addActor(overlayImage);
-        float verticalPad = WidgetBuilder.dpToPixels(16);
-        float horizontalPad = WidgetBuilder.dpToPixels(24);
+        float verticalPad = WidgetBuilder.dp8ToPixels();
+        float horizontalPad = WidgetBuilder.dp16ToPixels();
         for (int i = 0; i < items.length; ++i) {
             String item = items[i];
             final TextButton textButton = new TabButton(item);
@@ -64,7 +64,7 @@ public class Tabs extends Table {
             }
             textButton.pad(verticalPad, horizontalPad, verticalPad,
                     horizontalPad);
-            add(textButton);
+            add(textButton).expandY().fillY();
         }
     }
 

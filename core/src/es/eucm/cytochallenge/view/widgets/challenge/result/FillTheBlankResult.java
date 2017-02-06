@@ -68,7 +68,7 @@ public class FillTheBlankResult extends ResultLayout<FillTheBlankControl> {
 
         Table verticalLayout = new Table();
         verticalLayout.setTouchable(Touchable.disabled);
-        verticalLayout.pad(es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(48f));
+        verticalLayout.pad(es.eucm.cytochallenge.view.widgets.WidgetBuilder.dp48ToPixels());
         FillTheBlankStatement[] statements = control.getStatements();
 
         for (int i = 0; i < statements.length; i++) {

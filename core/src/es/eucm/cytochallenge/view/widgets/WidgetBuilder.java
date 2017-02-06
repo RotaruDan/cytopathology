@@ -1,5 +1,6 @@
 package es.eucm.cytochallenge.view.widgets;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -15,8 +16,24 @@ import es.eucm.cytochallenge.view.SkinConstants;
 
 public class WidgetBuilder {
 
-    public static float dpToPixels(float dp) {
-        return Gdx.graphics.getDensity() * dp;
+    private static float getDensity() {
+        return Gdx.app.getType() == Application.ApplicationType.WebGL ? 1f : Gdx.graphics.getDensity();
+    }
+
+    public static float dp8ToPixels() {
+        return getDensity() * 8f;
+    }
+
+    public static float dp16ToPixels() {
+        return getDensity() * 16f;
+    }
+
+    public static float dp24ToPixels() {
+        return getDensity() * 24f;
+    }
+
+    public static float dp48ToPixels() {
+        return getDensity() * 48f;
     }
 
     public static IconButton toolbarIcon(String icon) {
@@ -50,7 +67,7 @@ public class WidgetBuilder {
         row.add(icon(icon, style));
         row.add(new Label(label, BaseScreen.skin, style));
         row.addSpace();
-        row.pad(0, 0, dpToPixels(16), 0);
+        row.pad(0, 0, dp16ToPixels(), 0);
         row.setTouchable(Touchable.disabled);
 
         Button button = button(style);
@@ -107,8 +124,7 @@ public class WidgetBuilder {
 
     public static TextButton dialogButton(String text, TextButton.TextButtonStyle style) {
         TextButton button = new TextButton(text.toUpperCase(), style);
-        button.pad(dpToPixels(8)).padBottom(dpToPixels(10))
-                .padTop(dpToPixels(10));
+        button.pad(dp8ToPixels());
         return button;
     }
 

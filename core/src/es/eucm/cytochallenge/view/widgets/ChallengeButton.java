@@ -70,7 +70,7 @@ public class ChallengeButton extends TextButton {
         image.setScaling(Scaling.fit);
 
         clearChildren();
-        float defaultPad = WidgetBuilder.dpToPixels(24f);
+        float defaultPad = WidgetBuilder.dp16ToPixels();
 
         pad(defaultPad);
         left();

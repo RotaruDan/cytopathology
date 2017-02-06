@@ -30,12 +30,12 @@ public class ChallengeLayout extends AbstractWidget {
         if(nextChallenge != null) {
 
             float nextWidth = getPrefWidth(nextChallenge);
-            float offset = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(16);
+            float offset = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dp16ToPixels();
             setBounds(nextChallenge, getWidth() - nextWidth - offset, offset * 2 + checkWidth,
                     nextWidth, getPrefHeight(nextChallenge));
         }
 
-        float offset = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(16);
+        float offset = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dp16ToPixels();
         setBounds(checkButton, getWidth() - checkWidth - offset, offset,
                 checkWidth, getPrefHeight(checkButton));
 

@@ -88,7 +88,7 @@ public class BaseScreen {
 
     public void onBackPressed() {
         Gdx.app.log(getClassTag(), "onBackPressed");
-        game.changeScreen(previousScreen, Fade.init(1f, MathUtils.randomBoolean()));
+        game.changeScreen(previousScreen, Fade.init(1f));
     }
 
     public static Stage getStage() {

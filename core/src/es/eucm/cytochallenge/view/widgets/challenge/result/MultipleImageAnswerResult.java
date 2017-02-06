@@ -88,7 +88,7 @@ public class MultipleImageAnswerResult extends ResultLayout<MultipleImageAnswerC
 
             Image imageActor = new Image(originalImage.getDrawable());
             imageActor.setScaling(Scaling.fit);
-            float pad8 = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(Gdx.graphics.getHeight() * .1f);
+            float pad8 = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dp8ToPixels();
 
             imageButton.add(imageActor).expand().fill().pad(pad8);
             imageButton.setClip(true);

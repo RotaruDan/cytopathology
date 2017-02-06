@@ -8,66 +8,67 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
+import es.eucm.cytochallenge.model.Challenge;
 import es.eucm.cytochallenge.model.course.Course;
 import es.eucm.cytochallenge.utils.Grades;
 import es.eucm.cytochallenge.utils.Prefs;
 import es.eucm.cytochallenge.view.SkinConstants;
+import es.eucm.cytochallenge.view.screens.BaseScreen;
 import es.eucm.cytochallenge.view.widgets.Tile;
 
-public class CourseTile extends Tile {
+import java.util.Date;
+
+public class ChallengeTile extends Tile {
 
     private float score;
-    private final Label percentage;
+    private final Label grade;
     private Image star1, star2, star3;
+    private boolean isDisabled;
 
-    public CourseTile(Course course, Skin skin, I18NBundle i18n, Prefs prefs) {
+    public ChallengeTile(Challenge challenge, Skin skin, I18NBundle i18n, Prefs prefs) {
         super(skin);
 
-        setText(course.getName());
+        setText(challenge.getName());
         setMarker(es.eucm.cytochallenge.view.widgets.WidgetBuilder
-                .difficulty(course.getEstimatedDifficulty(null), i18n));
+                .difficulty(challenge.getDifficulty(), i18n));
 
-        float progress = computeCourseProgress(course, prefs);
-        float size = course.getChallenges().size;
-        ProgressBar progressBar = new ProgressBar(0f, size, 1f, false,
-                skin, SkinConstants.STYLE_COURSE);
-        progressBar.setValue(progress);
-        setBottom(progressBar);
-
-        int finalPercentage = MathUtils.round(100 * progress / size);
-        percentage = new Label(finalPercentage + "%", skin);
-        labelContainer.add(percentage);
+        grade = new Label(Grades.getGrade(score = prefs.getChallengeScore(challenge.getId())), skin);
+        labelContainer.add(grade);
         invalidateHierarchy();
         setUpStars(skin);
+
+
+        boolean disabled = true;
+        long timeValue = BaseScreen.prefs.getChallengeTime(challenge.getId());
+        if (timeValue > 0l) {
+            disabled = false;
+        }
+        setDisabled(disabled);
+        if(disabled) {
+            label.setColor(Color.LIGHT_GRAY);
+            grade.setColor(Color.LIGHT_GRAY);
+            setColor(Color.LIGHT_GRAY);
+        }
     }
 
-    private float computeCourseProgress(Course course, Prefs prefs) {
-        int progress = 0;
-        float totalScore = 0f;
 
-        Array<String> challenges = course.getChallenges();
-        for (int i = 0; i < challenges.size; ++i) {
-            String challengeId = challenges.get(i);
-            long challengeTime = prefs.getChallengeTime(challengeId);
-            if (challengeTime > 0l) {
-                progress++;
-            }
+    public boolean isDisabled () {
+        return isDisabled;
+    }
 
-            totalScore += prefs.getChallengeScore(challengeId);
-        }
-
-        score = totalScore / challenges.size;
-        return progress;
+    public void setDisabled (boolean isDisabled) {
+        this.isDisabled = isDisabled;
     }
 
     @Override
     public void layout() {
         super.layout();
-        labelContainer.getCell(label).width((labelContainer.getWidth() - percentage.getWidth()) * .92f);
+        labelContainer.getCell(label).width((labelContainer.getWidth() - grade.getWidth()) * .92f);
 
         float starY = getHeight() - marker.getHeight();
         if (star3 != null) {

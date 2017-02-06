@@ -29,7 +29,7 @@ public class ChatDialog extends Container {
         fill();
 
         textSpeed = 25f;
-        pad(WidgetBuilder.dpToPixels(32f));
+        pad(WidgetBuilder.dp16ToPixels());
     }
 
     @Override

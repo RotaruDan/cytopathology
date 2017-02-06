@@ -96,7 +96,7 @@ public class DragAndDropResult extends ResultLayout<DragAndDropControl> {
         float maxX = imageActor.getWidth(), maxY = imageActor.getHeight();
         float minX = 0f, minY = 0f;
 
-        float defaultPad = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(24f);
+        float defaultPad = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dp24ToPixels();
 
         for (int i = 0; i < answers.length; i++) {
             final DragAndDropAnswer answer = answers[i];

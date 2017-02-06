@@ -11,6 +11,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 1024;
 		config.height = 552;
+		config.overrideDensity = 160;
 
 		double[][] pollygons = new double[][]{
 				new double[]{

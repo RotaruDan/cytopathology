@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -43,10 +44,6 @@ public class Gallery extends ScrollPane {
         getStyle().background = style.background;
         setScrollingDisabled(true, false);
         setOverscroll(false, false);
-    }
-
-    public Grid getGrid() {
-        return grid;
     }
 
     /*
@@ -124,6 +121,12 @@ public class Gallery extends ScrollPane {
         return Math.round(Math.max(prefHeight, grid.rowHeight(0, prefHeight)));
     }
 
+    @Override
+    public void layout() {
+        super.layout();
+        System.out.println("layout");
+    }
+
     public static class Grid extends AbstractWidget {
 
         private int columns;
@@ -132,7 +135,7 @@ public class Gallery extends ScrollPane {
 
         private float rowHeight;
 
-        private float pad = WidgetBuilder.dpToPixels(8);
+        private float pad = WidgetBuilder.dp8ToPixels();
 
         Grid(float rows, int columns) {
             this.columns = columns;
@@ -218,6 +221,9 @@ public class Gallery extends ScrollPane {
                 counter++;
             }
             height += currentRowHeight;
+
+            System.out.println("getParent().getHeight() = " + getParent().getHeight());
+            System.out.println("height + pad = " + height + pad);
             return Math.max(getParent().getHeight(), height + pad);
         }
 
@@ -227,8 +233,6 @@ public class Gallery extends ScrollPane {
     }
 
     public static class Cell extends AbstractWidget {
-
-        private static final float DELTA_Y = cmToYPixels(0.5f);
 
         private Actor actor;
 
@@ -285,7 +289,7 @@ public class Gallery extends ScrollPane {
 
         @Override
         public void layout() {
-            setBounds(actor, 0, -DELTA_Y, getWidth(), getHeight());
+            setBounds(actor, 0, 0, getWidth(), getHeight());
             actor.getColor().a = 0.0f;
             actor.clearActions();
             actor.addAction(Actions.parallel(

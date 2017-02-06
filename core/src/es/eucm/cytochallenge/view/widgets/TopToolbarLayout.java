@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import es.eucm.cytochallenge.view.widgets.AbstractWidget;
 
 
@@ -32,7 +33,7 @@ public class TopToolbarLayout extends AbstractWidget {
                 getWidth(), getHeight() - height);
 
         if(check != null) {
-            float offset = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(16);
+            float offset = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dp16ToPixels();
             setBounds(check, getWidth() - getPrefWidth(check) - offset, offset,
                     getPrefWidth(check), getPrefHeight(check));
         }

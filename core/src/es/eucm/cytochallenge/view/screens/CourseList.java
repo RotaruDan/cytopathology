@@ -16,6 +16,7 @@ import es.eucm.cytochallenge.utils.ChallengeResourceProvider;
 import es.eucm.cytochallenge.utils.InternalFilesChallengeResourceProvider;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.transitions.Fade;
+import es.eucm.cytochallenge.view.transitions.TransitionManager;
 import es.eucm.cytochallenge.view.widgets.*;
 import es.eucm.cytochallenge.view.widgets.challenge.CourseTile;
 
@@ -27,11 +28,7 @@ public class CourseList extends BaseScreen {
     public void create() {
         super.create();
 
-        gallery = new Gallery(3, 3, skin.get("navigation", Gallery.GalleryStyle.class));
-
-
-        ScrollPane scroll = new ScrollPane(gallery, BaseScreen.skin, "verticalScroll");
-        scroll.setScrollingDisabled(true, false);
+        gallery = new Gallery(2.26f, 3, skin.get("navigation", Gallery.GalleryStyle.class));
 
         Table topTable = new Table();
         topTable.background(BaseScreen.skin.getDrawable(SkinConstants.DRAWABLE_9P_TOOLBAR));
@@ -54,7 +51,7 @@ public class CourseList extends BaseScreen {
 
         TopToolbarLayout rootLayout = new TopToolbarLayout();
         rootLayout.setTopToolbar(topTable);
-        rootLayout.setContainer(scroll);
+        rootLayout.setContainer(gallery);
 
         root.add(rootLayout).expand().fill();
     }
@@ -84,7 +81,7 @@ public class CourseList extends BaseScreen {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     challengeList.setCurrentCourse(course);
-                    game.changeScreen(challengeList);
+                    game.changeScreen(challengeList, Fade.init(1f));
                 }
             });
         }
@@ -97,7 +94,7 @@ public class CourseList extends BaseScreen {
 
     @Override
     public void onBackPressed() {
-        game.changeScreen(menu, Fade.init(1f, true));
+        game.changeScreen(menu, Fade.init(1f));
     }
 
 

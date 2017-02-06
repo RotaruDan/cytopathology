@@ -24,8 +24,8 @@ public class StartCourseDialog extends Container<Table> {
         Table root = getActor();
         root.setBackground(style.panelBackground);
 
-        float pad24dp = WidgetBuilder.dpToPixels(24);
-        float pad48dp = WidgetBuilder.dpToPixels(48);
+        float pad24dp = WidgetBuilder.dp24ToPixels();
+        float pad48dp = WidgetBuilder.dp48ToPixels();
         root.pad(pad48dp, pad48dp, pad48dp, pad48dp);
 
         root.defaults().space(pad24dp);
@@ -47,7 +47,7 @@ public class StartCourseDialog extends Container<Table> {
 
         if (courseCompletionTime > 0) {
             Date date = new Date(courseCompletionTime);
-            String availableTimeMessage = i18n.get("availableTime") + ":" + resolver.format("mm:ss", date);
+            String availableTimeMessage = i18n.get("availableTime") + " - " + resolver.format("mm:ss", date);
             Label timeLabel = new Label(availableTimeMessage, style.textStyle);
             timeLabel.setWrap(true);
             timeLabel.setWidth(Gdx.graphics.getWidth() * .5f);
@@ -76,8 +76,8 @@ public class StartCourseDialog extends Container<Table> {
 
         float y = root.getY();
         root.setY(Gdx.graphics.getHeight());
-        root.addAction(Actions.sequence(Actions.moveTo(root.getX(), y, 1f, Interpolation.swingOut),
-                Actions.delay(2f, Actions.sequence(Actions.moveTo(root.getX(), -root.getHeight(), .6f, Interpolation.swingIn), Actions.run(new Runnable() {
+        root.addAction(Actions.sequence(Actions.moveTo(root.getX(), y, .6f, Interpolation.swingOut),
+                Actions.delay(1.8f, Actions.sequence(Actions.moveTo(root.getX(), -root.getHeight(), .6f, Interpolation.swingIn), Actions.run(new Runnable() {
                     @Override
                     public void run() {
                         remove();

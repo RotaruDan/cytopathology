@@ -28,7 +28,8 @@ import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.transitions.TransitionManager;
 
 public class LoadManager extends BaseScreen {
-    public static final String[] SCALES = new String[]{"1.0", "2.0"};
+    public static final String[] SCALES = new String[]{"1.0", "1.5", "2.0",
+            "2.5", "3.0", "4.0"};
     private String SKIN_JSON_SRC = "skin/scale1.0/skin.json";
     private String I18N_SRC = "i18n/app";
 
@@ -44,25 +45,29 @@ public class LoadManager extends BaseScreen {
     public void create() {
 
         // 48px are 0.76cm in scale 1.0
-        float scale = (Gdx.graphics.getPpcX() * 0.76f) / SkinConstants.UNIT_SIZE;
         String scaleString;
-        if (scale < Float.parseFloat(SCALES[0])) {
-            scaleString = SCALES[0];
+        if (Gdx.app.getType() == Application.ApplicationType.WebGL || Gdx.app.getType() == Application.ApplicationType.Desktop) {
+            scaleString = "1.5";
         } else {
-            scaleString = SCALES[SCALES.length - 1];
-            for (int i = 0; i < SCALES.length - 1; i++) {
-                float lowerScale = Float.parseFloat(SCALES[i]);
-                float greaterScale = Float.parseFloat(SCALES[i + 1]);
-                if (scale >= lowerScale && scale <= greaterScale) {
-                    scaleString = scale - lowerScale < greaterScale - scale ? SCALES[i]
-                            : SCALES[i + 1];
-                    break;
+            float scale = (Gdx.graphics.getPpcX() * 0.76f) / SkinConstants.UNIT_SIZE;
+            if (scale < Float.parseFloat(SCALES[0])) {
+                scaleString = SCALES[0];
+            } else {
+                scaleString = SCALES[SCALES.length - 1];
+                for (int i = 0; i < SCALES.length - 1; i++) {
+                    float lowerScale = Float.parseFloat(SCALES[i]);
+                    float greaterScale = Float.parseFloat(SCALES[i + 1]);
+                    if (scale >= lowerScale && scale <= greaterScale) {
+                        scaleString = scale - lowerScale < greaterScale - scale ? SCALES[i]
+                                : SCALES[i + 1];
+                        break;
+                    }
                 }
             }
         }
 
         SKIN_JSON_SRC = "skin/scale" + scaleString + "/skin.json";
-        Gdx.app.log(getClassTag(), "Skin path: " + SKIN_JSON_SRC + ", scale: " + scale);
+        Gdx.app.log(getClassTag(), "Skin path: " + SKIN_JSON_SRC + ", scale: " + scaleString);
 
         stage = new Stage(new ScreenViewport());
         if (Gdx.app.getLogLevel() != Application.LOG_NONE) {
@@ -80,7 +85,7 @@ public class LoadManager extends BaseScreen {
         am.setLoader(Sound.class, new SoundLoader(resolver));
         am.setLoader(TextureAtlas.class, new TextureAtlasLoader(resolver));
         am.setLoader(Texture.class, new TextureLoader(resolver));
-        am.setLoader(Skim.class, new SkimLoader(resolver));
+        am.setLoader(Skim.class, new SkimLoader(resolver, scaleString));
         am.setLoader(I18NBundle.class, new I18NBundleLoader(resolver));
 
         /*-QUEUE here loading assets-*/
@@ -176,7 +181,7 @@ public class LoadManager extends BaseScreen {
 
                         transitionManager.initialize();
 
-                        game.changeScreen(menu, null);
+                        game.changeScreen(lab, null);
                     } else {
 
                         challenges = new Challenges();

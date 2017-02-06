@@ -106,7 +106,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
         Container imageContainer;
 
-        float defaultPad = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(24f);
+        float defaultPad = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dp16ToPixels();
 
         if (textControl instanceof MultipleAnswerControl) {
 
@@ -127,11 +127,12 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
 
             MultipleAnswerControl multipleAnswerControl = ((MultipleAnswerControl) textControl);
             String[] answers = multipleAnswerControl.getAnswers();
-            final LinearLayout answersLayout = new LinearLayout(false);
+            final Table answersLayout = new Table();
 
             group.clear();
             group.setMaxCheckCount(1);
 
+            float maxWidth = Gdx.graphics.getWidth() * .45f;
             for (int i = 0; i < answers.length; i++) {
                 String answer = answers[i];
                 final TextButton answerLabel = new TextButton((i + 1) + " - " + answer, skin,
@@ -140,15 +141,18 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
                 answerLabel.setUserObject(answer);
                 answerLabel.pad(defaultPad);
                 answerLabel.getLabel().setAlignment(Align.left);
-                answerLabel.getLabelCell().width(Gdx.graphics.getWidth() * .45f);
-                answersLayout.add(answerLabel).expandX();
+                answerLabel.getLabelCell().width(maxWidth);
+                answersLayout.add(answerLabel).expandX().padLeft(defaultPad);
+                answersLayout.row();
 
                 group.add(answerLabel);
             }
 
             right.row();
-            right.add(answersLayout).expand();
-
+            ScrollPane scroll = new ScrollPane(answersLayout, skin, "vertical");
+            scroll.setScrollingDisabled(true, false);
+            scroll.setFadeScrollBars(false);
+            right.add(scroll).expand();
 
             imageContainer = new Container();
             imageContainer.setActor(slideEditor);
@@ -189,7 +193,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
                         Button.ButtonStyle.class));
                 final Image imageActor = new Image();
 
-                final float pad8 = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(Gdx.graphics.getHeight() * .1f);
+                final float pad8 = es.eucm.cytochallenge.view.widgets.WidgetBuilder.dp8ToPixels();
                 imageButton.add(imageActor).expand().fill().pad(pad8);
 
                 challengeResourceProvider.getTexture(answer, new ImageResourceCallback(imageActor) {
@@ -477,7 +481,7 @@ public class TextChallengeWidget implements WidgetBuilder<TextChallenge> {
             FillTheBlankControl dndControl = (FillTheBlankControl) textControl;
 
             Table verticalLayout = new Table();
-            verticalLayout.pad(es.eucm.cytochallenge.view.widgets.WidgetBuilder.dpToPixels(48f));
+            verticalLayout.pad(es.eucm.cytochallenge.view.widgets.WidgetBuilder.dp48ToPixels());
             FillTheBlankStatement[] statements = dndControl.getStatements();
 
             for (int i = 0; i < statements.length; i++) {

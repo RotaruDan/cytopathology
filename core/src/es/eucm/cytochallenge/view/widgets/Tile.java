@@ -31,7 +31,7 @@ public class Tile extends AbstractWidget {
         label.setEllipsis(true);
         this.style = tileStyle;
         labelContainer.setBackground(tileStyle.labelBackground);
-        labelContainer.pad(WidgetBuilder.dpToPixels(8));
+        labelContainer.pad(WidgetBuilder.dp8ToPixels());
         labelContainer.left();
         addActor(labelContainer);
         addListener(clickListener);
@@ -40,6 +40,7 @@ public class Tile extends AbstractWidget {
             Image bg = new Image(tileStyle.background);
             setBackground(bg);
         }
+
     }
 
     public void setBackground(Actor actor) {
@@ -115,7 +116,6 @@ public class Tile extends AbstractWidget {
             setBounds(background, 0, 0, width, height);
         }
         setBounds(labelContainer, 0, 0, width, getPrefHeight(labelContainer));
-        //labelContainer.getCell(label).width(labelContainer.getWidth() * .95f);
         if (bottom != null) {
             float topPrefH = getPrefHeight(bottom);
             setBounds(bottom, 0, 0, width, topPrefH);

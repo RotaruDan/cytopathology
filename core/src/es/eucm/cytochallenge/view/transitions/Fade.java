@@ -12,6 +12,10 @@ public class Fade implements TransitionManager.Transition {
     private float duration;
     private boolean fadeCurrentScreen;
 
+    public static Fade init (float duration) {
+        return init(duration, false);
+    }
+
     public static Fade init (float duration, boolean fadeCurrentScreen) {
         instance.fadeCurrentScreen = fadeCurrentScreen;
         instance.duration = duration;

@@ -246,7 +246,7 @@ public class SlideEditor extends AbstractWidget {
         this.maxZoom = fitZoom * 50f;
         this.minZoom = fitZoom * 0.5f;
         fitButton.pack();
-        float offset = WidgetBuilder.dpToPixels(16);
+        float offset = WidgetBuilder.dp16ToPixels();
         setPosition(fitButton, offset,
                 offset);
         fit(false);

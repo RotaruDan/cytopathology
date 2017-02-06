@@ -15,8 +15,10 @@ public class CourseProgressBar extends IconButton {
 
     private Table progressBarPanel;
     private Cell<ProgressBar> progressBarCell;
-    private Label progressBarLabel;
-    private float timeout = -1;
+    private Label progressBarLabel, remainingTime;
+    private float time = -1;
+    private boolean stopped;
+    private Runnable onTimeoutListener;
 
     public CourseProgressBar(String icon, Skin skin) {
         this(icon, skin, "default");
@@ -27,7 +29,7 @@ public class CourseProgressBar extends IconButton {
 
         CourseProgressBarStyle style = skin.get(styleName, CourseProgressBarStyle.class);
 
-        float space = WidgetBuilder.dpToPixels(24f);
+        float space = WidgetBuilder.dp16ToPixels();
 
         progressBarPanel = new Table();
         progressBarPanel.setBackground(style.panelBackground);
@@ -47,6 +49,8 @@ public class CourseProgressBar extends IconButton {
         progressBarCell = progressBarPanel.add().expand().fill();
         progressBarLabel = new Label("", skin);
         progressBarPanel.add(progressBarLabel);
+        remainingTime = new Label("", skin);
+        progressBarPanel.add(remainingTime);
 
         addListener(new ClickListener() {
             @Override
@@ -92,9 +96,39 @@ public class CourseProgressBar extends IconButton {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (timeout > 0) {
-            timeout -= delta;
-
+        if (time <= 0 || stopped) {
+            return;
         }
+        time -= delta;
+        remainingTime.setText(String.valueOf((int) time));
+        if(onTimeoutListener != null && time <= 0) {
+            onTimeoutListener.run();
+        }
+    }
+
+    public float getTime() {
+        return time;
+    }
+
+    public void setTime(float time) {
+        this.time = time;
+        if(time > 0) {
+            remainingTime.setVisible(true);
+            remainingTime.setText(String.valueOf((int) time));
+        } else {
+            remainingTime.setVisible(false);
+        }
+    }
+
+    public void stop() {
+        stopped = true;
+    }
+
+    public void start() {
+        stopped = false;
+    }
+
+    public void setOnTimeoutListener(Runnable onTimeoutListener) {
+        this.onTimeoutListener = onTimeoutListener;
     }
 }

@@ -31,7 +31,7 @@ public class Toast extends LinearLayout {
         background(style.background);
         backgroundColor(style.color);
         this.setColor(style.color);
-        pad(WidgetBuilder.dpToPixels(8));
+        pad(WidgetBuilder.dp8ToPixels());
     }
 
     @Override

@@ -93,6 +93,29 @@ public class Challenges extends BaseScreen {
         root.add(challengeLayout).expand().fill();
 
         showProgressBar = new CourseProgressBar(SkinConstants.IC_UPP, skin);
+        showProgressBar.setOnTimeoutListener(new Runnable() {
+            @Override
+            public void run() {
+                stage.addAction(Actions.delay(.5f, Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast toast = new Toast(skin);
+                        toast.setText(i18n.get("timeout"));
+                        stage.addActor(toast);
+                        toast.show();
+                        challengeLayout.setTimer(null);
+                    }
+                })));
+                finishCourse();
+            }
+        });
+    }
+
+    private void finishCourse() {
+        challengeLayout.setNextChallenge(null);
+        challengeList.setShowCourseInfo(true);
+        game.changeScreen(challengeList);
+        showProgressBar.setTime(-1f);
     }
 
     private void goNextChallenge() {
@@ -101,9 +124,7 @@ public class Challenges extends BaseScreen {
             showProgressBar.hideProgress();
         }
         if (currentCourse.getChallenges().size == challengeCount) {
-            challengeLayout.setNextChallenge(null);
-            challengeList.setShowCourseInfo(true);
-            game.changeScreen(challengeList);
+            finishCourse();
         } else {
             challengeLayout.setNextChallenge(null);
             game.changeScreen(challenges);
@@ -141,7 +162,7 @@ public class Challenges extends BaseScreen {
         });
 
         if (currentCourse != null) {
-            progressBar.setValue((float)challengeCount);
+            progressBar.setValue((float) challengeCount);
             showProgressBar.showProgress();
         }
         addButton = hint;
@@ -170,6 +191,14 @@ public class Challenges extends BaseScreen {
                     (InternalFilesChallengeResourceProvider) challengeResourceProvider;
             internalChallengeResourceProvider.setResourcePath(currentChallenge);
             internalChallengeResourceProvider.setCurrentChallengeId(currentChallengeId);
+
+            // Course timeout control
+            if (showProgressBar.getTime() <= 0) {
+                showProgressBar.setTime(currentCourse.getCourseCompletionTime() / 1000f);
+                showProgressBar.showProgress();
+            } else {
+                showProgressBar.showProgress();
+            }
         }
 
         if (currentCourse == null) {
@@ -256,9 +285,9 @@ public class Challenges extends BaseScreen {
     @Override
     public void onBackPressed() {
         if (challengeList != null) {
-            game.changeScreen(challengeList, Fade.init(1f, true));
+            game.changeScreen(challengeList, Fade.init(1f));
         } else {
-            game.changeScreen(challenges, Fade.init(1f, true));
+            game.changeScreen(challenges, Fade.init(1f));
         }
     }
 

@@ -3,6 +3,7 @@ package es.eucm.cytochallenge.view.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -28,6 +29,7 @@ import es.eucm.cytochallenge.utils.InternalFilesChallengeResourceProvider;
 import es.eucm.cytochallenge.view.SkinConstants;
 import es.eucm.cytochallenge.view.transitions.Fade;
 import es.eucm.cytochallenge.view.widgets.*;
+import es.eucm.cytochallenge.view.widgets.challenge.ChallengeTile;
 
 public class ChallengeList extends BaseScreen {
 
@@ -35,7 +37,7 @@ public class ChallengeList extends BaseScreen {
 
     private boolean showCourseInfo = false;
     private Course currentCourse;
-    private Table layout;
+    private Gallery gallery;
     private Label title;
     private CourseInfoDialog courseDialog;
     private Button courseInfo;
@@ -49,15 +51,12 @@ public class ChallengeList extends BaseScreen {
     public void create() {
         super.create();
 
-        layout = new Table();
+        gallery = new Gallery(2.26f, 3, skin.get("navigation", Gallery.GalleryStyle.class));
         courseDialog = new CourseInfoDialog(skin, i18n, resolver);
-
-        ScrollPane scroll = new ScrollPane(layout, BaseScreen.skin, "verticalScroll");
-        scroll.setScrollingDisabled(true, false);
 
         Table topTable = new Table();
         topTable.background(BaseScreen.skin.getDrawable(SkinConstants.DRAWABLE_9P_TOOLBAR));
-        topTable.setColor(SkinConstants.COLOR_TOOLBAR_TOP);
+        topTable.setColor(SkinConstants.COLOR_TOOLBAR_TOP_DARK);
 
         title = new Label("", BaseScreen.skin,
                 SkinConstants.STYLE_TOOLBAR);
@@ -78,7 +77,7 @@ public class ChallengeList extends BaseScreen {
                 playCourse();
             }
         });
-        float dpSpace = WidgetBuilder.dpToPixels(6f);
+        float dpSpace = WidgetBuilder.dp8ToPixels();
         play.setPosition(Gdx.graphics.getWidth() - play.getWidth() - dpSpace, dpSpace);
 
         courseInfo = es.eucm.cytochallenge.view.widgets.WidgetBuilder.toolbarIcon(SkinConstants.IC_ERROR);
@@ -98,7 +97,7 @@ public class ChallengeList extends BaseScreen {
 
         TopToolbarLayout rootLayout = new TopToolbarLayout();
         rootLayout.setTopToolbar(topTable);
-        rootLayout.setContainer(scroll);
+        rootLayout.setContainer(gallery);
         rootLayout.setCheckButton(play);
 
         root.add(rootLayout).expand().fill();
@@ -143,18 +142,15 @@ public class ChallengeList extends BaseScreen {
             title.setText(i18n.get("challenges"));
             courseInfo.setVisible(false);
         }
-        layout.clearChildren();
-        loadChallenges(layout);
+        gallery.clearChildren();
+        loadChallenges();
 
     }
 
-    private void loadChallenges(final Table layout) {
+    private void loadChallenges() {
 
-        layout.top();
         Json json = new Json();
-        float pad = WidgetBuilder.dpToPixels(54f);
-        layout.pad(pad);
-        final float maxWidth = Gdx.graphics.getWidth() - pad;
+        float pad = WidgetBuilder.dp48ToPixels();
         String challengesPath = "challenges/";
         String challengeJson = "challenge.json";
 
@@ -184,21 +180,18 @@ public class ChallengeList extends BaseScreen {
                         if (currentCourse != null) {
                             courseDialog.addChallenge(challenge, i18n);
                         }
-                        TextChallenge textChallenge = (TextChallenge) challenge;
 
-                        final Button button = new ChallengeButton(textChallenge,
-                                skin, i18n, resolver);
-                        button.setUserObject(challengeFolder);
-                        Gdx.app.log("Files", "json challenge getTextControl: " + textChallenge.getTextControl());
+                        final ChallengeTile tile = new ChallengeTile(challenge, skin, i18n, prefs);
 
-                        button.addListener(new ClickListener() {
+                        tile.setUserObject(challengeFolder);
+                        tile.addListener(new ClickListener() {
                             @Override
                             public void clicked(InputEvent event, float x, float y) {
-                                if (button.isDisabled()) {
+                                if (tile.isDisabled()) {
                                     playCourseToast();
                                 } else {
                                     challenges.setCurrentCourse(null);
-                                    challengeResourceProvider.setResourcePath(button.getUserObject().toString());
+                                    challengeResourceProvider.setResourcePath(tile.getUserObject().toString());
                                     challengeResourceProvider.setCurrentChallengeId(challengeId);
                                     challenges.setChallengeResourceProvider(challengeResourceProvider);
                                     game.changeScreen(challenges);
@@ -206,8 +199,7 @@ public class ChallengeList extends BaseScreen {
                             }
                         });
 
-                        layout.add(button).left().fillX().width(maxWidth);
-                        layout.row();
+                        gallery.add(tile);
                     }
                 }
 
@@ -234,12 +226,17 @@ public class ChallengeList extends BaseScreen {
 
     @Override
     public void draw() {
+
+
+        Gdx.gl.glClearColor(SkinConstants.COLOR_TOOLBAR_TOP_DARK.r, SkinConstants.COLOR_TOOLBAR_TOP_DARK.g,
+                SkinConstants.COLOR_TOOLBAR_TOP_DARK.b, SkinConstants.COLOR_TOOLBAR_TOP_DARK.a);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         super.draw();
     }
 
     @Override
     public void onBackPressed() {
-        game.changeScreen(courseList, Fade.init(1f, true));
+        game.changeScreen(courseList, Fade.init(1f));
     }
 
     public void setShowCourseInfo(boolean showCourseInfo) {
