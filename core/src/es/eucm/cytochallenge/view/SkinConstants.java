@@ -134,4 +134,5 @@ public interface SkinConstants {
     Color COLOR_BUTTON = new Color(0.050980392f, 0.35682745f, 0.549019607f, 1f);
     Color COLOR_BUTTON_CLEAR = new Color(63f/255f, 145f/255f, 195f/255f, 1f);
     Color COLOR_TOOLBAR_TOP = COLOR_PANEL_RIGHT;
+    Color COLOR_TOOLBAR_TOP_DARK = new Color(90f/255f, 180f/255f, 1f, 1f);
 }

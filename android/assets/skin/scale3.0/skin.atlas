@@ -455,7 +455,7 @@ map-marker
   index: -1
 page
   rotate: false
-  xy: 272, 190
+  xy: 294, 128
   size: 42, 42
   split: 18, 18, 18, 18
   pad: 13, 13, 13, 13
@@ -487,6 +487,32 @@ page_up
   split: 21, 21, 21, 21
   pad: 16, 16, 16, 16
   orig: 48, 48
+  offset: 0, 0
+  index: -1
+scroll_corner
+  rotate: false
+  xy: 272, 172
+  size: 36, 60
+  split: 18, 15, 30, 27
+  orig: 36, 60
+  offset: 0, 0
+  index: -1
+scroll_vertical
+  rotate: false
+  xy: 310, 172
+  size: 36, 60
+  split: 18, 15, 30, 27
+  pad: 13, 13, 22, 19
+  orig: 36, 60
+  offset: 0, 0
+  index: -1
+scroll_vertical_knob
+  rotate: false
+  xy: 348, 172
+  size: 36, 60
+  split: 18, 15, 30, 27
+  pad: 13, 13, 22, 19
+  orig: 36, 60
   offset: 0, 0
   index: -1
 selected_tab

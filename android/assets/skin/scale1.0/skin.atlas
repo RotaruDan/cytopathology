@@ -468,6 +468,32 @@ page_up
   orig: 16, 16
   offset: 0, 0
   index: -1
+scroll_corner
+  rotate: false
+  xy: 246, 22
+  size: 12, 20
+  split: 6, 5, 10, 9
+  orig: 12, 20
+  offset: 0, 0
+  index: -1
+scroll_vertical
+  rotate: false
+  xy: 1008, 324
+  size: 12, 20
+  split: 6, 5, 10, 9
+  pad: 4, 4, 7, 6
+  orig: 12, 20
+  offset: 0, 0
+  index: -1
+scroll_vertical_knob
+  rotate: false
+  xy: 484, 259
+  size: 12, 20
+  split: 6, 5, 10, 9
+  pad: 4, 4, 7, 6
+  orig: 12, 20
+  offset: 0, 0
+  index: -1
 selected_tab
   rotate: false
   xy: 358, 2
