@@ -483,6 +483,11 @@
         },
         "pane": {
             "background": "page"
+        },
+        "vertical": {
+            "vScroll": "scroll_vertical",
+            "vScrollKnob": "scroll_vertical_knob",
+            "corner": "scroll_corner"
         }
     },
     "com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle": {

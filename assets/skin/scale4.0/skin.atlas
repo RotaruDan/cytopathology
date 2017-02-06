@@ -268,7 +268,7 @@ knob_after
   index: -1
 knob_background
   rotate: false
-  xy: 1993, 1422
+  xy: 1993, 1176
   size: 36, 36
   split: 13, 13, 13, 13
   pad: 13, 13, 2, 2
@@ -333,6 +333,32 @@ page_up
   split: 28, 28, 28, 28
   pad: 21, 21, 21, 21
   orig: 64, 64
+  offset: 0, 0
+  index: -1
+scroll_corner
+  rotate: false
+  xy: 1993, 1378
+  size: 48, 80
+  split: 24, 20, 40, 36
+  orig: 48, 80
+  offset: 0, 0
+  index: -1
+scroll_vertical
+  rotate: false
+  xy: 1993, 1296
+  size: 48, 80
+  split: 24, 20, 40, 36
+  pad: 17, 17, 29, 25
+  orig: 48, 80
+  offset: 0, 0
+  index: -1
+scroll_vertical_knob
+  rotate: false
+  xy: 1993, 1214
+  size: 48, 80
+  split: 24, 20, 40, 36
+  pad: 17, 17, 29, 25
+  orig: 48, 80
   offset: 0, 0
   index: -1
 selected_tab
