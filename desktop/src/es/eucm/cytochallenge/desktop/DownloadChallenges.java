@@ -8,6 +8,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.utils.*;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import es.eucm.cytochallenge.model.Challenge;
 import es.eucm.cytochallenge.model.Difficulty;
 import es.eucm.cytochallenge.model.course.Course;
 import sun.misc.BASE64Encoder;
@@ -27,6 +28,10 @@ public class DownloadChallenges {
     public static final String GET_COURSES_PATH = API_PATH + "api/courses";
     public static final String GET_CHALLENGES_UPLOAD_PATH = API_PATH + "uploads/";
     public static final String CHALLENGE_ZIP_NAME = "challenge.zip";
+
+
+    public static final String CHALLENGE_NAME = "name";
+    public static final Map<String, Map<String, Object>> challengesData = new HashMap<String, Map<String, Object>>();
 
     public static final Array<Course> courses = new Array<Course>();
 
@@ -181,6 +186,10 @@ public class DownloadChallenges {
                             String courseId = challengeInfo.getString("_course");
 
 
+                            String challengeName = challengeInfo.getString("name");
+                            setChallengeData(id, CHALLENGE_NAME, challengeName);
+                            System.out.println("challengeName = " + challengeName);
+
                             if (challengeInfo.hasChild("challengeFile")) {
                                 JsonValue challengeFile = challengeInfo.getChild("challengeFile");
                                 while (!challengeFile.name().equals("difficulty")) {
@@ -241,7 +250,18 @@ public class DownloadChallenges {
 
     }
 
+    private static void setChallengeData(String id, String key, Object data) {
+        Map challengeData = challengesData.get(id);
+        if(challengeData == null) {
+            challengeData = new HashMap<String, Object>();
+            challengesData.put(id, challengeData);
+        }
+        challengeData.put(key, data);
+    }
+
+
     public static void downloadChallenge(final String id) {
+
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
         final Net.HttpRequest httpRequest = requestBuilder.newRequest()
                 .method(Net.HttpMethods.GET).url(GET_CHALLENGES_UPLOAD_PATH + id + "/" + CHALLENGE_ZIP_NAME)
@@ -273,7 +293,6 @@ public class DownloadChallenges {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -297,7 +316,30 @@ public class DownloadChallenges {
     }
 
     public static void copyChallengeToAssets(FileHandle challengeDir, String id) {
-        challengeDir.copyTo(CHALLENGES_FOLDER.child(id));
+
+        FileHandle challengeFolder = CHALLENGES_FOLDER.child(id);
+        challengeDir.copyTo(challengeFolder);
+        if (challengeFolder.list().length == 0 || !challengeFolder.child("challenge.json").exists()) {
+            // Clean challenge folder
+            challengeFolder.delete();
+        } else {
+            Map challengeData = challengesData.get(id);
+            if (challengeData != null && !challengeData.isEmpty()) {
+
+                FileHandle challengeFile = challengeFolder.child("challenge.json");
+
+                Json json = new Json();
+                Challenge challenge = json.fromJson(Challenge.class, challengeFile);
+
+                Object challengeName = challengeData.get(CHALLENGE_NAME);
+                if (challengeName != null) {
+                    challenge.setName(challengeName.toString());
+
+                    json.setOutputType(JsonWriter.OutputType.json);
+                    json.toJson(challenge, Challenge.class, challengeFile);
+                }
+            }
+        }
         PROCESSED++;
     }
 }
