@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="512mm"
-   height="128mm"
-   viewBox="0 0 1814.1732 453.54331"
+   width="284.17892mm"
+   height="63.850574mm"
+   viewBox="0 0 1006.9332 226.24219"
    id="svg3336"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -26,16 +26,20 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.5"
-     inkscape:cx="907.89244"
-     inkscape:cy="392.52577"
+     inkscape:cx="325.52461"
+     inkscape:cy="281.723"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1680"
-     inkscape:window-height="987"
+     inkscape:window-height="1027"
      inkscape:window-x="1912"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:window-y="19"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <metadata
      id="metadata3341">
     <rdf:RDF>
@@ -52,23 +56,23 @@
      inkscape:label="Capa 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-598.8189)">
+     transform="translate(-402.03343,-715.31725)">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:180px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
-       x="902.99512"
-       y="780.36218"
+       style="font-style:normal;font-weight:normal;font-size:101.61727142px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="904.08588"
+       y="801.29742"
        id="text3344"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3346"
-         x="902.99512"
-         y="780.36218"
-         style="-inkscape-font-specification:'Arial Rounded MT Bold, ';font-family:'Arial Rounded MT Bold';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#ffffff;">CYTOPATHOLOGY</tspan><tspan
+         x="904.08588"
+         y="801.29742"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Arial Rounded MT Bold';-inkscape-font-specification:'Arial Rounded MT Bold, ';fill:#ffffff">CYTOPATHOLOGY</tspan><tspan
          sodipodi:role="line"
-         x="902.99512"
-         y="1005.3622"
+         x="904.08588"
+         y="928.31903"
          id="tspan3348"
-         style="-inkscape-font-specification:'Arial Rounded MT Bold, ';font-family:'Arial Rounded MT Bold';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;fill:#ffffff;">CHALLENGE</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Arial Rounded MT Bold';-inkscape-font-specification:'Arial Rounded MT Bold, ';fill:#ffffff">CHALLENGE</tspan></text>
   </g>
 </svg>
