@@ -1,14 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "69yr.png",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "Pap smear from a 69 year old post menopausal woman not receiving any hormonal treatment. Is this pattern compatible with age and menstrual history?",
-        "answers": [
-            "Yes",
-            "No"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"69yr.png","name":"Case 69 year old woman","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"Pap smear from a 69 year old post menopausal woman not receiving any hormonal treatment. Is this pattern compatible with age and menstrual history?","answers":["Yes","No"]}}

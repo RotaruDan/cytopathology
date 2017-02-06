@@ -1,16 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "case48year.jpg",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "Cervical smear from a 48 year old woman. This pattern is consistent with",
-        "answers": [
-            "HSIL, moderate keratinizing dysplasia",
-            "Atypical parakeratosis",
-            "Keratinizing invasive carcinoma",
-            "ASC-US"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"case48year.jpg","name":"Case 48 year old woman","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"Cervical smear from a 48 year old woman. This pattern is consistent with","answers":["HSIL, moderate keratinizing dysplasia","Atypical parakeratosis","Keratinizing invasive carcinoma","ASC-US"]}}

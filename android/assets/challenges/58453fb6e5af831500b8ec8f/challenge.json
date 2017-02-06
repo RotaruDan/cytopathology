@@ -1,14 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "02_01-animal-cell.jpg",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "What is a cell?",
-        "answers": [
-            "Cells are the smallest unit of life that can replicate independently (often called the \"building blocks of life\").",
-            "Cells are the smallest unit of life that can't replicate independently"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"02_01-animal-cell.jpg","name":"What is a cell?","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"What is a cell?","answers":["Cells are the smallest unit of life that can replicate independently (often called the \"building blocks of life\").","Cells are the smallest unit of life that can't replicate independently"]}}

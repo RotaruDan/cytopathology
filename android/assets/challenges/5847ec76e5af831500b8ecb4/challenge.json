@@ -1,15 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "70yrold.jpg",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "Cervical smear. 70 year old female. LMP:20 years ago. These findings are most consistent with:",
-        "answers": [
-            "Atrophy with inflammation",
-            "ASC-US",
-            "HGSIL CIN III"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"70yrold.jpg","name":"Cervical smear, 70 year old","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"Cervical smear. 70 year old female. LMP:20 years ago. These findings are most consistent with:","answers":["Atrophy with inflammation","ASC-US","HGSIL CIN III"]}}

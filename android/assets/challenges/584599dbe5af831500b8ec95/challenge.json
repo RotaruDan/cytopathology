@@ -1,16 +1,1 @@
-{
-    "class": "es.eucm.cytochallenge.model.TextChallenge",
-    "imagePath": "case38year.jpg",
-    "difficulty": "EASY",
-    "textControl": {
-        "class": "es.eucm.cytochallenge.model.control.MultipleAnswerControl",
-        "text": "Cervical smear from a 38 year old woman complaining of post-coital bleeding and pain. This pattern is consistent with",
-        "answers": [
-            "Atypia of repair",
-            "Carcinoma in situ",
-            "Microinvasive carcinoma",
-            "Non-keratinizing invasive squamous carcinoma"
-        ],
-        "correctAnswer": 0
-    }
-}
+{"class":"es.eucm.cytochallenge.model.TextChallenge","imagePath":"case38year.jpg","name":"Case 38 year old woman","textControl":{"class":"es.eucm.cytochallenge.model.control.MultipleAnswerControl","text":"Cervical smear from a 38 year old woman complaining of post-coital bleeding and pain. This pattern is consistent with","answers":["Atypia of repair","Carcinoma in situ","Microinvasive carcinoma","Non-keratinizing invasive squamous carcinoma"]}}
