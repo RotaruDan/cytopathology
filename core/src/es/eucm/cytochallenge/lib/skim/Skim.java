@@ -19,8 +19,11 @@ import com.badlogic.gdx.utils.reflect.ReflectionException;
 
 public class Skim extends Skin {
 
-    public Skim(TextureAtlas atlas) {
+    private String scale;
+
+    public Skim(TextureAtlas atlas, String scale) {
         super(atlas);
+        this.scale = scale;
     }
 
     public void addRegions(TextureAtlas atlas) {
@@ -104,7 +107,7 @@ public class Skim extends Skin {
                 Boolean flip = json.readValue("flip", Boolean.class, false, jsonData);
                 Boolean markupEnabled = json.readValue("markupEnabled", Boolean.class, false, jsonData);
 
-                FileHandle fontFile = skinFile.parent().child(path);
+                FileHandle fontFile = skinFile.parent().child("scale" + scale).child(path);
                 if (!fontFile.exists()) fontFile = Gdx.files.internal(path);
                 if (!fontFile.exists()) throw new SerializationException("Font file not found: " + fontFile);
 

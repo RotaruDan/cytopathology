@@ -1,7 +1,7 @@
 {
     "com.badlogic.gdx.graphics.g2d.BitmapFont": {
         "default_font": {
-            "file": "Roboto-Regular-24.fnt"
+            "file": "Roboto-Regular-16.fnt"
         }
     },
     "com.badlogic.gdx.graphics.Color": {
@@ -483,10 +483,6 @@
         },
         "pane": {
             "background": "page"
-        },
-        "verticalScroll": {
-            "vScroll": "knob_after",
-            "vScrollKnob": "knob_after"
         }
     },
     "com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle": {

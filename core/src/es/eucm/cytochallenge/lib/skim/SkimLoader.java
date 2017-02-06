@@ -23,8 +23,11 @@ import com.badlogic.gdx.utils.ObjectMap.Entry;
  * @author Nathan Sweet */
 public class SkimLoader extends AsynchronousAssetLoader<Skim, SkimLoader.SkinParameter> {
 
-    public SkimLoader (FileHandleResolver resolver) {
+    private final String scale;
+
+    public SkimLoader (FileHandleResolver resolver, String scale) {
         super(resolver);
+        this.scale = scale;
     }
 
     @Override
@@ -55,13 +58,14 @@ public class SkimLoader extends AsynchronousAssetLoader<Skim, SkimLoader.SkinPar
             }
         }
         TextureAtlas atlas = manager.get(textureAtlasPath, TextureAtlas.class);
-        Skim skin = new Skim(atlas);
+        Skim skin = new Skim(atlas, scale);
         if (resources != null) {
             for (Entry<String, Object> entry : resources.entries()) {
                 skin.add(entry.key, entry.value);
             }
         }
-        skin.load(file);
+
+        skin.load(file.parent().parent().child("skin.json"));
         return skin;
     }
 
